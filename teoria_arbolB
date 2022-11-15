@@ -1,0 +1,60 @@
+ARBOL VACIO:
+
+Caso A: El numero ingresante no se puede comparar con nada porque el arbol esta vacio. Creo un nodo raiz e inserto el numero en la primera clave del nodo.
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NODO ES HOJA:
+    CON UNA CLAVE:
+Caso B: El numero ingresante es mas grande que la primera clave del nodo, pero no se puede comparar con la segunda porque esta no existe. Se inserta el numero ingresante en la segunda posicion.
+
+Caso C: En un nodo de una clave existente y una vacia (|2| |), el numero ingresado es mas chico que la primera clave. Muevo la primera clave a la segunda e inserto el numero a ingresar en la primera clave.
+
+    CON DOS CLAVES:
+Caso D: El numero ingresado es mas grande que las dos claves del nodo. SPLIT: 
+La actual segunda clave del nodo subira al nodo superior (en caso de no haberlo lo creara). Dentro de su nodo, esta clave tendra como hijo izquierdo, un nuevo nodo conteniendo la antigua primera clave y como hijo derecho, otro nuevo nodo conteniendo la clave ingresada.
+
+Caso E: El numero ingresado es mas chico que las dos claves del nodo. SPLIT: 
+La actual primera clave del nodo subira al nodo superior (en caso de no haberlo lo creara). Dentro de su nodo, esta clave tendra como hijo izquierdo, un nuevo nodo conteniendo el nuevo numero ingresado y como hijo derecho, otro nuevo nodo conteniendo la antigua segunda clave.
+
+Caso F: El numero ingresado es mas grande que la primera clave del nodo pero mas pequeña que la segunda. SPLIT:
+El numero ingresado subira al nodo superior (en caso de no haberlo, lo creara). Dentro de su nodo, esta clave tendra como hijo izquierdo un nuevo nodo conteniendo la antigua primera clave, y como hijo derecho otro nuevo nodo conteniendo la antigua segunda clave.
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NODOS CON 1 CLAVE E HIJOS:
+SI EL NUMERO INGRESADO NO PROVIENE DE SPLIT:
+Caso G: El numero ingresante es mas grande que la primera clave del nodo, pero no se puede comparar con la segunda porque esta no existe. 
+Se avanza al segundo hijo del nodo.
+
+Caso H: El numero ingresante es mas chico que la primera clave del nodo. 
+Se avanza al primer hijo del nodo.
+
+SI EL NUMERO INGRESADO PROVIENE DE SPLIT:
+Caso I: Si el numero ingresante a un nodo de una sola clave, proviene de un split de un nodo de mas abajo, y este numero ingresante es mas pequeño que la clave existente en el nodo actual, el numero ingresante se ubicara en la primera clave y la anterior primera clave, en la segunda.
+El primer hijo del nodo sera el nodo de clave mas pequeña resultante del split, el segundo hijo del nodo sera el nodo de clave mas grande resultante del split y el tercer hijo del nodo sera el antiguo segundo hijo del nodo previo a todo cambio en el nodo actual.
+
+Caso O: Si el numero ingresante a un nodo de una sola clave, proviene de un split de un nodo de mas abajo, y este numero ingresante es mas grande que la clave existente en el nodo actual, el numero ingresante se ubicara en la segunda clave.
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NODOS CON 2 CLAVES E HIJOS:
+SI EL NUMERO INGRESADO NO PROVIENE DE SPLIT:
+Caso J: El numero ingresado es mas grande que las dos claves del nodo.  
+Se avanza al tercer hijo del nodo.
+
+Caso K: El numero ingresado es mas chico que las dos claves del nodo. 
+Se avanza al primer hijo del nodo.
+
+Caso Ñ: El numero ingresado es mas grande que la primera clave del nodo pero mas pequeña que la segunda.
+Se avanza al segundo hijo del nodo.
+
+SI EL NUMERO INGRESADO PROVIENE DE SPLIT:
+
+Caso L: El numero ingresante al nodo proviene de un split. Este numero ingresante es mas grande que las dos claves existentes en el nodo actual.
+Se hace un split, sube la segunda clave del nodo.
+
+Caso M: El numero ingresante al nodo proviene de un split. Este numero ingresante es mas chico que las dos claves existentes en el nodo actual.
+Se hace un split, sube la primera clave del nodo.
+
+Caso N: El numero ingresante al nodo proviene de un split. Este numero ingresante es mas grande que la primera clave del nodo actual pero mas chico que el segundo.
+Se hace un split, sube el numero ingresante al nodo.
+
+
