@@ -187,14 +187,12 @@ void Nodo <Tipo_de_animal>::set_hijo_auxiliar(Nodo <Tipo_de_animal>* hijo){
 
 template<typename Tipo_de_animal>
 bool Nodo <Tipo_de_animal>::es_primer_hijo(){
-    return(datos[PRIMERA_POSICION] < nodo_padre->get_primer_dato());
+    return(datos[PRIMERA_POSICION]->get_nombre() < nodo_padre->get_primer_dato()->get_nombre());
 }
 
 template<typename Tipo_de_animal>
 bool Nodo <Tipo_de_animal>::es_segundo_hijo(){
-    return (datos[PRIMERA_POSICION] > nodo_padre->get_primer_dato() && datos[PRIMERA_POSICION] < nodo_padre->get_primer_dato());
+    return (datos[PRIMERA_POSICION]->get_nombre() > nodo_padre->get_primer_dato()->get_nombre() && datos[PRIMERA_POSICION]->get_nombre() < nodo_padre->get_primer_dato()->get_nombre());
 }
-
-
 
 #endif

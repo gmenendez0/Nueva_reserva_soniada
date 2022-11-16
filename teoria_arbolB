@@ -2,6 +2,8 @@ ARBOL VACIO:
 
 Caso A: El numero ingresante no se puede comparar con nada porque el arbol esta vacio. Creo un nodo raiz e inserto el numero en la primera clave del nodo.
 
+Caso A: El numero ingresante no se puede comparar con nada porque el arbol esta vacio. Creo un nodo raiz e inserto el numero en la primera clave del nodo.
+
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 NODO ES HOJA:
     CON UNA CLAVE:
