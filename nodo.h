@@ -21,6 +21,7 @@ class Nodo{
         Nodo<Tipo_de_animal>* primer_hijo;
         Nodo<Tipo_de_animal>* segundo_hijo;
         Nodo<Tipo_de_animal>* tercer_hijo;
+        Nodo<Tipo_de_animal>* hijo_auxiliar;
 
     public:
         //Pre Debe recibir minimo un animal y maximo dos para insertarse como claves del nodo. En caso de recibir solo uno, el segundo tendra un valor por defecto de nulo.
@@ -61,6 +62,14 @@ class Nodo{
         Nodo<Tipo_de_animal>* get_nodo_padre();
 
         Nodo<Tipo_de_animal>* set_nodo_padre(Nodo<Tipo_de_animal>* nodo_padre);
+
+        Nodo<Tipo_de_animal>* get_hijo_auxiliar();
+
+        void set_hijo_auxiliar(Nodo<Tipo_de_animal>* hijo);
+
+        bool es_primer_hijo();
+
+        bool es_segundo_hijo();
 };
 
 template<typename Tipo_de_animal>
@@ -74,8 +83,7 @@ Nodo <Tipo_de_animal>::Nodo(Tipo_de_animal primer_dato, Tipo_de_animal segundo_d
     primer_hijo = nullptr;
     segundo_hijo = nullptr;
     tercer_hijo = nullptr;
-
-    std::cout << tope_datos;
+    hijo_auxiliar = nullptr;
 }
 
 template<typename Tipo_de_animal>
@@ -166,6 +174,27 @@ template<typename Tipo_de_animal>
 void Nodo <Tipo_de_animal>::set_tercer_hijo(Nodo <Tipo_de_animal>* tercer_hijo){
     this->tercer_hijo = tercer_hijo;
 }
+
+template<typename Tipo_de_animal>
+Nodo <Tipo_de_animal>* Nodo <Tipo_de_animal>::get_hijo_auxiliar(){
+    return hijo_auxiliar;
+}
+
+template<typename Tipo_de_animal>
+void Nodo <Tipo_de_animal>::set_hijo_auxiliar(Nodo <Tipo_de_animal>* hijo){
+    hijo_auxiliar = hijo;
+}
+
+template<typename Tipo_de_animal>
+bool Nodo <Tipo_de_animal>::es_primer_hijo(){
+    return(datos[PRIMERA_POSICION] < nodo_padre->get_primer_dato());
+}
+
+template<typename Tipo_de_animal>
+bool Nodo <Tipo_de_animal>::es_segundo_hijo(){
+    return (datos[PRIMERA_POSICION] > nodo_padre->get_primer_dato() && datos[PRIMERA_POSICION] < nodo_padre->get_primer_dato());
+}
+
 
 
 #endif
