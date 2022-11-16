@@ -35,6 +35,32 @@ class Nodo{
         bool es_hoja();
 
         int get_tope_datos();
+
+        void set_primer_dato(Tipo_de_animal dato);
+
+        void set_segundo_dato(Tipo_de_animal dato);
+
+        Tipo_de_animal get_primer_dato();
+
+        Tipo_de_animal get_segundo_dato();
+
+        void aumentar_tope_datos();
+
+        Nodo<Tipo_de_animal>* get_primer_hijo();
+
+        Nodo<Tipo_de_animal>* get_segundo_hijo();
+
+        Nodo<Tipo_de_animal>* get_tercer_hijo();
+
+        void set_primer_hijo(Nodo<Tipo_de_animal>* primer_hijo);
+
+        void set_segundo_hijo(Nodo<Tipo_de_animal>* segundo_hijo);
+
+        void set_tercer_hijo(Nodo<Tipo_de_animal>* tercer_hijo);
+
+        Nodo<Tipo_de_animal>* get_nodo_padre();
+
+        Nodo<Tipo_de_animal>* set_nodo_padre(Nodo<Tipo_de_animal>* nodo_padre);
 };
 
 template<typename Tipo_de_animal>
@@ -75,5 +101,71 @@ template<typename Tipo_de_animal>
 int Nodo <Tipo_de_animal>::get_tope_datos(){
     return tope_datos;
 }
+
+template<typename Tipo_de_animal>
+void Nodo <Tipo_de_animal>::set_primer_dato(Tipo_de_animal dato){
+    datos[PRIMERA_POSICION] = dato;
+}
+
+template<typename Tipo_de_animal>
+void Nodo <Tipo_de_animal>::set_segundo_dato(Tipo_de_animal dato){
+    datos[SEGUNDA_POSICION] = dato;
+}
+
+template<typename Tipo_de_animal>
+Tipo_de_animal Nodo <Tipo_de_animal>::get_primer_dato(){
+    return datos[PRIMERA_POSICION];
+}
+
+template<typename Tipo_de_animal>
+Tipo_de_animal Nodo <Tipo_de_animal>::get_segundo_dato(){
+    return datos[SEGUNDA_POSICION];
+}
+
+template<typename Tipo_de_animal>
+void Nodo <Tipo_de_animal>::aumentar_tope_datos(){
+    tope_datos++;
+}
+
+template<typename Tipo_de_animal>
+Nodo <Tipo_de_animal>* Nodo <Tipo_de_animal>::get_primer_hijo(){
+    return primer_hijo;
+}
+
+template<typename Tipo_de_animal>
+Nodo <Tipo_de_animal>* Nodo <Tipo_de_animal>::get_segundo_hijo(){
+    return segundo_hijo;
+}
+
+template<typename Tipo_de_animal>
+Nodo <Tipo_de_animal>* Nodo <Tipo_de_animal>::get_tercer_hijo(){
+    return tercer_hijo;
+}
+
+template<typename Tipo_de_animal>
+Nodo <Tipo_de_animal>* Nodo <Tipo_de_animal>::get_nodo_padre(){
+    return nodo_padre;
+}
+
+template<typename Tipo_de_animal>
+Nodo <Tipo_de_animal>* Nodo <Tipo_de_animal>::set_nodo_padre(Nodo<Tipo_de_animal>* nodo_padre){
+    this->nodo_padre = nodo_padre;
+}
+
+template<typename Tipo_de_animal>
+void Nodo <Tipo_de_animal>::set_primer_hijo(Nodo <Tipo_de_animal>* primer_hijo){
+    this->primer_hijo = primer_hijo;
+}
+
+template<typename Tipo_de_animal>
+void Nodo <Tipo_de_animal>::set_segundo_hijo(Nodo <Tipo_de_animal>* segundo_hijo){
+    this->segundo_hijo = segundo_hijo;
+}
+
+template<typename Tipo_de_animal>
+void Nodo <Tipo_de_animal>::set_tercer_hijo(Nodo <Tipo_de_animal>* tercer_hijo){
+    this->tercer_hijo = tercer_hijo;
+}
+
 
 #endif
