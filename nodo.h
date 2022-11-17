@@ -69,7 +69,7 @@ class Nodo{
 
         bool es_primer_hijo();
 
-        bool es_segundo_hijo();
+        bool es_tercer_hijo();
 };
 
 template<typename Tipo_de_animal>
@@ -191,8 +191,8 @@ bool Nodo <Tipo_de_animal>::es_primer_hijo(){
 }
 
 template<typename Tipo_de_animal>
-bool Nodo <Tipo_de_animal>::es_segundo_hijo(){
-    return (datos[PRIMERA_POSICION]->get_nombre() > nodo_padre->get_primer_dato()->get_nombre() && datos[PRIMERA_POSICION]->get_nombre() < nodo_padre->get_primer_dato()->get_nombre());
+bool Nodo <Tipo_de_animal>::es_tercer_hijo(){
+    return (datos[PRIMERA_POSICION]->get_nombre() > nodo_padre->get_segundo_dato()->get_nombre());
 }
 
 #endif

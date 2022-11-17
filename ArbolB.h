@@ -106,13 +106,13 @@ void ArbolB <Tipo_de_animal>::evaluar_posibilidades_nodo_con_hijos(Tipo_de_anima
         } else {
             //? EL NODO TIENE DOS DATOS
             if(animal_nuevo_es_mas_grande(animal, nodo_a_insertar)){
-                //split_nodo_con_hijos(animal, nodo_a_insertar, animal_a_insertar_proviene_de_split);
+                split_nodo_con_hijos(nodo_a_insertar, nodo_a_insertar->get_primer_dato(), nodo_a_insertar->get_segundo_dato(), animal, animal_a_insertar_proviene_de_split);
                 //Quiere decir que el animal que trato de ingresar es más grande que las dos claves que están en el nodo. SPLIT
             } else if(animal_nuevo_es_intermedio(animal, nodo_a_insertar)) {
-                //split_nodo_con_hijos(animal, nodo_a_insertar, animal_a_insertar_proviene_de_split);
+                split_nodo_con_hijos(nodo_a_insertar, nodo_a_insertar->get_primer_dato(), animal, nodo_a_insertar->get_segundo_dato(), animal_a_insertar_proviene_de_split);
                 //quiere decir que el animal que quiero ingresar es más grande que la primera clave, pero más chico que la segunda SPLIT
             } else {
-                //split_nodo_con_hijos(animal, nodo_a_insertar, animal_a_insertar_proviene_de_split);
+                split_nodo_con_hijos(nodo_a_insertar, animal, nodo_a_insertar->get_primer_dato(), nodo_a_insertar->get_segundo_dato(), animal_a_insertar_proviene_de_split);
                 //Quiere decir que el animal es más chico que las otras dos claves. SPLIT
             }
         }
@@ -186,30 +186,32 @@ dato_mayor, bool &animal_a_insertar_proviene_de_split){
 
             animal_a_insertar_proviene_de_split = true;
             insertar_en_arbol(dato_intermedio, nodo_a_splitear->get_nodo_padre(), animal_a_insertar_proviene_de_split);
+            delete nodo_a_splitear;
         } else {
             //? SI ENTRA POR ACA ES PORQUE EL NODO A SPLITEAR ES HOJA Y PORQUE EL PADRE DEL NODO A SPLITEAR ESTA LLENO. HAY QUE PREPARAR TODO PARA EL SPLIT DEL PADRE.
-            //! ACA FALTA ASOCIAR NODO MENOR Y NODO MAYOR COMO HIJOS DE nodo_a_splitear->get_nodo_padre(). Cual es el problema con esto?
-            //! EL PROBLEMA ESTA EN QUE SI YO QUIERO METER NODO MENOR Y NODO MAYOR COMO HIJOS DE nodo_a_splitear->get_nodo_padre() Y ESTE YA TIENE DOS HIJOS, ME VA A FALTAR UN PUNTERO PARA
-            //! ALMACENAR UN HIJO, TENDRIA 3 PUNTEROS PARA 4 HIJOS
+            Nodo<Tipo_de_animal>* nuevo_nodo_menor = new Nodo<Tipo_de_animal>(dato_menor, nullptr, nodo_a_splitear->get_nodo_padre());
+            Nodo<Tipo_de_animal>* nuevo_nodo_mayor = new Nodo<Tipo_de_animal>(dato_mayor, nullptr, nodo_a_splitear->get_nodo_padre());
 
-            //! ESTO LO PODEMOS SOLUCIONAR PRIMERO INSERTANDO LA CLAVE INTERMEDIA EN EL NODO PADRE Y DESPUES SPLITEANDO EL NODO A SPLITEAR
-            Nodo<Tipo_de_animal>* nodo_menor = new Nodo<Tipo_de_animal>(dato_menor, nullptr, nodo_a_splitear->get_nodo_padre());
-            Nodo<Tipo_de_animal>* nodo_mayor = new Nodo<Tipo_de_animal>(dato_mayor, nullptr, nodo_a_splitear->get_nodo_padre());
 
             if(nodo_a_splitear->es_primer_hijo()){
-
-            } else if(nodo_a_splitear->es_segundo_hijo()){
-
+                nodo_a_splitear->get_nodo_padre()->set_hijo_auxiliar(nodo_a_splitear->get_nodo_padre()->get_tercer_hijo());
+                nodo_a_splitear->get_nodo_padre()->set_tercer_hijo(nodo_a_splitear->get_nodo_padre()->get_segundo_hijo());
+                nodo_a_splitear->get_nodo_padre()->set_primer_hijo(nuevo_nodo_menor);
+                nodo_a_splitear->get_nodo_padre()->set_segundo_hijo(nuevo_nodo_mayor);
+            } else if(nodo_a_splitear->es_tercer_hijo()){
+                nodo_a_splitear->get_nodo_padre()->set_primer_hijo(nodo_a_splitear->get_nodo_padre()->get_primer_hijo());
+                nodo_a_splitear->get_nodo_padre()->set_segundo_hijo(nodo_a_splitear->get_nodo_padre()->get_segundo_hijo());
+                nodo_a_splitear->get_nodo_padre()->set_hijo_auxiliar(nuevo_nodo_mayor);
+                nodo_a_splitear->get_nodo_padre()->set_tercer_hijo(nuevo_nodo_menor);
             } else {
-                //nodo_a_splitear->get_nodo_padre()->set_primer_hijo();
-                //nodo_a_splitear->get_nodo_padre()->set_segundo_hijo();
-                //nodo_a_splitear->get_nodo_padre()->set_tercer_hijo();
-                //nodo_a_splitear->get_nodo_padre()->set_hijo_auxiliar();
+                nodo_a_splitear->get_nodo_padre()->set_primer_hijo(nodo_a_splitear->get_nodo_padre()->get_primer_hijo());
+                nodo_a_splitear->get_nodo_padre()->set_hijo_auxiliar(nodo_a_splitear->get_nodo_padre()->get_tercer_hijo());
+                nodo_a_splitear->get_nodo_padre()->set_segundo_hijo(nuevo_nodo_menor);
+                nodo_a_splitear->get_nodo_padre()->set_tercer_hijo(nuevo_nodo_mayor);
             }
 
-            insertar_en_arbol(dato_intermedio, nodo_a_splitear->get_nodo_padre(), animal_a_insertar_proviene_de_split);
-
             animal_a_insertar_proviene_de_split = true;
+            insertar_en_arbol(dato_intermedio, nodo_a_splitear->get_nodo_padre(), animal_a_insertar_proviene_de_split);
         }
     }
 }
@@ -217,8 +219,42 @@ dato_mayor, bool &animal_a_insertar_proviene_de_split){
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::split_nodo_con_hijos(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio,
 Tipo_de_animal dato_mayor, bool &animal_a_insertar_proviene_de_split){
-    //Cuando yo voy a splitear un nodo con hijos:
-    //1)
+
+
+    if(nodo_es_raiz(nodo_a_splitear)){
+        std::cout << nodo_a_splitear->get_hijo_auxiliar()->get_primer_dato()->get_nombre();
+
+        Nodo<Tipo_de_animal>* nodo_superior = new Nodo<Tipo_de_animal>(dato_intermedio);
+        Nodo<Tipo_de_animal>* nodo_menor = new Nodo<Tipo_de_animal>(dato_menor, nullptr, nodo_superior);
+        Nodo<Tipo_de_animal>* nodo_mayor = new Nodo<Tipo_de_animal>(dato_mayor, nullptr, nodo_superior);
+
+        nodo_menor->set_primer_hijo(nodo_a_splitear->get_primer_hijo());
+        nodo_menor->set_segundo_hijo(nodo_a_splitear->get_segundo_hijo());
+
+        nodo_mayor->set_primer_hijo(nodo_a_splitear->get_tercer_hijo());
+        nodo_mayor->set_segundo_hijo(nodo_a_splitear->get_hijo_auxiliar());
+
+        nodo_superior->set_primer_hijo(nodo_menor);
+        nodo_superior->set_segundo_hijo(nodo_mayor);
+
+        this->raiz = nodo_superior;
+        delete nodo_a_splitear;
+    } else {
+        Nodo<Tipo_de_animal>* nodo_superior = new Nodo<Tipo_de_animal>(dato_intermedio, nullptr, nodo_a_splitear->get_nodo_padre());
+        Nodo<Tipo_de_animal>* nodo_menor = new Nodo<Tipo_de_animal>(dato_menor, nullptr, nodo_superior);
+        Nodo<Tipo_de_animal>* nodo_mayor = new Nodo<Tipo_de_animal>(dato_mayor, nullptr, nodo_superior);
+
+        nodo_menor->set_primer_hijo(nodo_a_splitear->get_primer_hijo());
+        nodo_menor->set_segundo_hijo(nodo_a_splitear->get_segundo_hijo());
+
+        nodo_mayor->set_primer_hijo(nodo_a_splitear->get_tercer_hijo());
+        nodo_mayor->set_segundo_hijo(nodo_a_splitear->get_hijo_auxiliar());
+
+        nodo_superior->set_primer_hijo(nodo_menor);
+        nodo_superior->set_segundo_hijo(nodo_mayor);
+
+        delete nodo_a_splitear;
+    }
 }
 
 template<typename Tipo_de_animal>
