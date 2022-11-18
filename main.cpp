@@ -54,13 +54,13 @@ int main(){
     Animal* gato6 = new Gato("k", 35, "chico", 'G', "sociable");
     Animal* gato7 = new Gato("l", 35, "chico", 'G', "sociable");
     Animal* gato8 = new Gato("m", 35, "chico", 'G', "sociable");
+    Animal* gato9 = new Gato("n", 35, "chico", 'G', "sociable");
+    Animal* gato12 = new Gato("o", 35, "chico", 'G', "sociable");
+    Animal* gato13 = new Gato("p", 35, "chico", 'G', "sociable");
+    Animal* gato14 = new Gato("q", 35, "chico", 'G', "sociable");
+
 
     arbol.insertar(gato);
-
-
-
-
-
     arbol.insertar(gato2);
     arbol.insertar(gato3);
     arbol.insertar(gato1);
@@ -70,25 +70,29 @@ int main(){
     arbol.insertar(gato5);
     arbol.insertar(gato6);
     arbol.insertar(gato7);
-    arbol.insertar(gato8);  //splitea el nodo hoja de la derecha del todo
+    arbol.insertar(gato8);
+    arbol.insertar(gato9);
+    arbol.insertar(gato12);
+    arbol.insertar(gato13);
+    arbol.insertar(gato14);
 
-    std::cout << arbol.get_raiz()->get_tope_datos();
 
-    arbol.get_raiz()->get_primer_hijo()->get_primer_hijo()->get_primer_dato()->presentar_animal(); //a bien
-    arbol.get_raiz()->get_primer_hijo()->get_primer_dato()->presentar_animal(); //b bien
-    arbol.get_raiz()->get_primer_hijo()->get_segundo_hijo()->get_primer_dato()->presentar_animal(); //c bien
+    /*arbol.get_raiz()->get_primer_hijo()->get_primer_hijo()->get_primer_hijo()->get_primer_dato()->presentar_animal();
+    arbol.get_raiz()->get_primer_hijo()->get_primer_hijo()->get_primer_dato()->presentar_animal();
+    arbol.get_raiz()->get_primer_hijo()->get_primer_hijo()->get_segundo_hijo()->get_primer_dato()->presentar_animal();
+    arbol.get_raiz()->get_primer_hijo()->get_primer_dato()->presentar_animal();
+    arbol.get_raiz()->get_primer_hijo()->get_segundo_hijo()->get_primer_hijo()->get_primer_dato()->presentar_animal();
+    arbol.get_raiz()->get_primer_hijo()->get_segundo_hijo()->get_primer_dato()->presentar_animal();
+    arbol.get_raiz()->get_primer_hijo()->get_segundo_hijo()->get_segundo_hijo()->get_primer_dato()->presentar_animal();*/
 
-    arbol.get_raiz()->get_primer_dato()->presentar_animal(); //f bien
+    arbol.get_raiz()->get_segundo_hijo()->get_primer_hijo()->get_primer_hijo()->get_primer_dato()->presentar_animal();
+    arbol.get_raiz()->get_segundo_hijo()->get_primer_hijo()->get_primer_dato()->presentar_animal();
+    arbol.get_raiz()->get_segundo_hijo()->get_primer_hijo()->get_segundo_hijo()->get_primer_dato()->presentar_animal();
+    arbol.get_raiz()->get_segundo_hijo()->get_primer_dato()->presentar_animal();
+    arbol.get_raiz()->get_segundo_hijo()->get_segundo_hijo()->get_primer_hijo()->get_primer_dato()->presentar_animal();
+    arbol.get_raiz()->get_segundo_hijo()->get_segundo_hijo()->get_primer_dato()->presentar_animal();
+    arbol.get_raiz()->get_segundo_hijo()->get_segundo_hijo()->get_segundo_hijo()->get_primer_dato()->presentar_animal();
 
-    arbol.get_raiz()->get_segundo_hijo()->get_primer_hijo()->get_primer_dato()->presentar_animal();     //g bien
-    arbol.get_raiz()->get_segundo_hijo()->get_primer_dato()->presentar_animal();    //funciona mal  h
-    arbol.get_raiz()->get_segundo_hijo()->get_segundo_hijo()->get_primer_dato()->presentar_animal();    //i bien
-
-    arbol.get_raiz()->get_segundo_dato()->presentar_animal();                   //j MAL
-
-    arbol.get_raiz()->get_tercer_hijo()->get_primer_hijo()->get_primer_dato()->presentar_animal();    //k mal
-    arbol.get_raiz()->get_tercer_hijo()->get_primer_dato()->presentar_animal();     //l mal
-    arbol.get_raiz()->get_tercer_hijo()->get_segundo_hijo()->get_primer_dato()->presentar_animal(); //m mal
 
 
 
