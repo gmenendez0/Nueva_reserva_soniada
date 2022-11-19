@@ -29,52 +29,101 @@ class Nodo{
         //Post Crea un nuevo nodo no raiz.
         Nodo(Tipo_de_animal primer_dato, Tipo_de_animal segundo_dato = nullptr, Nodo<Tipo_de_animal>* nodo_padre = nullptr);
 
+        //Pre
+        //Post
         string get_primera_clave();
 
+        //Pre
+        //Post
         string get_segunda_clave();
 
+        //Pre
+        //Post
         bool es_hoja();
 
+        //Pre
+        //Post
+        bool es_raiz();
+
+        //Pre
+        //Post
         int get_tope_datos();
 
+        //Pre
+        //Post
         void set_primer_dato(Tipo_de_animal dato);
 
+        //Pre
+        //Post
         void set_segundo_dato(Tipo_de_animal dato);
 
+        //Pre
+        //Post
         Tipo_de_animal get_primer_dato();
 
+        //Pre
+        //Post
         Tipo_de_animal get_segundo_dato();
 
+        //Pre
+        //Post
         void aumentar_tope_datos();
 
+        //Pre
+        //Post
         Nodo<Tipo_de_animal>* get_primer_hijo();
 
+        //Pre
+        //Post
         Nodo<Tipo_de_animal>* get_segundo_hijo();
 
+        //Pre
+        //Post
         Nodo<Tipo_de_animal>* get_tercer_hijo();
 
+        //Pre
+        //Post
         void set_primer_hijo(Nodo<Tipo_de_animal>* primer_hijo);
 
+        //Pre
+        //Post
         void set_segundo_hijo(Nodo<Tipo_de_animal>* segundo_hijo);
 
+        //Pre
+        //Post
         void set_tercer_hijo(Nodo<Tipo_de_animal>* tercer_hijo);
 
+        //Pre
+        //Post
         Nodo<Tipo_de_animal>* get_nodo_padre();
 
+        //Pre
+        //Post
         void set_nodo_padre(Nodo<Tipo_de_animal>* nodo_padre);
 
+        //Pre
+        //Post
         Nodo<Tipo_de_animal>* get_hijo_auxiliar();
 
+        //Pre
+        //Post
         void set_hijo_auxiliar(Nodo<Tipo_de_animal>* hijo);
 
+        //Pre
+        //Post
         bool es_primer_hijo();
 
+        //Pre
+        //Post
         bool es_tercer_hijo();
 
+        //Pre
+        //Post
         Tipo_de_animal buscar_animal_con_mismo_nombre(string nombre_animal);
 
-        Tipo_de_animal buscar_animal_no_eliminado(string nombre_animal);
 
+        //Pre
+        //Post
         Tipo_de_animal get_dato_buscado(int posicion);
 };
 
@@ -220,16 +269,8 @@ Tipo_de_animal Nodo <Tipo_de_animal>::get_dato_buscado(int posicion){
 }
 
 template<typename Tipo_de_animal>
-Tipo_de_animal Nodo <Tipo_de_animal>::buscar_animal_no_eliminado(string nombre_animal){
-    Tipo_de_animal animal_presente = nullptr;
-
-    for(int i = 0; i < tope_datos; ++i){
-        if(datos[i]->get_nombre() == nombre_animal){
-            animal_presente = datos[i];
-        }
-    }
-
-    return animal_presente;
+bool Nodo <Tipo_de_animal>::es_raiz(){
+    return (nodo_padre == nullptr);
 }
 
 #endif
