@@ -22,6 +22,8 @@ int main(){
     Animal* gato12 = new Gato("o", 35, "chico", 'G', "sociable");
     Animal* gato13 = new Gato("p", 35, "chico", 'G', "sociable");
     Animal* gato14 = new Gato("q", 35, "chico", 'G', "sociable");
+    Animal* gato15 = new Gato("r", 35, "chico", 'G', "sociable");
+
 
 
     arbol.insertar(gato);
@@ -39,9 +41,10 @@ int main(){
     arbol.insertar(gato12);
     arbol.insertar(gato13);
     arbol.insertar(gato14);
+    arbol.insertar(gato15);
 
 
-    arbol.get_raiz()->get_primer_hijo()->get_primer_hijo()->get_primer_hijo()->get_primer_dato()->presentar_animal();
+    /*arbol.get_raiz()->get_primer_hijo()->get_primer_hijo()->get_primer_hijo()->get_primer_dato()->presentar_animal();
     arbol.get_raiz()->get_primer_hijo()->get_primer_hijo()->get_primer_dato()->presentar_animal();
     arbol.get_raiz()->get_primer_hijo()->get_primer_hijo()->get_segundo_hijo()->get_primer_dato()->presentar_animal();
     arbol.get_raiz()->get_primer_hijo()->get_primer_dato()->presentar_animal();
@@ -63,7 +66,9 @@ int main(){
 
     if(arbol.eliminar_animal("f") == 0){
         std::cout << "hola";
-    }
+    }*/
+
+    arbol.presentar_todos();
 
     return 0;
 }
