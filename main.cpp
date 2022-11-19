@@ -5,7 +5,6 @@
 
 int main(){
     ArbolB<Animal*> arbol;
-    std::cout << "Hello, World!" << std::endl;
 
     Animal* gato = new Gato("a", 35, "chico", 'G', "sociable");
     Animal* gato1 = new Gato("b", 35, "chico", 'G', "sociable");

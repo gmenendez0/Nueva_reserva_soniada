@@ -84,14 +84,22 @@ class ArbolB{
         //Post Crea un arbol vacio.
         ArbolB();
 
+        //Pre Tiene que recibir un elemento inicializado para insertarse en el arbol usando su nombre como clave
+        //Post Devolvera 0 en caso de operacion completada exitosamente y 1 en caso de animal repetido
         int insertar(Tipo_de_animal animal);
 
+        //Pre -
+        //Post Devolvera un puntero al animal buscado en caso de encontrarlo, y en caso contrario devuelve nullptr
         Tipo_de_animal buscar_animal(string nombre);
 
         Nodo<Tipo_de_animal>* get_raiz();   //? PARA DEBUGGING
 
+        //Pre -
+        //Post Devolvera 0 en caso de eliminacion exitosa, 1 en caso contrario que no se haya encontrado el animal a eliminar
         int eliminar_animal(string nombre);
 
+        //Pre -
+        //Post Presentara todos los animales dentro del arbol
         void presentar_todos();
 };
 
@@ -460,6 +468,7 @@ Tipo_de_animal ArbolB <Tipo_de_animal>::revisar_arbol(string nombre, Nodo <Tipo_
     if(nodo_a_revisar == nullptr) return nullptr;
 
     Tipo_de_animal animal_buscado = nodo_a_revisar->buscar_animal_no_eliminado(nombre);
+    //! RECORDAR QUE ESTA FUNCION TIENE UN ERROR: DA EL ANIMAL COMO ENCONTRADO A PESAR DE TENER EL ATRIBUTO "ELIMINADO"
 
     if(animal_buscado != nullptr){
         return animal_buscado;
@@ -475,7 +484,6 @@ Tipo_de_animal ArbolB <Tipo_de_animal>::revisar_arbol(string nombre, Nodo <Tipo_
 }
 
 //! ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 template<typename Tipo_de_animal>
 int ArbolB <Tipo_de_animal>::eliminar_animal(string nombre){
@@ -495,7 +503,7 @@ void ArbolB <Tipo_de_animal>::presentar_todos(){
 
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::presentar_todos(Nodo <Tipo_de_animal>* nodo_actual){
-    presentar_datos_nodo(nodo_actual);
+    if(nodo_actual != nullptr) presentar_datos_nodo(nodo_actual);
 
     if(nodo_actual->get_primer_hijo() != nullptr) presentar_todos(nodo_actual->get_primer_hijo());
     if(nodo_actual->get_segundo_hijo() != nullptr) presentar_todos(nodo_actual->get_segundo_hijo());
