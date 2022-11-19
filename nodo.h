@@ -61,7 +61,7 @@ class Nodo{
 
         Nodo<Tipo_de_animal>* get_nodo_padre();
 
-        Nodo<Tipo_de_animal>* set_nodo_padre(Nodo<Tipo_de_animal>* nodo_padre);
+        void set_nodo_padre(Nodo<Tipo_de_animal>* nodo_padre);
 
         Nodo<Tipo_de_animal>* get_hijo_auxiliar();
 
@@ -71,7 +71,11 @@ class Nodo{
 
         bool es_tercer_hijo();
 
-        Tipo_de_animal hay_animal_con_mismo_nombre(Tipo_de_animal animal);
+        Tipo_de_animal buscar_animal_con_mismo_nombre(string nombre_animal);
+
+        Tipo_de_animal buscar_animal_no_eliminado(string nombre_animal);
+
+        Tipo_de_animal get_dato_buscado(int posicion);
 };
 
 template<typename Tipo_de_animal>
@@ -158,7 +162,7 @@ Nodo <Tipo_de_animal>* Nodo <Tipo_de_animal>::get_nodo_padre(){
 }
 
 template<typename Tipo_de_animal>
-Nodo <Tipo_de_animal>* Nodo <Tipo_de_animal>::set_nodo_padre(Nodo<Tipo_de_animal>* nodo_padre){
+void Nodo <Tipo_de_animal>::set_nodo_padre(Nodo<Tipo_de_animal>* nodo_padre){
     this->nodo_padre = nodo_padre;
 }
 
@@ -198,11 +202,30 @@ bool Nodo <Tipo_de_animal>::es_tercer_hijo(){
 }
 
 template<typename Tipo_de_animal>
-Tipo_de_animal Nodo <Tipo_de_animal>::hay_animal_con_mismo_nombre(Tipo_de_animal animal){
+Tipo_de_animal Nodo <Tipo_de_animal>::buscar_animal_con_mismo_nombre(string nombre_animal){
     Tipo_de_animal animal_presente = nullptr;
 
     for(int i = 0; i < tope_datos; ++i){
-        if(datos[i]->get_nombre() == animal->get_nombre()){
+        if(datos[i]->get_nombre() == nombre_animal){
+            animal_presente = datos[i];
+        }
+    }
+
+    return animal_presente;
+}
+
+template<typename Tipo_de_animal>
+Tipo_de_animal Nodo <Tipo_de_animal>::get_dato_buscado(int posicion){
+    return datos[posicion];
+}
+
+template<typename Tipo_de_animal>
+Tipo_de_animal Nodo <Tipo_de_animal>::buscar_animal_no_eliminado(string nombre_animal){
+    Tipo_de_animal animal_presente = nullptr;
+
+    for(int i = 0; i < tope_datos; ++i){
+        if(datos[i]->get_nombre() == nombre_animal){
+            //! ACA HAY QUE DECIR QUE SI EL ANIMAL ENCONTRADO NO TIENE "ELIMINADO" COMO TRUE, QUE HAGA LO SIGUIENTE. CASO CONTRARIO, QUE HAGA OTRA COSA
             animal_presente = datos[i];
         }
     }

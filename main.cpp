@@ -57,5 +57,13 @@ int main(){
     arbol.get_raiz()->get_segundo_hijo()->get_segundo_hijo()->get_primer_dato()->presentar_animal();
     arbol.get_raiz()->get_segundo_hijo()->get_segundo_hijo()->get_segundo_hijo()->get_primer_dato()->presentar_animal();
 
+    if(arbol.buscar_animal("f") != nullptr){
+        std::cout << arbol.buscar_animal("f")->get_nombre();
+    }
+
+    if(arbol.eliminar_animal("f") == 0){
+        std::cout << "hola";
+    }
+
     return 0;
 }

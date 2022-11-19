@@ -3,6 +3,7 @@
 
 const int ANIMAL_REPETIDO = 1;
 const int COMPLETADA = 0;
+const int ANIMAL_NO_ENCONTRADO = 1;
 
 #include <iostream>
 #include "nodo.h"
@@ -20,9 +21,9 @@ class ArbolB{
 
         void evaluar_posibilidades_nodo_con_hijos(Tipo_de_animal animal, Nodo<Tipo_de_animal>* nodo_a_insertar, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
-        bool animal_nuevo_es_mas_grande(Tipo_de_animal animal, Nodo<Tipo_de_animal>* nodo_a_insertar);
+        bool animal_es_mas_grande(string nombre_animal, Nodo<Tipo_de_animal>* nodo_a_insertar);
 
-        bool animal_nuevo_es_intermedio(Tipo_de_animal animal, Nodo<Tipo_de_animal>* nodo_a_insertar);
+        bool animal_es_intermedio(string nombre_animal, Nodo<Tipo_de_animal>* nodo_a_insertar);
 
         void split_hoja(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
         dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion);
@@ -72,6 +73,8 @@ class ArbolB{
 
         void evaluar_repeticion_nombre(Tipo_de_animal animal_coincidente, Tipo_de_animal animal, int* resultado_insercion);
 
+        Tipo_de_animal revisar_arbol(string nombre, Nodo <Tipo_de_animal>* nodo_a_revisar);
+
     public:
         //Pre -
         //Post Crea un arbol vacio.
@@ -79,7 +82,11 @@ class ArbolB{
 
         int insertar(Tipo_de_animal animal);
 
-        Nodo<Tipo_de_animal>* get_raiz();
+        Tipo_de_animal buscar_animal(string nombre);
+
+        Nodo<Tipo_de_animal>* get_raiz();   //? PARA DEBUGGING
+
+        int eliminar_animal(string nombre);
 };
 
 template<typename Tipo_de_animal>
@@ -102,8 +109,8 @@ template<typename Tipo_de_animal>
 int* ArbolB<Tipo_de_animal>::insertar_en_arbol(Tipo_de_animal animal, Nodo<Tipo_de_animal>* nodo_a_insertar, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion){
      if(nodo_a_insertar == nullptr){
         raiz = new Nodo <Tipo_de_animal>(animal);
-    } else if(nodo_a_insertar->hay_animal_con_mismo_nombre(animal) != nullptr){
-         evaluar_repeticion_nombre(nodo_a_insertar->hay_animal_con_mismo_nombre(animal), animal, resultado_insercion);
+    } else if(nodo_a_insertar->buscar_animal_con_mismo_nombre(animal->get_nombre()) != nullptr){
+         evaluar_repeticion_nombre(nodo_a_insertar->buscar_animal_con_mismo_nombre(animal->get_nombre()), animal, resultado_insercion);
     } else if(nodo_a_insertar->es_hoja()){
         evaluar_posibilidades_nodo_hoja(animal, nodo_a_insertar, animal_a_insertar_proviene_de_split, resultado_insercion);
     } else{
@@ -117,7 +124,7 @@ template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::evaluar_repeticion_nombre(Tipo_de_animal animal_coincidente, Tipo_de_animal animal, int* resultado_insercion){
     if(animal_coincidente->esta_eliminado()){
         delete animal_coincidente;
-        animal_coincidente = animal; //? AVERIGUAR PORQUE ESTO NO FUNCIONA CORRECTAMENTE
+        animal_coincidente = animal;        //? AVERIGUAR COMO HACER QUE ESTO ANDE CORRECTAMENTE
     } else {
         (*resultado_insercion) = ANIMAL_REPETIDO;
     }
@@ -129,10 +136,10 @@ resultado_insercion){
     if(nodo_a_insertar->get_tope_datos() == UN_DATO){
         realizar_insercion(nodo_a_insertar, animal);
     } else {
-        if(animal_nuevo_es_mas_grande(animal, nodo_a_insertar)){
+        if(animal_es_mas_grande(animal->get_nombre(), nodo_a_insertar)){
             split_hoja(nodo_a_insertar, nodo_a_insertar->get_primer_dato(), nodo_a_insertar->get_segundo_dato(), animal, animal_a_insertar_proviene_de_split, resultado_insercion);
             //Quiere decir que el animal que trato de ingresar es más grande que las dos claves que están en el nodo. SPLIT
-        } else if(animal_nuevo_es_intermedio(animal, nodo_a_insertar)) {
+        } else if(animal_es_intermedio(animal->get_nombre(), nodo_a_insertar)) {
             split_hoja(nodo_a_insertar, nodo_a_insertar->get_primer_dato(), animal, nodo_a_insertar->get_segundo_dato(), animal_a_insertar_proviene_de_split, resultado_insercion);
             //quiere decir que el animal que quiero ingresar es más grande que la primera clave, pero más chico que la segunda SPLIT
         } else {
@@ -182,10 +189,10 @@ template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::realizar_insercion_proveniente_de_split_dos_datos(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
 int* resultado_insercion){
     //? EL NODO TIENE DOS DATOS
-    if(animal_nuevo_es_mas_grande(animal, nodo_a_insertar)){
+    if(animal_es_mas_grande(animal->get_nombre(), nodo_a_insertar)){
         split_nodo_con_hijos(nodo_a_insertar, nodo_a_insertar->get_primer_dato(), nodo_a_insertar->get_segundo_dato(), animal, animal_a_insertar_proviene_de_split, resultado_insercion);
         //Quiere decir que el animal que trato de ingresar es más grande que las dos claves que están en el nodo. SPLIT
-    } else if(animal_nuevo_es_intermedio(animal, nodo_a_insertar)) {
+    } else if(animal_es_intermedio(animal->get_nombre(), nodo_a_insertar)) {
         split_nodo_con_hijos(nodo_a_insertar, nodo_a_insertar->get_primer_dato(), animal, nodo_a_insertar->get_segundo_dato(), animal_a_insertar_proviene_de_split, resultado_insercion);
         //quiere decir que el animal que quiero ingresar es más grande que la primera clave, pero más chico que la segunda SPLIT
     } else {
@@ -211,10 +218,10 @@ template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::evaluar_insercion_no_proveniente_de_split_dos_datos(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
  int* resultado_insercion){
     //? EL NODO TIENE DOS DATOS
-    if(animal_nuevo_es_mas_grande(animal, nodo_a_insertar)){
+    if(animal_es_mas_grande(animal->get_nombre(), nodo_a_insertar)){
         insertar_en_arbol(animal, nodo_a_insertar->get_tercer_hijo(), animal_a_insertar_proviene_de_split, resultado_insercion);
         //Quiere decir que el animal que trato de ingresar es más grande que las dos claves que están en el nodo. Se avanza al tercer hijo del nodo.
-    } else if(animal_nuevo_es_intermedio(animal, nodo_a_insertar)) {
+    } else if(animal_es_intermedio(animal->get_nombre(), nodo_a_insertar)) {
         insertar_en_arbol(animal, nodo_a_insertar->get_segundo_hijo(), animal_a_insertar_proviene_de_split, resultado_insercion);
         //Quiere decir que el animal que quiero ingresar es más grande que la primera clave, pero más chico que la segunda. Se avanza al segundo hijo del nodo
     } else {
@@ -424,13 +431,48 @@ Nodo <Tipo_de_animal>* ArbolB <Tipo_de_animal>::get_raiz(){
 }
 
 template<typename Tipo_de_animal>
-bool ArbolB <Tipo_de_animal>::animal_nuevo_es_mas_grande(Tipo_de_animal animal, Nodo <Tipo_de_animal>* nodo_a_insertar){
-    return (nodo_a_insertar->get_primera_clave() < animal->get_nombre() && nodo_a_insertar->get_segunda_clave() < animal->get_nombre());
+bool ArbolB <Tipo_de_animal>::animal_es_mas_grande(string nombre_animal, Nodo <Tipo_de_animal>* nodo_a_insertar){
+    return (nodo_a_insertar->get_primera_clave() < nombre_animal && nodo_a_insertar->get_segunda_clave() < nombre_animal);
 }
 
 template<typename Tipo_de_animal>
-bool ArbolB <Tipo_de_animal>::animal_nuevo_es_intermedio(Tipo_de_animal animal, Nodo <Tipo_de_animal>* nodo_a_insertar){
-    return (nodo_a_insertar->get_primera_clave() < animal->get_nombre() && nodo_a_insertar->get_segunda_clave() > animal->get_nombre());
+bool ArbolB <Tipo_de_animal>::animal_es_intermedio(string nombre_animal, Nodo <Tipo_de_animal>* nodo_a_insertar){
+    return (nodo_a_insertar->get_primera_clave() < nombre_animal && nodo_a_insertar->get_segunda_clave() > nombre_animal);
+}
+
+//!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+template<typename Tipo_de_animal>
+Tipo_de_animal ArbolB <Tipo_de_animal>::buscar_animal(string nombre){
+    return revisar_arbol(nombre, raiz);
+}
+
+template<typename Tipo_de_animal>
+Tipo_de_animal ArbolB <Tipo_de_animal>::revisar_arbol(string nombre, Nodo <Tipo_de_animal>* nodo_a_revisar){
+    if(nodo_a_revisar == nullptr) return nullptr;
+
+    Tipo_de_animal animal_buscado = nodo_a_revisar->buscar_animal_no_eliminado(nombre);
+
+    if(animal_buscado != nullptr){
+        return animal_buscado;
+    } else if(nombre < nodo_a_revisar->get_primera_clave()){
+        return revisar_arbol(nombre, nodo_a_revisar->get_primer_hijo());
+    } else if((nombre > nodo_a_revisar->get_primera_clave() && nodo_a_revisar->get_tope_datos() == UN_DATO) || (animal_es_intermedio(nombre, nodo_a_revisar))){
+        return revisar_arbol(nombre, nodo_a_revisar->get_segundo_hijo());
+    } else if(animal_es_mas_grande(nombre, nodo_a_revisar)){
+        return revisar_arbol(nombre, nodo_a_revisar->get_tercer_hijo());
+    }
+
+    return nullptr;
+}
+
+template<typename Tipo_de_animal>
+int ArbolB <Tipo_de_animal>::eliminar_animal(string nombre){
+    Tipo_de_animal animal_a_eliminar = revisar_arbol(nombre, raiz);
+    if(animal_a_eliminar == nullptr) return ANIMAL_NO_ENCONTRADO;
+
+    animal_a_eliminar->eliminar();
+    return COMPLETADA;
 }
 
 #endif //TP3_ARBOLB_H
