@@ -71,7 +71,7 @@ class Nodo{
 
         bool es_tercer_hijo();
 
-        bool hay_animal_con_mismo_nombre(Tipo_de_animal animal);
+        Tipo_de_animal hay_animal_con_mismo_nombre(Tipo_de_animal animal);
 };
 
 template<typename Tipo_de_animal>
@@ -198,16 +198,16 @@ bool Nodo <Tipo_de_animal>::es_tercer_hijo(){
 }
 
 template<typename Tipo_de_animal>
-bool Nodo <Tipo_de_animal>::hay_animal_con_mismo_nombre(Tipo_de_animal animal){
-    bool esta_presente = false;
+Tipo_de_animal Nodo <Tipo_de_animal>::hay_animal_con_mismo_nombre(Tipo_de_animal animal){
+    Tipo_de_animal animal_presente = nullptr;
 
     for(int i = 0; i < tope_datos; ++i){
         if(datos[i]->get_nombre() == animal->get_nombre()){
-            esta_presente = true;
+            animal_presente = datos[i];
         }
     }
 
-    return esta_presente;
+    return animal_presente;
 }
 
 #endif

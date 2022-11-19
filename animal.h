@@ -14,6 +14,7 @@ class Animal{
         int higene_actual;
         int hambre_actual;
         int espacio_minimo_requerido;
+        bool eliminado;
 
     protected:
         //Pre: Debe recibir el nombre, la edad, el tamanio, la especie y la personalidad del animal.
@@ -61,6 +62,10 @@ class Animal{
 
         //Post Devuelve el espacio minimo requerido para que el animal pueda vivir
         int get_espacio_minimo_requerido();
+
+        bool esta_eliminado();
+
+        void eliminar();
 };
 
 #endif

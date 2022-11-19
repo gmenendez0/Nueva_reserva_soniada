@@ -70,6 +70,8 @@ class ArbolB{
         void split_nodo_con_hijos_padre_dos_datos(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal dato_mayor, bool
         &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
+        void evaluar_repeticion_nombre(Tipo_de_animal animal_coincidente, Tipo_de_animal animal, int* resultado_insercion);
+
     public:
         //Pre -
         //Post Crea un arbol vacio.
@@ -100,8 +102,8 @@ template<typename Tipo_de_animal>
 int* ArbolB<Tipo_de_animal>::insertar_en_arbol(Tipo_de_animal animal, Nodo<Tipo_de_animal>* nodo_a_insertar, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion){
      if(nodo_a_insertar == nullptr){
         raiz = new Nodo <Tipo_de_animal>(animal);
-    } else if(nodo_a_insertar->hay_animal_con_mismo_nombre(animal) ){
-         (*resultado_insercion) = ANIMAL_REPETIDO;
+    } else if(nodo_a_insertar->hay_animal_con_mismo_nombre(animal) != nullptr){
+         evaluar_repeticion_nombre(nodo_a_insertar->hay_animal_con_mismo_nombre(animal), animal, resultado_insercion);
     } else if(nodo_a_insertar->es_hoja()){
         evaluar_posibilidades_nodo_hoja(animal, nodo_a_insertar, animal_a_insertar_proviene_de_split, resultado_insercion);
     } else{
@@ -109,6 +111,16 @@ int* ArbolB<Tipo_de_animal>::insertar_en_arbol(Tipo_de_animal animal, Nodo<Tipo_
     }
 
     return resultado_insercion;
+}
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::evaluar_repeticion_nombre(Tipo_de_animal animal_coincidente, Tipo_de_animal animal, int* resultado_insercion){
+    if(animal_coincidente->esta_eliminado()){
+        delete animal_coincidente;
+        animal_coincidente = animal; //? AVERIGUAR PORQUE ESTO NO FUNCIONA CORRECTAMENTE
+    } else {
+        (*resultado_insercion) = ANIMAL_REPETIDO;
+    }
 }
 
 template<typename Tipo_de_animal>

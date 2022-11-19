@@ -30,6 +30,7 @@ Animal::Animal(std::string nombre, int edad, std::string tamanio, char especie, 
     this->personalidad = personalidad;
     this->higene_actual = HIGENE_INICIAL;
     this->hambre_actual = HAMBRE_INICIAL;
+    this->eliminado = false;
 
     set_espacio_minimo_requerido(tamanio);
 }
@@ -122,4 +123,12 @@ void Animal::set_espacio_minimo_requerido(string tamanio){
     } else if( tamanio == "gigante"){
         this->espacio_minimo_requerido = ESPACIO_MINIMO_GIGANTE;
     }
+}
+
+bool Animal::esta_eliminado(){
+    return eliminado;
+}
+
+void Animal::eliminar(){
+    eliminado = true;
 }
