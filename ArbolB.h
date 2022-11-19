@@ -79,6 +79,8 @@ class ArbolB{
 
         void presentar_datos_nodo(Nodo<Tipo_de_animal>* nodo_actual);
 
+        Tipo_de_animal analizar_animal_encontrado(Tipo_de_animal animal_encontrado);
+
     public:
         //Pre -
         //Post Crea un arbol vacio.
@@ -471,7 +473,7 @@ Tipo_de_animal ArbolB <Tipo_de_animal>::revisar_arbol(string nombre, Nodo <Tipo_
     //! RECORDAR QUE ESTA FUNCION TIENE UN ERROR: DA EL ANIMAL COMO ENCONTRADO A PESAR DE TENER EL ATRIBUTO "ELIMINADO"
 
     if(animal_buscado != nullptr){
-        return animal_buscado;
+        return analizar_animal_encontrado(animal_buscado);
     } else if(nombre < nodo_a_revisar->get_primera_clave()){
         return revisar_arbol(nombre, nodo_a_revisar->get_primer_hijo());
     } else if((nombre > nodo_a_revisar->get_primera_clave() && nodo_a_revisar->get_tope_datos() == UN_DATO) || (animal_es_intermedio(nombre, nodo_a_revisar))){
@@ -481,6 +483,13 @@ Tipo_de_animal ArbolB <Tipo_de_animal>::revisar_arbol(string nombre, Nodo <Tipo_
     }
 
     return nullptr;
+}
+
+template<typename Tipo_de_animal>
+Tipo_de_animal ArbolB <Tipo_de_animal>::analizar_animal_encontrado(Tipo_de_animal animal_encontrado){
+    if(animal_encontrado->esta_eliminado()) return nullptr;
+
+    return animal_encontrado;
 }
 
 //! ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

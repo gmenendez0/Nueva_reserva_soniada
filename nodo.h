@@ -225,7 +225,6 @@ Tipo_de_animal Nodo <Tipo_de_animal>::buscar_animal_no_eliminado(string nombre_a
 
     for(int i = 0; i < tope_datos; ++i){
         if(datos[i]->get_nombre() == nombre_animal){
-            //! ACA HAY QUE DECIR QUE SI EL ANIMAL ENCONTRADO NO TIENE "ELIMINADO" COMO TRUE, QUE HAGA LO SIGUIENTE. CASO CONTRARIO, QUE HAGA OTRA COSA
             animal_presente = datos[i];
         }
     }
