@@ -1,4 +1,5 @@
 #include "menu_controllers.h"
+#include "buscar_animal.h"
 
 using std::cout;
 using std::cin;
@@ -73,7 +74,7 @@ void imprimir_mensaje_despedida(){
     cout << "Guardando y saliendo..." << endl;
 }
 
-void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_animales){
+void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_animales, int &combustible_auto){
     switch(opcion_elegida){
         case LISTAR_ANIMALES:
             //pasar_el_tiempo(registro_de_animales);
@@ -87,7 +88,7 @@ void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_ani
 
         case BUSCAR_ANIMAL:
             //pasar_el_tiempo(registro_de_animales);
-            //proceso_de_busqueda(registro_de_animales);
+            proceso_de_busqueda(registro_de_animales);
             break;
 
         case CUIDAR_ANIMALES:
@@ -101,6 +102,7 @@ void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_ani
             break;
 
         case CARGAR_COMBUSTIBLE:
+            //cargar_combustible(combustible_auto);
             break;
 
         case GUARDAR_Y_SALIR:

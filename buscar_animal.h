@@ -6,11 +6,13 @@
 #include "animal.h"
 #include "ArbolB.h"
 
-//Pre: Debe existir una lista de animales
-//post: Busca y devuelve el animal buscado con todas sus caracteristicas en caso de existir minimo un animal. En caso de no haberlo, lo avisa y no hace nada
+//Pre: Debe recibir el arbol.
+//Post: Pide al usuario que ingrese un nombre y comprueba que el animal exista en la lista, si no lo vuelve a pedir hasta que el usuario cancela la operacion.
+Animal* ingresar_nombre(ArbolB<Animal*> &registro_de_animales);
 
-//Animal* ingresar_nombre(ArbolB<Animal*> &registro_de_animales);
 
+//Pre: Debe recibir el arbol.
+//Post: Pone en marcha las debidas funciones para buscar al animal que el usuario ingresa.
 void proceso_de_busqueda(ArbolB<Animal*> &registro_de_animales);
 
 #endif //__BUSCAR_ANIMAL_H__

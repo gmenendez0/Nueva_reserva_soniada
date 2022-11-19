@@ -15,120 +15,121 @@ class ArbolB{
 
     private:
         //Pre
-        //Post
+        //Post Pone en marcha los metodos correspondientes para insertar en animal en el arbol. Devuelve 1 en caso de insercion erronea por animal repetido, 0 en caso de exito
         int* insertar_en_arbol(Tipo_de_animal animal, Nodo<Tipo_de_animal>* nodo_a_insertar, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
         //Pre
-        //Post
+        //Post Evalua las posibilidades de insercion en un nodo hoja y redirige a la adecuada
         void evaluar_posibilidades_nodo_hoja(Tipo_de_animal animal, Nodo<Tipo_de_animal>* nodo_a_insertar, bool &animal_a_insertar_proviene_de_split, int*
         resultado_insercion);
 
         //Pre
-        //Post
+        //Post Evalua las posibilidades de insercion en un nodo no hoja y redirige a la adecuada
         void evaluar_posibilidades_nodo_con_hijos(Tipo_de_animal animal, Nodo<Tipo_de_animal>* nodo_a_insertar, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
-        //Pre
-        //Post
+        //Pre El nodo recibido debe tener dos datos
+        //Post Devuelve true si el animal recibido es más grande que las dos claves del nodo
         bool animal_es_mas_grande(string nombre_animal, Nodo<Tipo_de_animal>* nodo_a_insertar);
 
-        //Pre
-        //Post
+        //Pre El nodo recibido debe tener minimo un dato
+        //Post Devuelve true si el animal recibido es más grande que la primera clave pero más chico que la segunda del nodo recibido
         bool animal_es_intermedio(string nombre_animal, Nodo<Tipo_de_animal>* nodo_a_insertar);
 
-        //Pre
-        //Post
+        //Pre El nodo recibido debe ser hoja.
+        //Post Pone en marcha el proceso para splitear un nodo hoja
         void split_hoja(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
         dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
-        //Pre
-        //Post
+        //Pre El nodo recibido no debe ser hoja
+        //Post Pone en marcha el proceso para splitear un nodo no hoja
         void split_nodo_con_hijos(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
         dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
         //Pre
-        //Post
+        //Post Realiza la insercion de un dato en un nodo
         void realizar_insercion(Nodo<Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal);
 
         //Pre
-        //Post
+        //Post Evalua las posibilidades de insercion en un nodo cuando el animal a insertar proviene de un split
         void evaluar_insercion_proveniente_de_split(Nodo<Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split, int*
         resultado_insercion);
 
         //Pre
-        //Post
+        //Post Evalua las posibilidades de insercion en un nodo cuando el animal a insertar no proviene de split
         void evaluar_insercion_no_proveniente_de_split(Nodo<Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split, int*
         resultado_insercion);
 
-        //Pre
-        //Post
+        //Pre  El animal a insertar debe venir de un previo split y el nodo a insertar debe tener dos datos.
+        //Post Realiza la insercion de un dato en un nodo cuando el animal a insertar proviene de un split y el nodo a insertar tiene dos datos
         void realizar_insercion_proveniente_de_split_dos_datos(Nodo<Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split, int*
         resultado_insercion);
 
-        //Pre
-        //Post
+        //Pre El nodo recibido para insertar debe tener solo un dato
+        //Post Evalua las posibilidades de insercion en un nodo con un solo dato cuando la insercion no proviene de un split
         void evaluar_insercion_no_proveniente_de_split_un_dato(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
         int* resultado_insercion);
 
-        //Pre
-        //Post
+        //Pre El nodo recibido para insertar debe tener dos datos
+        //Post Evalua las posibilidades de insercion en un nodo con un dos datos cuando la insercion no proviene de un split
         void evaluar_insercion_no_proveniente_de_split_dos_datos(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
         int* resultado_insercion);
 
-        //Pre
-        //Post
+        //Pre El nodo a splitear debe ser raiz y hoja.
+        //Post Realiza el split de un nodo raiz hoja
         void realizar_split_nodo_hoja_raiz(Nodo<Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
         dato_mayor);
 
-        //Pre
-        //Post
+        //Pre El nodo a splitear debe ser hoja y tener un dato.
+        //Post Realiza el split de un nodo hoja de un dato
         void realizar_split_nodo_hoja_un_dato(Nodo<Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
         dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
-        //Pre
-        //Post
+        //Pre El nodo a splitear debe tener dos datos y ser hoja
+        //Post Realiza el split de un nodo hoja de dos datos.
         void realizar_split_nodo_hoja_dos_datos(Nodo<Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
         dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
-        //Pre
-        //Post
+        //Pre El nodo padre del nodo a splitear debe tener un dato.
+        //Post Ordena los parentezcos de los nodos segun corresponda cuando el nodo padre del nodo a splitear tiene un dato.
         void ordenar_parentezco_padre_un_dato(Nodo <Tipo_de_animal>* nodo_a_splitear, Nodo <Tipo_de_animal>* nodo_menor, Nodo <Tipo_de_animal>* nodo_mayor);
 
-        //Pre
-        //Post
+        //Pre El nodo padre del nodo a splitear debe tener dos datos.
+        //Post Ordena los parentezcos de los nodos segun corresponda cuando el nodo padre del nodo a splitear tiene dos datos.
         void ordenar_parentezco_padre_dos_datos(Nodo <Tipo_de_animal>* nodo_a_splitear, Nodo <Tipo_de_animal>* nuevo_nodo_menor, Nodo <Tipo_de_animal>* nuevo_nodo_mayor);
 
-        //Pre
-        //Post
+        //Pre El nodo a splitear debe ser raiz y no hoja
+        //Post Pone en marcha el split de un nodo raiz no hoja
         void split_nodo_raiz_con_hijos(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal dato_mayor);
 
-        //Pre
-        //Post
+        //Pre EL nodo a splitear debe ser no hoja y debe tener solo un dato
+        //Post Pone en marcha el split de un nodo no hoja con un solo dato
         void split_nodo_con_hijos_padre_un_dato(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal dato_mayor, bool
         &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
-        //Pre
-        //Post
+        //Pre Debe recibir un nodo no hoja con dos datos
+        //Post Pone en marcha el split de nodo no hoja recibido con dos datos
         void split_nodo_con_hijos_padre_dos_datos(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal dato_mayor, bool
         &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
         //Pre
-        //Post
+        //Post Evalua el camino a tomar en caso de que haya un animal con el mismo nombre en el arbol. Si este animal está eliminado, lo reemplaza por el ingresante, caso contrario,
+        // devuelve error en la insercion.
         void evaluar_repeticion_nombre(Tipo_de_animal animal_coincidente, Tipo_de_animal animal, int* resultado_insercion);
 
         //Pre
-        //Post
+        //Post Devuelve nullptr en caso de que no se haya encontrado un animal con el nombre buscado, caso contrario devuelve el puntero al animal buscado.
         Tipo_de_animal revisar_arbol(string nombre, Nodo <Tipo_de_animal>* nodo_a_revisar);
 
         //Pre
-        //Post
+        //Post Recorre todo el arbol presentando a todos los datos que encuentre.
         void presentar_todos(Nodo<Tipo_de_animal>* nodo_actual);
 
         //Pre
-        //Post
+        //Post Recorre todo el vector de datos de un nodo, presentando los datos que encuentre en el.
         void presentar_datos_nodo(Nodo<Tipo_de_animal>* nodo_actual);
 
         //Pre
-        //Post
+        //Post Devuelve nullptr en caso de que el animal encontrado este eliminado, caso contrario devolvera un puntero a él
         Tipo_de_animal analizar_animal_encontrado(Tipo_de_animal animal_encontrado);
 
     public:
