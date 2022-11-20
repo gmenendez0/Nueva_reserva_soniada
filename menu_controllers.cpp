@@ -1,7 +1,5 @@
 #include "menu_controllers.h"
 #include "buscar_animal.h"
-#include "buscar_animal.h"
-#include "cuidar_animales_controllers.h"
 
 using std::cout;
 using std::cin;
@@ -16,6 +14,8 @@ const int ADOPTAR_ANIMAL = 5;
 const int CARGAR_COMBUSTIBLE = 6;
 const int GUARDAR_Y_SALIR = 7;
 const int UNA_ACCION = 1;
+
+std::string nombre;
 
 //Pre Debe recibir una respuesta
 //Post Devuelve true en caso de que la respuesta sea válida (valores 1 - 7 inclusive), false caso contrario
@@ -76,40 +76,40 @@ void imprimir_mensaje_despedida(){
     cout << "Guardando y saliendo..." << endl;
 }
 
-void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_animales, int &combustible_auto){
+void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_animales){
+	ingresar_nombre(registro_de_animales);
     switch(opcion_elegida){
         case LISTAR_ANIMALES:
-            registro_de_animales.pasar_tiempo(combustible_auto);
+            //pasar_el_tiempo(registro_de_animales);
             registro_de_animales.presentar_todos();
             break;
 
         case RESCATAR_ANIMAL:
-            registro_de_animales.pasar_tiempo(combustible_auto);
+            //pasar_el_tiempo(registro_de_animales);
             //rescatar_animal(registro_de_animales);
             break;
 
         case BUSCAR_ANIMAL:
-            registro_de_animales.pasar_tiempo(combustible_auto);
+            //pasar_el_tiempo(registro_de_animales);
             proceso_de_busqueda(registro_de_animales);
             break;
 
         case CUIDAR_ANIMALES:
-            registro_de_animales.pasar_tiempo(combustible_auto);
-            cuidar_animales(registro_de_animales);
+            //pasar_el_tiempo(registro_de_animales);
+            //cuidar_animales(registro_de_animales);
             break;
 
         case ADOPTAR_ANIMAL:
-            registro_de_animales.pasar_tiempo(combustible_auto);
+            //pasar_el_tiempo(registro_de_animales);
             //adoptar_animal(registro_de_animales);
             break;
 
         case CARGAR_COMBUSTIBLE:
-            //cargar_combustible(combustible_auto);
             break;
 
         case GUARDAR_Y_SALIR:
-            registro_de_animales.pasar_tiempo(combustible_auto);
-            registro_de_animales.guardar_datos_en_archivo();
+            //pasar_el_tiempo(registro_de_animales);
+            //guardar_cambios(registro_de_animales);
             imprimir_mensaje_despedida();
             break;
     }
