@@ -23,7 +23,7 @@ class Perro: public Animal{
 
         //Pre: -
         //Post: Pone en marcha los metodos ensuciarse y aumentar_hambre.
-        void pasar_el_tiempo();
+        void pasar_el_tiempo(int* animales_escapados);
 
         //Pre: -
         //Post: Devuelve true si higene_actual = 0, false en caso contrario.

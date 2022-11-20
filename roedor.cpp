@@ -20,8 +20,12 @@ void Roedor::comer(){
     }
 }
 
-void Roedor::pasar_el_tiempo(){
+void Roedor::pasar_el_tiempo(int* animales_escapados){
     aumentar_hambre();
+    if(hambre_actual == HAMBRIENTO) {
+        (*animales_escapados)++;
+        escapar();
+    }
 }
 
 void Roedor::aumentar_hambre(){

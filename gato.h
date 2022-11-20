@@ -19,7 +19,7 @@ class Gato: public Animal{
 
         //Pre: -
         //Post: Pone en marcha los metodos ensuciarse y aumentar_hambre.
-        void pasar_el_tiempo();
+        void pasar_el_tiempo(int* animales_escapados);
 
         //Pre: -
         //Post: Devuelve true si hambre_actual = 100, false en caso contrario.

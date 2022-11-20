@@ -1,5 +1,7 @@
 #include "menu_controllers.h"
 #include "buscar_animal.h"
+#include "buscar_animal.h"
+#include "cuidar_animales_controllers.h"
 
 using std::cout;
 using std::cin;
@@ -77,27 +79,27 @@ void imprimir_mensaje_despedida(){
 void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_animales, int &combustible_auto){
     switch(opcion_elegida){
         case LISTAR_ANIMALES:
-            //pasar_el_tiempo(registro_de_animales);
+            registro_de_animales.pasar_tiempo(combustible_auto);
             registro_de_animales.presentar_todos();
             break;
 
         case RESCATAR_ANIMAL:
-            //pasar_el_tiempo(registro_de_animales);
+            registro_de_animales.pasar_tiempo(combustible_auto);
             //rescatar_animal(registro_de_animales);
             break;
 
         case BUSCAR_ANIMAL:
-            //pasar_el_tiempo(registro_de_animales);
+            registro_de_animales.pasar_tiempo(combustible_auto);
             proceso_de_busqueda(registro_de_animales);
             break;
 
         case CUIDAR_ANIMALES:
-            //pasar_el_tiempo(registro_de_animales);
-            //cuidar_animales(registro_de_animales);
+            registro_de_animales.pasar_tiempo(combustible_auto);
+            cuidar_animales(registro_de_animales);
             break;
 
         case ADOPTAR_ANIMAL:
-            //pasar_el_tiempo(registro_de_animales);
+            registro_de_animales.pasar_tiempo(combustible_auto);
             //adoptar_animal(registro_de_animales);
             break;
 
@@ -106,7 +108,7 @@ void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_ani
             break;
 
         case GUARDAR_Y_SALIR:
-            //pasar_el_tiempo(registro_de_animales);
+            registro_de_animales.pasar_tiempo(combustible_auto);
             //guardar_cambios(registro_de_animales);
             imprimir_mensaje_despedida();
             break;

@@ -4,6 +4,10 @@
 const int ANIMAL_REPETIDO = 1;
 const int COMPLETADA = 0;
 const int ANIMAL_NO_ENCONTRADO = 1;
+const int AUMENTO_DE_NAFTA_CAMIONETA = 5;
+const int MAXIMO_NAFTA_CAMIONETA = 100;
+const int LIMITE_ANIMALES_ESCAPADOS = 3;
+const int EXITO = 0;
 
 #include <iostream>
 #include "nodo.h"
@@ -132,6 +136,30 @@ class ArbolB{
         //Post Devuelve nullptr en caso de que el animal encontrado este eliminado, caso contrario devolvera un puntero a él
         Tipo_de_animal analizar_animal_encontrado(Tipo_de_animal animal_encontrado);
 
+        //Pre
+        //Post Pasa el tiempo en todos los animales aumentando su hambre e higene. Además, actualiza  la cantidad de animales que se hayan escapado de la reserva.
+        void pasar_tiempo(Nodo <Tipo_de_animal>* nodo_actual, int* animales_escapados);
+
+        //Pre
+        //Post Pasa el tiempo en todos los animales de un nodo aumentando su hambre e higene.
+        void pasar_tiempo_nodo(Nodo <Tipo_de_animal>* nodo_actual, int* animales_escapados);
+
+        //Pre
+        //Post Presenta todos los animales que esten en el arbol sin haber sido eliminados ni haber escapado
+        void presentar_cuidables(Nodo <Tipo_de_animal>* nodo_actual);
+
+        //Pre
+        //Post Presenta todos los animales que esten en el nodo sin haber sido eliminados ni haber escapado
+        void presentar_cuidables_nodo(Nodo <Tipo_de_animal>* nodo_actual);
+
+        //Pre
+        //Post Devuelve true en caso de que el animal no este ni eliminado ni haya escapado, false en caso contrario.
+        bool animal_esta_presente(Tipo_de_animal animal);
+
+        //Pre
+        //Post Avisa al usuario que se escaparon demasiados animales, por lo que la reserva cerrara, finalizando el programa.
+        void desarmar_reserva(int* animales_escapados);
+
     public:
         //Pre -
         //Post Crea un arbol vacio.
@@ -154,6 +182,18 @@ class ArbolB{
         //Pre -
         //Post Presentara todos los animales dentro del arbol
         void presentar_todos();
+
+        //Pre -
+        //Post Presentara todos los animales dentro del arbol que puedan ser cuidados (que no esten eliminados ni escapados)
+        void presentar_cuidables();
+
+        //Post Devuelve true en caso de que el arbol este vacio, caso contrario devuelve false
+        bool esta_vacio();
+
+        //Pre -
+        //Post: Hace los debidos cambios al pasar el tiempo (cuando el usuario realiza una accion en el menu principal). Aumenta el hambre, decrece la higene (si corresponde) y aumenta la
+        // nafta. En caso de que los animales escapados sean 3 o más, termina el programa.
+        void pasar_tiempo(int &combustible_auto);
 };
 
 template<typename Tipo_de_animal>
@@ -533,7 +573,7 @@ Tipo_de_animal ArbolB <Tipo_de_animal>::revisar_arbol(string nombre, Nodo <Tipo_
 
 template<typename Tipo_de_animal>
 Tipo_de_animal ArbolB <Tipo_de_animal>::analizar_animal_encontrado(Tipo_de_animal animal_encontrado){
-    if(animal_encontrado->esta_eliminado()) return nullptr;
+    if(animal_encontrado->esta_eliminado() || animal_encontrado->se_escapo()) return nullptr;
 
     return animal_encontrado;
 }
@@ -570,6 +610,79 @@ void ArbolB <Tipo_de_animal>::presentar_datos_nodo(Nodo <Tipo_de_animal>* nodo_a
     for(int i = 0; i < nodo_actual->get_tope_datos(); ++i){
         nodo_actual->get_dato_buscado(i)->presentar_animal();
     }
+}
+
+//! ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+template<typename Tipo_de_animal>
+bool ArbolB <Tipo_de_animal>::esta_vacio(){
+    return (raiz == nullptr);
+}
+
+//! ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::pasar_tiempo(int &combustible_auto){
+    int* animales_escapados = new int;
+    (*animales_escapados) = 0;
+
+    this->pasar_tiempo(raiz, animales_escapados);
+    if((*animales_escapados) >= LIMITE_ANIMALES_ESCAPADOS) desarmar_reserva(animales_escapados);
+
+    combustible_auto = combustible_auto + AUMENTO_DE_NAFTA_CAMIONETA;
+    if(combustible_auto > MAXIMO_NAFTA_CAMIONETA) combustible_auto = MAXIMO_NAFTA_CAMIONETA;
+}
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::pasar_tiempo_nodo(Nodo <Tipo_de_animal>* nodo_actual, int* animales_escapados){
+    for(int i = 0; i < nodo_actual->get_tope_datos(); ++i){
+        if(nodo_actual->get_dato_buscado(i)->se_escapo()) (*animales_escapados)++;
+        if(animal_esta_presente(nodo_actual->get_dato_buscado(i))) nodo_actual->get_dato_buscado(i)->pasar_el_tiempo(animales_escapados);
+    }
+}
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::pasar_tiempo(Nodo <Tipo_de_animal>* nodo_actual, int* animales_escapados){
+    if(nodo_actual != nullptr) pasar_tiempo_nodo(nodo_actual, animales_escapados);
+
+    if(nodo_actual->get_primer_hijo() != nullptr) pasar_tiempo(nodo_actual->get_primer_hijo(), animales_escapados);
+    if(nodo_actual->get_segundo_hijo() != nullptr) pasar_tiempo(nodo_actual->get_segundo_hijo(), animales_escapados);
+    if(nodo_actual->get_tercer_hijo() != nullptr) pasar_tiempo(nodo_actual->get_tercer_hijo(), animales_escapados);
+}
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::desarmar_reserva(int* animales_escapados){
+    std::cout << "Se han escapado demasiados animales de la reserva. Debido a esto, se ha decidido desarmar la reserva y suspender su funcionamiento." << std::endl;
+    delete animales_escapados;
+    exit(EXITO);
+}
+
+//! ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::presentar_cuidables(){
+    presentar_cuidables(raiz);
+}
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::presentar_cuidables(Nodo <Tipo_de_animal>* nodo_actual){
+    if(nodo_actual != nullptr) presentar_cuidables_nodo(nodo_actual);
+
+    if(nodo_actual->get_primer_hijo() != nullptr) presentar_cuidables(nodo_actual->get_primer_hijo());
+    if(nodo_actual->get_segundo_hijo() != nullptr) presentar_cuidables(nodo_actual->get_segundo_hijo());
+    if(nodo_actual->get_tercer_hijo() != nullptr) presentar_cuidables(nodo_actual->get_tercer_hijo());
+}
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::presentar_cuidables_nodo(Nodo <Tipo_de_animal>* nodo_actual){
+    for(int i = 0; i < nodo_actual->get_tope_datos(); ++i){
+        if(animal_esta_presente(nodo_actual->get_dato_buscado(i))) nodo_actual->get_dato_buscado(i)->presentar_animal();
+    }
+}
+
+template<typename Tipo_de_animal>
+bool ArbolB <Tipo_de_animal>::animal_esta_presente(Tipo_de_animal animal){
+    return (!animal->esta_eliminado() && !animal->se_escapo());
 }
 
 #endif //TP3_ARBOLB_H

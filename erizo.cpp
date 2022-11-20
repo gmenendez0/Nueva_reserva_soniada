@@ -34,9 +34,13 @@ void Erizo::comer(){
     }
 }
 
-void Erizo::pasar_el_tiempo(){
+void Erizo::pasar_el_tiempo(int* animales_escapados){
     ensuciarse();
     aumentar_hambre();
+    if(hambre_actual == HAMBRIENTO || higene_actual == SUCIO) {
+        (*animales_escapados)++;
+        escapar();
+    }
 }
 
 void Erizo::ensuciarse(){

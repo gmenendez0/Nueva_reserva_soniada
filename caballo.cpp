@@ -34,9 +34,13 @@ void Caballo::comer(){
     }
 }
 
-void Caballo::pasar_el_tiempo(){
+void Caballo::pasar_el_tiempo(int* animales_escapados){
     ensuciarse();
     aumentar_hambre();
+    if(hambre_actual == HAMBRIENTO || higene_actual == SUCIO){
+        escapar();
+        (*animales_escapados)++;
+    }
 }
 
 void Caballo::ensuciarse(){

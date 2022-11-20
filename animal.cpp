@@ -44,6 +44,8 @@ void Animal::presentar_animal(){
     cout << "Personalidad: " << this->personalidad << endl;
     cout << "Higiene: " << this->higene_actual << endl;
     cout << "Hambre: " << this->hambre_actual << endl;
+    cout << "Adoptado: " << get_mensaje_adopcion() << endl;
+    cout << "Escapo: " << get_mensaje_escape() << endl;
     cout << endl;
 }
 
@@ -131,4 +133,25 @@ bool Animal::esta_eliminado(){
 
 void Animal::eliminar(){
     eliminado = true;
+}
+
+bool Animal::se_escapo(){
+    return escapo;
+}
+
+void Animal::escapar(){
+    std::cout << "El animal " << nombre << " se ha escapado! Recorda que los animales requieren cuidado para vivir en la reserva." << std::endl;
+    escapo = true;
+}
+
+string Animal::get_mensaje_adopcion(){
+    if(eliminado) return "Si";
+
+    return "No";
+}
+
+string Animal::get_mensaje_escape(){
+    if(escapo) return "Si";
+
+    return "No";
 }

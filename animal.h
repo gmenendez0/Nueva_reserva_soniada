@@ -15,11 +15,14 @@ class Animal{
         int hambre_actual;
         int espacio_minimo_requerido;
         bool eliminado;
+        bool escapo;
 
     protected:
         //Pre: Debe recibir el nombre, la edad, el tamanio, la especie y la personalidad del animal.
         //Post: Inicializa el animal con los valores recibidos.
         Animal(string nombre, int edad, string tamanio, char especie, string personalidad);
+
+        void escapar();
 
     private:
         //Pre: -
@@ -30,12 +33,16 @@ class Animal{
         //Post: Setea el espacio minimo requerido para que el animal pueda vivir
         void set_espacio_minimo_requerido(string tamanio);
 
+        string get_mensaje_adopcion();
+
+        string get_mensaje_escape();
+
     public:
         //Pre: -
         //Post: Imprime en pantalla una presentacion de todos los atributos del animal.
         void presentar_animal();
 
-        virtual void pasar_el_tiempo() = 0;
+        virtual void pasar_el_tiempo(int* animales_escapados) = 0;
 
         virtual void comer() = 0;
 
@@ -66,6 +73,8 @@ class Animal{
         bool esta_eliminado();
 
         void eliminar();
+
+        bool se_escapo();
 };
 
 #endif

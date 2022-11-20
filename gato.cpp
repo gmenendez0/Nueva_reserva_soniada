@@ -20,8 +20,12 @@ void Gato::comer(){
     }
 }
 
-void Gato::pasar_el_tiempo(){
+void Gato::pasar_el_tiempo(int* animales_escapados){
     aumentar_hambre();
+    if(hambre_actual == HAMBRIENTO) {
+        (*animales_escapados)++;
+        escapar();
+    }
 }
 
 void Gato::aumentar_hambre(){
