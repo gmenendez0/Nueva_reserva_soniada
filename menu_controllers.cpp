@@ -1,6 +1,7 @@
 #include "menu_controllers.h"
 #include "buscar_animal.h"
 #include "cuidar_animales_controllers.h"
+#include "cargar_combustible_controllers.h"
 
 using std::cout;
 using std::cin;
@@ -103,7 +104,7 @@ void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_ani
             break;
 
         case CARGAR_COMBUSTIBLE:
-            //cargar_combustible(combustible_auto);
+            cargar_combustible(combustible_auto);
             break;
 
         case GUARDAR_Y_SALIR:
