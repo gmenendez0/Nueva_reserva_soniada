@@ -1,5 +1,4 @@
 #include "archivo_controllers.h"
-#include <fstream>
 #include <iostream>
 #include "animal.h"
 #include "gato.h"
@@ -11,15 +10,11 @@
 #include "erizo.h"
 #include "ArbolB.h"
 
-const int ERROR = -1;
-const int EXITO = 0;
 const int PRIMERA_POSICION_VECTOR = 0;
 
 using std::cout;
 using std::string;
 using std::endl;
-
-const string NOMBRE_CSV = "animales.csv";
 
 //Pre: Debe recibir todas las caracteristicas de un animal y la lista de animales
 //Post: Da de alta un animal en el arbol con los datos recibidos.

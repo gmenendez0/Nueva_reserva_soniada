@@ -109,7 +109,7 @@ void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_ani
 
         case GUARDAR_Y_SALIR:
             registro_de_animales.pasar_tiempo(combustible_auto);
-            //guardar_cambios(registro_de_animales);
+            registro_de_animales.guardar_datos_en_archivo();
             imprimir_mensaje_despedida();
             break;
     }

@@ -3,7 +3,6 @@
 #include "animal.h"
 #include "menu_controllers.h"
 
-const int ERROR = -1;
 const int UNA_ACCION = 1;
 const int GUARDAR_Y_SALIR = 7;
 const int COMBUSTIBLE_LLENO = 100;

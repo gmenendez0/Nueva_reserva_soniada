@@ -1,6 +1,11 @@
 #ifndef TP3_ARBOLB_H
 #define TP3_ARBOLB_H
 
+#include <iostream>
+#include <fstream>
+#include "nodo.h"
+#include "string"
+
 const int ANIMAL_REPETIDO = 1;
 const int COMPLETADA = 0;
 const int ANIMAL_NO_ENCONTRADO = 1;
@@ -8,9 +13,8 @@ const int AUMENTO_DE_NAFTA_CAMIONETA = 5;
 const int MAXIMO_NAFTA_CAMIONETA = 100;
 const int LIMITE_ANIMALES_ESCAPADOS = 3;
 const int EXITO = 0;
-
-#include <iostream>
-#include "nodo.h"
+const int ERROR = -1;
+const std::string NOMBRE_CSV = "animales.csv";
 
 template<typename Tipo_de_animal>
 class ArbolB{
@@ -160,6 +164,20 @@ class ArbolB{
         //Post Avisa al usuario que se escaparon demasiados animales, por lo que la reserva cerrara, finalizando el programa.
         void desarmar_reserva(int* animales_escapados);
 
+        //Pre
+        //Post Guarda todos los animales (no eliminados ni escapados) que esten en el arbol en un archivo de texto.
+        void guardar_datos_en_archivo(Nodo <Tipo_de_animal>* nodo_actual, std::ofstream &archivo_animales);
+
+        //Post Chequea la correcta apertura del archivo. En caso de error, termina el programa dando aviso del error al usuario
+        void chequear_archivo_escritura(std::ofstream &archivo);
+
+        //Post Guarda los datos del nodo (no eliminados ni escapados) en el archivo de texto.
+        void realizar_guardado(Nodo <Tipo_de_animal>* nodo_actual, std::ofstream &archivo_animales);
+
+        //Pre
+        //Post: Devuelve un string con todos los datos del animal (nombre, edad, especie, personalidad y tamaño).
+        string recibir_datos_animal(Tipo_de_animal animal);
+
     public:
         //Pre -
         //Post Crea un arbol vacio.
@@ -194,6 +212,9 @@ class ArbolB{
         //Post: Hace los debidos cambios al pasar el tiempo (cuando el usuario realiza una accion en el menu principal). Aumenta el hambre, decrece la higene (si corresponde) y aumenta la
         // nafta. En caso de que los animales escapados sean 3 o más, termina el programa.
         void pasar_tiempo(int &combustible_auto);
+
+        //Post Guarda todos los datos del arbol en el archivo, salvo los animales que se hayan escapado o hayan sido adoptados.
+        void guardar_datos_en_archivo();
 };
 
 template<typename Tipo_de_animal>
@@ -683,6 +704,57 @@ void ArbolB <Tipo_de_animal>::presentar_cuidables_nodo(Nodo <Tipo_de_animal>* no
 template<typename Tipo_de_animal>
 bool ArbolB <Tipo_de_animal>::animal_esta_presente(Tipo_de_animal animal){
     return (!animal->esta_eliminado() && !animal->se_escapo());
+}
+
+//! ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::guardar_datos_en_archivo(){
+    std::ofstream archivo_animales(NOMBRE_CSV);
+    chequear_archivo_escritura(archivo_animales);
+    guardar_datos_en_archivo(raiz, archivo_animales);
+    archivo_animales.close();
+}
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::chequear_archivo_escritura(std::ofstream &archivo_animales){
+    if(!archivo_animales.is_open()){
+        std::cout<<"Error al abrir el archivo. Compruebe que exista y que no este corrompido y vuelva a intentar."<< std::endl;
+        exit(ERROR);
+    }
+}
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::guardar_datos_en_archivo(Nodo <Tipo_de_animal>* nodo_actual, std::ofstream &archivo_animales){
+    if(nodo_actual != nullptr) realizar_guardado(nodo_actual, archivo_animales);
+
+    if(nodo_actual->get_primer_hijo() != nullptr) guardar_datos_en_archivo(nodo_actual->get_primer_hijo(), archivo_animales);
+    if(nodo_actual->get_segundo_hijo() != nullptr) guardar_datos_en_archivo(nodo_actual->get_segundo_hijo(), archivo_animales);
+    if(nodo_actual->get_tercer_hijo() != nullptr) guardar_datos_en_archivo(nodo_actual->get_tercer_hijo(), archivo_animales);
+}
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::realizar_guardado(Nodo <Tipo_de_animal>* nodo_actual, std::ofstream &archivo_animales){
+    for(int i = 0; i < nodo_actual->get_tope_datos(); ++i){
+        if(animal_esta_presente(nodo_actual->get_dato_buscado(i))) {
+            archivo_animales << recibir_datos_animal(nodo_actual->get_dato_buscado(i));
+        }
+    }
+}
+
+template<typename Tipo_de_animal>
+string ArbolB <Tipo_de_animal>::recibir_datos_animal(Tipo_de_animal animal){
+    string datos_animal, nombre, edad, tamanio, especie, personalidad;
+
+    nombre = animal->get_nombre();
+    edad = std::to_string(animal->get_edad());
+    tamanio = animal->get_tamanio();
+    especie = animal->get_especie();
+    personalidad = animal->get_personalidad();
+
+    datos_animal = nombre + "," + edad + "," + tamanio + "," + especie + "," + personalidad + "\n";
+
+    return datos_animal;
 }
 
 #endif //TP3_ARBOLB_H
