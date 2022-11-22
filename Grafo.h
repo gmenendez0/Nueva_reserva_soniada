@@ -48,7 +48,7 @@ public:
 
     //pre: No hay vertices repetidos en nombre
     //post: agrega un nuevo vertice al grafo
-    void agregar_vertice(int id_vertice_nuevo, Animal* animal);
+    void agregar_vertice(int id_vertice_nuevo, Animal* animal, char color);
 
     //pre: se debe tener un algortimo para calcular el camino mínimo previamente elegido
     //post: muestra por terminal el camino mínimo desde un origen a un destino
@@ -66,6 +66,9 @@ public:
 
     //post: selecciona el algortimo de Dijkstra para calcular el camino mínimo
     void usar_dijkstra();
+
+    //Post: Devuelve el color de un vertice
+    char devolver_color_vertice(int id);
 
     ~Grafo();
 };

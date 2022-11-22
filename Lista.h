@@ -7,6 +7,7 @@ using namespace std;
 
 const int POSICION_NO_ENCONTRADA = -1;
 const int ID_NO_ENCONTRADO = -1;
+const int UNA_POSICION = 1;
 
 template <typename Tipo>
 class Lista{
@@ -29,8 +30,11 @@ public:
     //post: devuelve el id que se encuentra en la posicion recibida o ID_NO_ENCONTRADO si no lo encuentra
     int obtener_id(int posicion);
 
+    //post: devuelve el color que se encuentra en la posicion recibida o ID_NO_ENCONTRADO si no lo encuentra
+    char obtener_color(int posicion);
+
     //post: agrega un nuevo elemento a la lista
-    void agregar(int id_vertice_nuevo, Animal* animal);
+    void agregar(int id_vertice_nuevo, Animal* animal, char color);
 
     ~Lista();
 };
@@ -62,12 +66,12 @@ int Lista<Tipo>::obtener_posicion(int id) {
 
     if(!elemento_encontrado) return POSICION_NO_ENCONTRADA;
 
-    return i - 1;
+    return i - UNA_POSICION;
 }
 
 template < typename Tipo >
-void Lista<Tipo>::agregar(int id_vertice_nuevo, Animal* animal) {
-    Nodo_grafo<Tipo>* nuevoNodo = new Nodo_grafo<Tipo>(id_vertice_nuevo, animal);
+void Lista<Tipo>::agregar(int id_vertice_nuevo, Animal* animal, char color) {
+    Nodo_grafo<Tipo>* nuevoNodo = new Nodo_grafo<Tipo>(id_vertice_nuevo, animal, color);
 
     if(primero == nullptr){
         primero = nuevoNodo;
@@ -103,6 +107,20 @@ int Lista<Tipo>::obtener_id(int posicion) {
     }
 
     return auxiliar->get_id();
+}
+
+template<typename Tipo>
+char Lista<Tipo>::obtener_color(int posicion) {
+    int i = 0;
+    Nodo_grafo<Tipo>* auxiliar = primero;
+
+    if(posicion > cantidad_de_elementos) return ID_NO_ENCONTRADO;
+
+    while(i != posicion){
+        auxiliar = auxiliar->obtener_siguiente();
+        i++;
+    }
+    return auxiliar->get_color();
 }
 
 #endif //GRAFOS_LISTA_H

@@ -176,10 +176,13 @@ class ArbolB{
         void setear_hijos_padre_dos_datos(Nodo <Tipo_de_animal>* nodo_padre, Nodo<Tipo_de_animal>* primer_hijo, Nodo<Tipo_de_animal>* segundo_hijo, Nodo<Tipo_de_animal>* tercer_hijo,
           Nodo<Tipo_de_animal>* hijo_auxiliar);
 
+        //Setea los parentescos correspondientes al splitear un nodo
         void setear_parentescos_nodo_spliteado(Nodo <Tipo_de_animal>* primer_nuevo_nodo, Nodo<Tipo_de_animal>* segundo_nuevo_nodo, Nodo<Tipo_de_animal>* nodo_a_splitear);
 
+        //Post elimina todos los nodos y datos del arbol, liberando la memoria alocada
         void eliminar_todos(Nodo <Tipo_de_animal>* nodo_actual);
 
+        //Post elimina todos los datos de un nodo, liberando la memoria alocada
         void borrar_datos(Nodo <Tipo_de_animal>* nodo_actual);
 
     public:
@@ -218,6 +221,7 @@ class ArbolB{
         //Post Guarda todos los datos del arbol en el archivo, salvo los animales que se hayan escapado o hayan sido adoptados.
         void guardar_datos_en_archivo();
 
+        //Post elimina todos los nodos y datos del arbol, liberando la memoria alocada
         void eliminar_todos();
 };
 

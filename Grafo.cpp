@@ -8,9 +8,9 @@ Grafo::Grafo() {
     algortimo_camino_minimo = nullptr;
 }
 
-void Grafo::agregar_vertice(int id_vertice_nuevo, Animal* animal) {
+void Grafo::agregar_vertice(int id_vertice_nuevo, Animal* animal, char color) {
     agrandar_matriz_de_adyacencia();
-    vertices->agregar(id_vertice_nuevo, animal);
+    vertices->agregar(id_vertice_nuevo, animal, color);
 }
 
 void Grafo::mostrar_grafo() {
@@ -137,4 +137,10 @@ void Grafo::mostrar_camino_minimo(int origen, int destino) {
 void Grafo::usar_dijkstra() {
     delete algortimo_camino_minimo;
     algortimo_camino_minimo = new Dijkstra(vertices, matriz_de_adyacencia);
+}
+
+char Grafo::devolver_color_vertice(int id){
+    int posicion = vertices->obtener_posicion(id);
+
+    return vertices->obtener_color(posicion);
 }

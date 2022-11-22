@@ -1,6 +1,5 @@
 #include "Dijkstra.h"
 
-const int UNA_POSICION = 1;
 const int UN_VERTICE = 1;
 
 Dijkstra::Dijkstra(Lista<Vertice>* vertices, int** matriz_adyacencia) : camino_minimo(vertices, matriz_adyacencia) {

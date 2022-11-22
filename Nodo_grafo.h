@@ -2,6 +2,7 @@
 #define GRAFOS_NODO_H
 #include <string>
 #include "animal.h"
+#include "iostream"
 
 using namespace std;
 
@@ -14,7 +15,7 @@ private:
 
 /*MÉTODOS*/
 public:
-    Nodo_grafo(int id_vertice_nuevo, Animal* animal);
+    Nodo_grafo(int id_vertice_nuevo, Animal* animal, char color);
 
     //post: devuelve el nodo siguiente.
     Nodo_grafo<Tipo>* obtener_siguiente();
@@ -25,12 +26,15 @@ public:
     //post: le asigna como siguiente el nodo recibido
     void asignar_siguiente(Nodo_grafo<Tipo>* siguiente);
 
+    //post devuelve el color del vertice del nodo
+    char get_color();
+
     ~Nodo_grafo();
 };
 
 template<typename Tipo>
-Nodo_grafo<Tipo>::Nodo_grafo(int id_vertice_nuevo, Animal* animal) {
-    elemento = new Tipo(id_vertice_nuevo, animal);
+Nodo_grafo<Tipo>::Nodo_grafo(int id_vertice_nuevo, Animal* animal, char color) {
+    elemento = new Tipo(id_vertice_nuevo, animal, color);
     siguiente = nullptr;
 }
 
@@ -52,6 +56,11 @@ void Nodo_grafo<Tipo>::asignar_siguiente(Nodo_grafo<Tipo>* siguiente) {
 template<typename Tipo>
 Nodo_grafo<Tipo>::~Nodo_grafo() {
     delete elemento;
+}
+
+template<typename Tipo>
+char Nodo_grafo <Tipo>::get_color(){
+    return elemento->get_color();
 }
 
 
