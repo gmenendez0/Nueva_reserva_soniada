@@ -32,8 +32,9 @@ const int PESO_A_VERTICE_NEGRO = 40;
 const int PESO_A_VERTICE_GRIS = 1;
 const int PESO_A_VERTICE_MARRON_OSCURO = 5;
 const int PESO_A_VERTICE_MARRON_CLARO = 2;
-const int TRES_POSICIONES = 3;
+const int DOS_POSICIONES = 2;
 const int PRIMERA_POSICION_EN_DIAGONAL_AL_PRIMER_VERTICE = 10;
+const int TRES_POSICIONES = 3;
 
 void inicializar_aristas_vertices_inferiores(Grafo &grafo);
 
@@ -108,7 +109,7 @@ void inicializar_aristas_vertices_derechos(Grafo &grafo_mapa){
     int peso_camino_inferior;
     int peso_camino_izquierdo;
 
-    for(int i = ID_VERTICE_INFERIOR_AL_PRIMER_VERTICE; i <= ID_VERTICE_SUPERIOR_AL_PRIMER_VERTICE_ULTIMA_FILA; i = i+ANCHO_DEL_MAPA){
+    for(int i = ID_VERTICE_INFERIOR_ULTIMO_VERTICE_PRIMER_FILA; i <= ID_VERTICE_SUPERIOR_AL_ULTIMO_VERTICE; i = i+ANCHO_DEL_MAPA){
         peso_camino_superior = determinar_peso(grafo_mapa, i - ANCHO_DEL_MAPA);
         peso_camino_inferior = determinar_peso(grafo_mapa, i + ANCHO_DEL_MAPA);
         peso_camino_izquierdo = determinar_peso(grafo_mapa, i - UNA_POSICION);
@@ -124,7 +125,7 @@ void inicializar_aristas_vertices_izquierdos(Grafo &grafo_mapa){
     int peso_camino_inferior;
     int peso_camino_derecho;
 
-    for(int i = ID_VERTICE_INFERIOR_ULTIMO_VERTICE_PRIMER_FILA; i <= ID_VERTICE_SUPERIOR_AL_ULTIMO_VERTICE; i = i+ANCHO_DEL_MAPA){
+    for(int i = ID_VERTICE_INFERIOR_AL_PRIMER_VERTICE; i <= ID_VERTICE_SUPERIOR_AL_PRIMER_VERTICE_ULTIMA_FILA; i = i+ANCHO_DEL_MAPA){
         peso_camino_superior = determinar_peso(grafo_mapa, i - ANCHO_DEL_MAPA);
         peso_camino_inferior = determinar_peso(grafo_mapa, i + ANCHO_DEL_MAPA);
         peso_camino_derecho = determinar_peso(grafo_mapa, i + UNA_POSICION);
@@ -140,11 +141,11 @@ void inicializar_aristas_vertices_centrales(Grafo &grafo_mapa){
     int peso_camino_inferior;
     int peso_camino_derecho;
     int peso_camino_izquierdo;
-
     int iterador = PRIMERA_POSICION_EN_DIAGONAL_AL_PRIMER_VERTICE;
 
     for(int j = 0; j < (ANCHO_DEL_MAPA - PRIMERA_Y_ULTIMA_COLUMNA); ++j){
-        for(int i = 0; i < (ANCHO_DEL_MAPA - TRES_POSICIONES); i++){
+        for(int i = 0; i <= (ANCHO_DEL_MAPA - TRES_POSICIONES); i++){
+            cout << iterador << endl;
             peso_camino_superior = determinar_peso(grafo_mapa, iterador - ANCHO_DEL_MAPA);
             peso_camino_inferior = determinar_peso(grafo_mapa, iterador + ANCHO_DEL_MAPA);
             peso_camino_derecho = determinar_peso(grafo_mapa, iterador + UNA_POSICION);
@@ -155,10 +156,9 @@ void inicializar_aristas_vertices_centrales(Grafo &grafo_mapa){
             grafo_mapa.agregar_camino(iterador, iterador + ANCHO_DEL_MAPA, peso_camino_inferior);
             grafo_mapa.agregar_camino(iterador, iterador - UNA_POSICION, peso_camino_izquierdo);
             grafo_mapa.agregar_camino(iterador, iterador + UNA_POSICION, peso_camino_derecho);
-
             iterador++;
         }
-        iterador = iterador + TRES_POSICIONES;
+        iterador = iterador + DOS_POSICIONES;
     }
 }
 
@@ -222,9 +222,9 @@ void llenar_grafo(Grafo &grafo_mapa){
 
 void adoptar_animal(ArbolB<Animal*> &registro_de_animales) {
     Grafo grafo_mapa;
-    grafo_mapa.usar_dijkstra();
     llenar_grafo(grafo_mapa);
+    grafo_mapa.usar_dijkstra();
 
-
-    //grafo_mapa.obtener_camino_minimo(1, 2);
+    grafo_mapa.mostrar_grafo();
+    grafo_mapa.obtener_camino_minimo(15, 16);
 }
