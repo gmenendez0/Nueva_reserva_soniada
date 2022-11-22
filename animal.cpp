@@ -31,6 +31,7 @@ Animal::Animal(std::string nombre, int edad, std::string tamanio, char especie, 
     this->higene_actual = HIGENE_INICIAL;
     this->hambre_actual = HAMBRE_INICIAL;
     this->eliminado = false;
+    this->escapo = false;
 
     set_espacio_minimo_requerido(tamanio);
 }

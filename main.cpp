@@ -25,5 +25,6 @@ int main(){
         activar_opcion_elegida(opcion_elegida, registro_de_animales, combustible_auto);
     }
 
+    registro_de_animales.eliminar_todos();
     return 0;
 }

@@ -178,6 +178,10 @@ class ArbolB{
 
         void setear_parentescos_nodo_spliteado(Nodo <Tipo_de_animal>* primer_nuevo_nodo, Nodo<Tipo_de_animal>* segundo_nuevo_nodo, Nodo<Tipo_de_animal>* nodo_a_splitear);
 
+        void eliminar_todos(Nodo <Tipo_de_animal>* nodo_actual);
+
+        void borrar_datos(Nodo <Tipo_de_animal>* nodo_actual);
+
     public:
         //Pre -
         //Post Crea un arbol vacio.
@@ -213,6 +217,8 @@ class ArbolB{
 
         //Post Guarda todos los datos del arbol en el archivo, salvo los animales que se hayan escapado o hayan sido adoptados.
         void guardar_datos_en_archivo();
+
+        void eliminar_todos();
 };
 
 template<typename Tipo_de_animal>
@@ -612,6 +618,7 @@ void ArbolB <Tipo_de_animal>::pasar_tiempo(int &combustible_auto){
 
     combustible_auto = combustible_auto + AUMENTO_DE_NAFTA_CAMIONETA;
     if(combustible_auto > MAXIMO_NAFTA_CAMIONETA) combustible_auto = MAXIMO_NAFTA_CAMIONETA;
+    delete animales_escapados;
 }
 
 template<typename Tipo_de_animal>
@@ -716,5 +723,33 @@ string ArbolB <Tipo_de_animal>::recibir_datos_animal(Tipo_de_animal animal){
 
     return datos_animal;
 }
+
+//! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::eliminar_todos(){
+    eliminar_todos(raiz);
+}
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::eliminar_todos(Nodo <Tipo_de_animal>* nodo_actual){
+    if(nodo_actual == nullptr) return;
+
+    borrar_datos(nodo_actual);
+
+    eliminar_todos(nodo_actual->get_primer_hijo());
+    eliminar_todos(nodo_actual->get_segundo_hijo());
+    eliminar_todos(nodo_actual->get_tercer_hijo());
+
+    delete nodo_actual;
+}
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::borrar_datos(Nodo <Tipo_de_animal>* nodo_actual){
+    for(int i = 0; i < nodo_actual->get_tope_datos(); ++i){
+        delete nodo_actual->get_dato_buscado(i);
+    }
+}
+
 
 #endif //TP3_ARBOLB_H
