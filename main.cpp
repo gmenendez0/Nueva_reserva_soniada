@@ -8,7 +8,7 @@ const int GUARDAR_Y_SALIR = 7;
 const int COMBUSTIBLE_LLENO = 100;
 
 int main(){
-    srand(time(nullptr));
+    srand((unsigned)time(nullptr));
     ArbolB<Animal*> registro_de_animales;
     int combustible_auto = COMBUSTIBLE_LLENO;
 

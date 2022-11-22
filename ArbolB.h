@@ -109,14 +109,9 @@ class ArbolB{
         //Post Pone en marcha el split de un nodo raiz no hoja
         void split_nodo_raiz_con_hijos(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal dato_mayor);
 
-        //Pre EL nodo a splitear debe ser no hoja y debe tener solo un dato
-        //Post Pone en marcha el split de un nodo no hoja con un solo dato
-        void split_nodo_con_hijos_padre_un_dato(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal dato_mayor, bool
-        &animal_a_insertar_proviene_de_split, int* resultado_insercion);
-
-        //Pre Debe recibir un nodo no hoja con dos datos
-        //Post Pone en marcha el split de nodo no hoja recibido con dos datos
-        void split_nodo_con_hijos_padre_dos_datos(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal dato_mayor, bool
+        //Pre EL nodo a splitear debe ser no hoja y no raiz
+        //Post Pone en marcha el split de un nodo no hoja y no raiz
+        void split_nodo_con_hijos_no_raiz(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal dato_mayor, bool
         &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
         //Pre
@@ -178,6 +173,11 @@ class ArbolB{
         //Post: Devuelve un string con todos los datos del animal (nombre, edad, especie, personalidad y tamaño).
         string recibir_datos_animal(Tipo_de_animal animal);
 
+        void setear_hijos_padre_dos_datos(Nodo <Tipo_de_animal>* nodo_padre, Nodo<Tipo_de_animal>* primer_hijo, Nodo<Tipo_de_animal>* segundo_hijo, Nodo<Tipo_de_animal>* tercer_hijo,
+          Nodo<Tipo_de_animal>* hijo_auxiliar);
+
+        void setear_parentescos_nodo_spliteado(Nodo <Tipo_de_animal>* primer_nuevo_nodo, Nodo<Tipo_de_animal>* segundo_nuevo_nodo, Nodo<Tipo_de_animal>* nodo_a_splitear);
+
     public:
         //Pre -
         //Post Crea un arbol vacio.
@@ -190,8 +190,6 @@ class ArbolB{
         //Pre -
         //Post Devolvera un puntero al animal buscado en caso de encontrarlo, y en caso contrario devuelve nullptr
         Tipo_de_animal buscar_animal(string nombre);
-
-        Nodo<Tipo_de_animal>* get_raiz();   //? PARA DEBUGGING
 
         //Pre -
         //Post Devolvera 0 en caso de eliminacion exitosa, 1 en caso contrario que no se haya encontrado el animal a eliminar
@@ -426,14 +424,26 @@ void ArbolB <Tipo_de_animal>::realizar_split_nodo_hoja_dos_datos(Nodo <Tipo_de_a
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::split_nodo_con_hijos(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio,
 Tipo_de_animal dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion){
-
     if(nodo_a_splitear->es_raiz()){
         split_nodo_raiz_con_hijos(nodo_a_splitear, dato_menor, dato_intermedio, dato_mayor);
-    } else if(nodo_a_splitear->get_nodo_padre()->get_tope_datos() == UN_DATO){
-        split_nodo_con_hijos_padre_un_dato(nodo_a_splitear, dato_menor, dato_intermedio, dato_mayor, animal_a_insertar_proviene_de_split, resultado_insercion);
     } else {
-        split_nodo_con_hijos_padre_dos_datos(nodo_a_splitear, dato_menor, dato_intermedio, dato_mayor, animal_a_insertar_proviene_de_split, resultado_insercion);
+        split_nodo_con_hijos_no_raiz(nodo_a_splitear, dato_menor, dato_intermedio, dato_mayor, animal_a_insertar_proviene_de_split, resultado_insercion);
     }
+}
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::setear_parentescos_nodo_spliteado(Nodo <Tipo_de_animal>* primer_nuevo_nodo, Nodo <Tipo_de_animal>* segundo_nuevo_nodo, Nodo <Tipo_de_animal>* nodo_a_splitear){
+    primer_nuevo_nodo->set_primer_hijo(nodo_a_splitear->get_primer_hijo());
+    primer_nuevo_nodo->set_segundo_hijo(nodo_a_splitear->get_segundo_hijo());
+
+    segundo_nuevo_nodo->set_primer_hijo(nodo_a_splitear->get_tercer_hijo());
+    segundo_nuevo_nodo->set_segundo_hijo(nodo_a_splitear->get_hijo_auxiliar());
+
+    primer_nuevo_nodo->get_primer_hijo()->set_nodo_padre(primer_nuevo_nodo);
+    primer_nuevo_nodo->get_segundo_hijo()->set_nodo_padre(primer_nuevo_nodo);
+
+    segundo_nuevo_nodo->get_primer_hijo()->set_nodo_padre(segundo_nuevo_nodo);
+    segundo_nuevo_nodo->get_segundo_hijo()->set_nodo_padre(segundo_nuevo_nodo);
 }
 
 template<typename Tipo_de_animal>
@@ -443,18 +453,7 @@ void ArbolB <Tipo_de_animal>::split_nodo_raiz_con_hijos(Nodo <Tipo_de_animal>* n
     Nodo<Tipo_de_animal>* nodo_menor = new Nodo<Tipo_de_animal>(dato_menor, nullptr, nodo_superior);
     Nodo<Tipo_de_animal>* nodo_mayor = new Nodo<Tipo_de_animal>(dato_mayor, nullptr, nodo_superior);
 
-    //? CODIGO REPETIDO (1) SE PUEDE MODULARIZAR AUN MÁS
-    nodo_menor->set_primer_hijo(nodo_a_splitear->get_primer_hijo());
-    nodo_menor->set_segundo_hijo(nodo_a_splitear->get_segundo_hijo());
-
-    nodo_mayor->set_primer_hijo(nodo_a_splitear->get_tercer_hijo());
-    nodo_mayor->set_segundo_hijo(nodo_a_splitear->get_hijo_auxiliar());
-
-    nodo_menor->get_primer_hijo()->set_nodo_padre(nodo_menor);
-    nodo_menor->get_segundo_hijo()->set_nodo_padre(nodo_menor);
-
-    nodo_mayor->get_primer_hijo()->set_nodo_padre(nodo_mayor);
-    nodo_mayor->get_segundo_hijo()->set_nodo_padre(nodo_mayor);
+    setear_parentescos_nodo_spliteado(nodo_menor, nodo_mayor, nodo_a_splitear);
 
     nodo_superior->set_primer_hijo(nodo_menor);
     nodo_superior->set_segundo_hijo(nodo_mayor);
@@ -464,24 +463,19 @@ void ArbolB <Tipo_de_animal>::split_nodo_raiz_con_hijos(Nodo <Tipo_de_animal>* n
 }
 
 template<typename Tipo_de_animal>
-void ArbolB <Tipo_de_animal>::split_nodo_con_hijos_padre_un_dato(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
+void ArbolB <Tipo_de_animal>::split_nodo_con_hijos_no_raiz(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
 dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion){
     //? SI ENTRA POR ACA ES PORQUE EL NODO A SPLITEAR TIENE DOS DATOS Y EL NODO PADRE TIENE UNO SOLO.
     Nodo<Tipo_de_animal>* nodo_menor = new Nodo<Tipo_de_animal>(dato_menor, nullptr, nodo_a_splitear->get_nodo_padre());
     Nodo<Tipo_de_animal>* nodo_mayor = new Nodo<Tipo_de_animal>(dato_mayor, nullptr, nodo_a_splitear->get_nodo_padre());
 
-    //? CODIGO REPETIDO (1) SE PUEDE MODULARIZAR AUN MÁS
-    nodo_menor->set_primer_hijo(nodo_a_splitear->get_primer_hijo());
-    nodo_menor->set_segundo_hijo(nodo_a_splitear->get_segundo_hijo());
+    setear_parentescos_nodo_spliteado(nodo_menor, nodo_mayor, nodo_a_splitear);
 
-    nodo_mayor->set_primer_hijo(nodo_a_splitear->get_tercer_hijo());
-    nodo_mayor->set_segundo_hijo(nodo_a_splitear->get_hijo_auxiliar());
-
-    nodo_menor->get_primer_hijo()->set_nodo_padre(nodo_menor);
-    nodo_menor->get_segundo_hijo()->set_nodo_padre(nodo_menor);
-
-    nodo_mayor->get_primer_hijo()->set_nodo_padre(nodo_mayor);
-    nodo_mayor->get_segundo_hijo()->set_nodo_padre(nodo_mayor);
+    if(nodo_a_splitear->get_nodo_padre()->get_tope_datos() == UN_DATO){
+        ordenar_parentezco_padre_un_dato(nodo_a_splitear, nodo_menor, nodo_mayor);
+    } else {
+        ordenar_parentezco_padre_dos_datos(nodo_a_splitear, nodo_menor, nodo_mayor);
+    }
 
     ordenar_parentezco_padre_un_dato(nodo_a_splitear, nodo_menor, nodo_mayor);
 
@@ -490,69 +484,35 @@ dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion)
 }
 
 template<typename Tipo_de_animal>
-void ArbolB <Tipo_de_animal>::split_nodo_con_hijos_padre_dos_datos(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
-dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion){
-    //? SI ENTRA POR ACA ES PORQUE EL NODO A SPLITEAR TIENE 2 DATOS Y EL PADRE DEL NODO A SPLITEAR TAMBIEN TIENE 2 DATOS.
-    Nodo<Tipo_de_animal>* nodo_menor = new Nodo<Tipo_de_animal>(dato_menor, nullptr, nodo_a_splitear->get_nodo_padre());
-    Nodo<Tipo_de_animal>* nodo_mayor = new Nodo<Tipo_de_animal>(dato_mayor, nullptr, nodo_a_splitear->get_nodo_padre());
-
-    //? CODIGO REPETIDO (1) SE PUEDE MODULARIZAR AUN MÁS
-    nodo_menor->set_primer_hijo(nodo_a_splitear->get_primer_hijo());
-    nodo_menor->set_segundo_hijo(nodo_a_splitear->get_segundo_hijo());
-
-    nodo_mayor->set_primer_hijo(nodo_a_splitear->get_tercer_hijo());
-    nodo_mayor->set_segundo_hijo(nodo_a_splitear->get_hijo_auxiliar());
-
-    nodo_menor->get_primer_hijo()->set_nodo_padre(nodo_menor);
-    nodo_menor->get_segundo_hijo()->set_nodo_padre(nodo_menor);
-
-    nodo_mayor->get_primer_hijo()->set_nodo_padre(nodo_mayor);
-    nodo_mayor->get_segundo_hijo()->set_nodo_padre(nodo_mayor);
-
-    ordenar_parentezco_padre_dos_datos(nodo_a_splitear, nodo_menor, nodo_mayor);
-
-    insertar_en_arbol(dato_intermedio, nodo_a_splitear->get_nodo_padre(), animal_a_insertar_proviene_de_split, resultado_insercion);
-    delete nodo_a_splitear;
-}
-
-template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::ordenar_parentezco_padre_un_dato(Nodo <Tipo_de_animal>* nodo_a_splitear, Nodo <Tipo_de_animal>* nodo_menor, Nodo <Tipo_de_animal>* nodo_mayor){
-    //? SE PUEDE MODULARIZAR AUN MÁS
     if(nodo_a_splitear->es_primer_hijo()){
         nodo_a_splitear->get_nodo_padre()->set_primer_hijo(nodo_menor);
         nodo_a_splitear->get_nodo_padre()->set_tercer_hijo(nodo_a_splitear->get_nodo_padre()->get_segundo_hijo());
         nodo_a_splitear->get_nodo_padre()->set_segundo_hijo(nodo_mayor);
     } else {
-        //el primer hijo no hace falta modificarlo
         nodo_a_splitear->get_nodo_padre()->set_segundo_hijo(nodo_menor);
         nodo_a_splitear->get_nodo_padre()->set_tercer_hijo(nodo_mayor);
     }
 }
 
 template<typename Tipo_de_animal>
-void ArbolB <Tipo_de_animal>::ordenar_parentezco_padre_dos_datos(Nodo <Tipo_de_animal>* nodo_a_splitear, Nodo <Tipo_de_animal>* nuevo_nodo_menor, Nodo <Tipo_de_animal>* nuevo_nodo_mayor){
-    //? SE PUEDE MODULARIZAR AUN MÁS
-    if(nodo_a_splitear->es_primer_hijo()){
-        nodo_a_splitear->get_nodo_padre()->set_hijo_auxiliar(nodo_a_splitear->get_nodo_padre()->get_tercer_hijo());
-        nodo_a_splitear->get_nodo_padre()->set_tercer_hijo(nodo_a_splitear->get_nodo_padre()->get_segundo_hijo());
-        nodo_a_splitear->get_nodo_padre()->set_primer_hijo(nuevo_nodo_menor);
-        nodo_a_splitear->get_nodo_padre()->set_segundo_hijo(nuevo_nodo_mayor);
-    } else if(nodo_a_splitear->es_tercer_hijo()){
-        nodo_a_splitear->get_nodo_padre()->set_primer_hijo(nodo_a_splitear->get_nodo_padre()->get_primer_hijo());
-        nodo_a_splitear->get_nodo_padre()->set_segundo_hijo(nodo_a_splitear->get_nodo_padre()->get_segundo_hijo());
-        nodo_a_splitear->get_nodo_padre()->set_hijo_auxiliar(nuevo_nodo_mayor);
-        nodo_a_splitear->get_nodo_padre()->set_tercer_hijo(nuevo_nodo_menor);
-    } else {
-        nodo_a_splitear->get_nodo_padre()->set_primer_hijo(nodo_a_splitear->get_nodo_padre()->get_primer_hijo());
-        nodo_a_splitear->get_nodo_padre()->set_hijo_auxiliar(nodo_a_splitear->get_nodo_padre()->get_tercer_hijo());
-        nodo_a_splitear->get_nodo_padre()->set_segundo_hijo(nuevo_nodo_menor);
-        nodo_a_splitear->get_nodo_padre()->set_tercer_hijo(nuevo_nodo_mayor);
-    }
+void ArbolB <Tipo_de_animal>::setear_hijos_padre_dos_datos(Nodo <Tipo_de_animal>* nodo_padre, Nodo <Tipo_de_animal>* primer_hijo, Nodo <Tipo_de_animal>* segundo_hijo, Nodo <Tipo_de_animal>*
+ tercer_hijo, Nodo <Tipo_de_animal>* hijo_auxiliar){
+    nodo_padre->set_hijo_auxiliar(hijo_auxiliar);
+    nodo_padre->set_tercer_hijo(tercer_hijo);
+    nodo_padre->set_primer_hijo(primer_hijo);
+    nodo_padre->set_segundo_hijo(segundo_hijo);
 }
 
 template<typename Tipo_de_animal>
-Nodo <Tipo_de_animal>* ArbolB <Tipo_de_animal>::get_raiz(){
-    return raiz;
+void ArbolB <Tipo_de_animal>::ordenar_parentezco_padre_dos_datos(Nodo <Tipo_de_animal>* nodo_a_splitear, Nodo <Tipo_de_animal>* nuevo_nodo_menor, Nodo <Tipo_de_animal>* nuevo_nodo_mayor){
+    if(nodo_a_splitear->es_primer_hijo()){
+        setear_hijos_padre_dos_datos(nodo_a_splitear->get_nodo_padre(), nuevo_nodo_menor, nuevo_nodo_mayor, nodo_a_splitear->get_nodo_padre()->get_segundo_hijo(),nodo_a_splitear->get_nodo_padre()->get_tercer_hijo());
+    } else if(nodo_a_splitear->es_tercer_hijo()){
+        setear_hijos_padre_dos_datos(nodo_a_splitear->get_nodo_padre(), nodo_a_splitear->get_nodo_padre()->get_primer_hijo(), nodo_a_splitear->get_nodo_padre()->get_segundo_hijo(), nuevo_nodo_menor,nuevo_nodo_mayor);
+    } else {
+        setear_hijos_padre_dos_datos(nodo_a_splitear->get_nodo_padre(), nodo_a_splitear->get_nodo_padre()->get_primer_hijo(), nuevo_nodo_menor, nuevo_nodo_mayor,nodo_a_splitear->get_nodo_padre()->get_tercer_hijo());
+    }
 }
 
 template<typename Tipo_de_animal>
