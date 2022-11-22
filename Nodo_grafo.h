@@ -17,13 +17,13 @@ public:
     Nodo_grafo(int id_vertice_nuevo, Animal* animal);
 
     //post: devuelve el nodo siguiente.
-    Nodo_grafo<Tipo>* obtenerSiguiente();
+    Nodo_grafo<Tipo>* obtener_siguiente();
 
-    //post: devuelve el nombre del nodo
+    //post: devuelve el id del vertice que contiene el nodo.
     int get_id();
 
     //post: le asigna como siguiente el nodo recibido
-    void asignarSiguiente(Nodo_grafo<Tipo>* siguiente);
+    void asignar_siguiente(Nodo_grafo<Tipo>* siguiente);
 
     ~Nodo_grafo();
 };
@@ -35,7 +35,7 @@ Nodo_grafo<Tipo>::Nodo_grafo(int id_vertice_nuevo, Animal* animal) {
 }
 
 template<typename Tipo>
-Nodo_grafo<Tipo> *Nodo_grafo<Tipo>::obtenerSiguiente() {
+Nodo_grafo<Tipo>* Nodo_grafo<Tipo>::obtener_siguiente() {
     return siguiente;
 }
 
@@ -45,7 +45,7 @@ int Nodo_grafo<Tipo>::get_id() {
 }
 
 template<typename Tipo>
-void Nodo_grafo<Tipo>::asignarSiguiente(Nodo_grafo<Tipo> *siguiente) {
+void Nodo_grafo<Tipo>::asignar_siguiente(Nodo_grafo<Tipo>* siguiente) {
     this -> siguiente = siguiente;
 }
 

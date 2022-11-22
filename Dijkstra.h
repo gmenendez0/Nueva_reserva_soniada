@@ -4,43 +4,42 @@
 
 #include "CaminoMinimo.h"
 
-class Dijkstra : public CaminoMinimo{
+class Dijkstra : public camino_minimo{
 //Atributos
 private:
-    bool * verticesVisitados;
-    int * distancia;
-    int * recorrido;
+    bool* vertices_visitados;
+    int* distancia;
+    int* recorrido;
 
 //Métodos
     //post: pone todos los valores del vector de verticesVisitados en "false" menos el origen
-    void inicializarVisitados(int origen);
+    void inicializar_visitados(int origen);
 
     //post: pone las distancias exactamente igual que la distanciaOrigen
-    void inicializarDistancia(const int * distanciaOrigen);
+    void inicializar_distancia(const int* distancia_origen);
 
     //post: llena el vector de recorrido con el origen
-    void inicializarRecorrido(int origen);
+    void inicializar_recorrido(int origen);
 
     //post: devuelve el número de vértices con menor distancia al origen
-    int verticeMinimaDistancia();
+    int vertice_minima_distancia();
 
     //post: actualiza el vector de distancias y el de recorrido con los valores que impone vertice.
-    void actualizarDistancia(int vertice);
+    void actualizar_distancia(int vertice);
 
     //pre: para que tenga sentido, debe ejecutarse un recorrido previamente
     //post: muestra por pantalla el resultado del recorrido.
-    void mostrarRecorrido(int origen, int destino);
+    void mostrar_recorrido(int origen, int destino);
 
     //post: muestra el estado instantaneo del vector de recorrido, distancia y visitados.
-    void mostrarIteracion(int iteracion);
+    void mostrar_iteracion(int iteracion);
 public:
-    Dijkstra(Lista<Vertice> * vertices, int ** matrizAdyacencia);
+    Dijkstra(Lista<Vertice>* vertices, int** matriz_adyacencia);
 
     //post: muestra por pantalla el camino mínimo entre el origen y el destino, detallando su recorrido y peso
-    void caminoMinimo(int origen, int destino) override;
+    void mostrar_camino_minimo(int origen, int destino) override;
 
     ~Dijkstra() override;
-
 };
 
 

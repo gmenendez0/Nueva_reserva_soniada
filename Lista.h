@@ -6,13 +6,13 @@
 using namespace std;
 
 const int POSICION_NO_ENCONTRADA = -1;
-const int NOMBRE_NO_ENCONTRADO = -1;
+const int ID_NO_ENCONTRADO = -1;
 
-template < typename Tipo >
+template <typename Tipo>
 class Lista{
 /*ATRIBUTOS*/
 private:
-    int cantidadDeElementos;
+    int cantidad_de_elementos;
     Nodo_grafo<Tipo>* primero;
     Nodo_grafo<Tipo>* ultimo;
 
@@ -21,12 +21,12 @@ public:
     Lista();
 
     //post: devuelve la cantidad de elementos que tiene la lista
-    int obtenerCantidadDeElementos();
+    int obtener_cantidad_de_elementos();
 
     //post: devuelve la posicion en la que se encuentra el nombre que recibe o -1 si no lo encuentra
-    int obtenerPosicion(int id);
+    int obtener_posicion(int id);
 
-    //post: devuelve el  nombre que se encuentra en la posicion recibida o NOMBRE_NO_ENCONTRADO si no lo encuentra
+    //post: devuelve el id que se encuentra en la posicion recibida o ID_NO_ENCONTRADO si no lo encuentra
     int obtener_id(int posicion);
 
     //post: agrega un nuevo elemento a la lista
@@ -37,33 +37,31 @@ public:
 
 template < typename Tipo >
 Lista<Tipo>::Lista(){
-    cantidadDeElementos = 0;
+    cantidad_de_elementos = 0;
     ultimo = nullptr;
     primero =  nullptr;
 }
 
 template < typename Tipo >
-int Lista<Tipo>::obtenerCantidadDeElementos(){
-    return cantidadDeElementos;
+int Lista<Tipo>::obtener_cantidad_de_elementos(){
+    return cantidad_de_elementos;
 }
 
 template < typename Tipo >
-int Lista<Tipo>::obtenerPosicion(int id) {
-    bool elementoEncontrado = false;
+int Lista<Tipo>::obtener_posicion(int id) {
+    bool elemento_encontrado = false;
     int i = 0;
     Nodo_grafo<Tipo>* auxiliar = primero;
 
-    while(!elementoEncontrado && i < cantidadDeElementos){
-        if(auxiliar -> get_id() == id){
-            elementoEncontrado = true;
-        }
+    while(!elemento_encontrado && i < cantidad_de_elementos){
+        if(auxiliar -> get_id() == id) elemento_encontrado = true;
+
         i++;
-        auxiliar = auxiliar -> obtenerSiguiente();
+        auxiliar = auxiliar->obtener_siguiente();
     }
 
-    if(!elementoEncontrado){
-        return POSICION_NO_ENCONTRADA;
-    }
+    if(!elemento_encontrado) return POSICION_NO_ENCONTRADA;
+
     return i - 1;
 }
 
@@ -74,17 +72,17 @@ void Lista<Tipo>::agregar(int id_vertice_nuevo, Animal* animal) {
         primero = nuevoNodo;
         ultimo = primero;
     } else {
-        ultimo -> asignarSiguiente(nuevoNodo);
+        ultimo -> asignar_siguiente(nuevoNodo);
         ultimo = nuevoNodo;
     }
-    cantidadDeElementos++;
+    cantidad_de_elementos++;
 }
 
 template<typename Tipo>
 Lista<Tipo>::~Lista() {
     Nodo_grafo<Tipo>* siguiente;
     while(primero != nullptr){
-        siguiente = primero -> obtenerSiguiente();
+        siguiente = primero->obtener_siguiente();
         delete primero;
         primero = siguiente;
     }
@@ -95,16 +93,14 @@ int Lista<Tipo>::obtener_id(int posicion) {
     int i = 0;
     Nodo_grafo<Tipo>* auxiliar = primero;
 
-    if(posicion > cantidadDeElementos){
-        return NOMBRE_NO_ENCONTRADO;
-    }
+    if(posicion > cantidad_de_elementos) return ID_NO_ENCONTRADO;
 
     while(i != posicion - 1){
-        auxiliar = auxiliar -> obtenerSiguiente();
+        auxiliar = auxiliar->obtener_siguiente();
         i++;
     }
 
-    return auxiliar -> get_id();
+    return auxiliar->get_id();
 }
 
 #endif //GRAFOS_LISTA_H

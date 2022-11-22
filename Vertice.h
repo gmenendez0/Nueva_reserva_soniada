@@ -16,9 +16,10 @@ private:
 public:
     Vertice(int id, Animal* animal);
 
-    //post: obtiene el nombre del vertice
+    //post: obtiene el id del vertice
     int get_id();
 
+    //post devuelve el animal que contiene el vertice
     Animal* get_animal();
 
     ~Vertice();
