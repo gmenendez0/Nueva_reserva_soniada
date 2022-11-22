@@ -54,7 +54,7 @@ int Lista<Tipo>::obtener_posicion(int id) {
     Nodo_grafo<Tipo>* auxiliar = primero;
 
     while(!elemento_encontrado && i < cantidad_de_elementos){
-        if(auxiliar -> get_id() == id) elemento_encontrado = true;
+        if(auxiliar->get_id() == id) elemento_encontrado = true;
 
         i++;
         auxiliar = auxiliar->obtener_siguiente();
@@ -68,6 +68,7 @@ int Lista<Tipo>::obtener_posicion(int id) {
 template < typename Tipo >
 void Lista<Tipo>::agregar(int id_vertice_nuevo, Animal* animal) {
     Nodo_grafo<Tipo>* nuevoNodo = new Nodo_grafo<Tipo>(id_vertice_nuevo, animal);
+
     if(primero == nullptr){
         primero = nuevoNodo;
         ultimo = primero;
@@ -81,6 +82,7 @@ void Lista<Tipo>::agregar(int id_vertice_nuevo, Animal* animal) {
 template<typename Tipo>
 Lista<Tipo>::~Lista() {
     Nodo_grafo<Tipo>* siguiente;
+
     while(primero != nullptr){
         siguiente = primero->obtener_siguiente();
         delete primero;

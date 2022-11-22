@@ -38,6 +38,10 @@ private:
 
     //post: imprime por pantalla la matriz de adyacencia
     void mostrar_matriz_adyacencia();
+
+    void realizar_impresion_matriz_adyacencia(int i, int j);
+
+    bool posicion_no_encontrada(int posicion_origen, int posicion_destino);
 public:
 
     Grafo();

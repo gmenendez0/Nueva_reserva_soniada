@@ -33,6 +33,10 @@ private:
 
     //post: muestra el estado instantaneo del vector de recorrido, distancia y visitados.
     void mostrar_iteracion(int iteracion);
+
+    //post imprime por pantalla el recorrido de un vertice a otro si este recorrido existe y es factible.
+    void mostrar_recorrido_factible(int origen, int destino);
+
 public:
     Dijkstra(Lista<Vertice>* vertices, int** matriz_adyacencia);
 
