@@ -73,6 +73,8 @@ public:
     //Post: Devuelve el animal de un vertice
     Animal* devolver_animal_vertice(int id);
 
+    int obtener_peso_minimo(int origen, int destino);
+
     ~Grafo();
 };
 

@@ -8,7 +8,7 @@ Dijkstra::Dijkstra(Lista<Vertice>* vertices, int** matriz_adyacencia) : camino_m
     recorrido = new int[cantidad_vertices];
 }
 
-void Dijkstra::mostrar_camino_minimo(int origen, int destino) {
+int Dijkstra::calcular_peso_minimo(int origen, int destino){
     inicializar_visitados(origen);
     inicializar_distancia(matriz_adyacencia[origen]);
     inicializar_recorrido(origen);
@@ -18,17 +18,22 @@ void Dijkstra::mostrar_camino_minimo(int origen, int destino) {
     int vertices_recorridos = UN_VERTICE;
 
     while(!destino_arribado){
-         //mostrar_iteracion(vertices_recorridos - UN_VERTICE);
-         minimo_vertice = vertice_minima_distancia();                       //? SE PUEDE MODULARIZAR MÁS
-         destino_arribado = minimo_vertice == destino;
+        //mostrar_iteracion(vertices_recorridos - UN_VERTICE);
+        minimo_vertice = vertice_minima_distancia();                       //? SE PUEDE MODULARIZAR MÁS
+        destino_arribado = minimo_vertice == destino;
 
-         if(!destino_arribado){
-             vertices_visitados[minimo_vertice] = true;
-             actualizar_distancia(minimo_vertice);
-         }
-         vertices_recorridos++;
+        if(!destino_arribado){
+            vertices_visitados[minimo_vertice] = true;
+            actualizar_distancia(minimo_vertice);
+        }
+        vertices_recorridos++;
     }
 
+    return distancia[destino];
+}
+
+void Dijkstra::mostrar_camino_minimo(int origen, int destino) {
+    calcular_peso_minimo(origen, destino);
     mostrar_recorrido(origen, destino);
 }
 
@@ -96,38 +101,6 @@ void Dijkstra::mostrar_recorrido(int origen, int destino) {
         mostrar_recorrido_factible(origen, destino);
     }
     cout << endl;
-}
-
-void Dijkstra::mostrar_iteracion(int iteracion) {
-    cout << endl << "Iteración " << iteracion << endl;
-
-    cout << "Visitados: [";
-    for(int i = 0; i < cantidad_vertices; i++){
-        cout << vertices_visitados[i];
-        if(i + 1 != cantidad_vertices){     //! modularizar
-            cout << ", ";
-        }
-    }
-    cout << "]" << endl;
-
-    cout << "Distancia: [";
-    for(int i = 0; i < cantidad_vertices; i++){
-        if(distancia[i] != INFINITO) {
-            cout << distancia[i];
-        } else {
-            cout << "∞";                        //! modularizar
-        }
-
-        if(i + 1 != cantidad_vertices) cout << ", ";
-    }
-    cout << "]" << endl;
-
-    cout << "Recorrido: [";
-    for(int i = 0; i < cantidad_vertices; i++){
-        cout << vertices -> obtener_id(recorrido[i] + 1);   //! modularizar
-        if(i + 1 != cantidad_vertices) cout << ", ";
-    }
-    cout << "]" << endl << endl;
 }
 
 

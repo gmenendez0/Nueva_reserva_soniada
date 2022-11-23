@@ -129,10 +129,12 @@ void Grafo::mostrar_camino_minimo(int origen, int destino) {
     algortimo_camino_minimo->mostrar_camino_minimo(origen, destino);
 }
 
-/*void Grafo::usar_floyd() {
-    delete algortimo_camino_minimo;
-    algortimo_camino_minimo = new Floyd(vertices, matriz_de_adyacencia);
-}*/
+int Grafo::obtener_peso_minimo(int origen, int destino){
+    int posicion_origen = vertices->obtener_posicion(origen);
+    int posicion_destino = vertices->obtener_posicion(destino);
+
+    return algortimo_camino_minimo->calcular_peso_minimo(posicion_origen, posicion_destino);
+}
 
 void Grafo::usar_dijkstra() {
     delete algortimo_camino_minimo;

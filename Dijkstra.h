@@ -31,9 +31,6 @@ private:
     //post: muestra por pantalla el resultado del recorrido.
     void mostrar_recorrido(int origen, int destino);
 
-    //post: muestra el estado instantaneo del vector de recorrido, distancia y visitados.
-    void mostrar_iteracion(int iteracion);
-
     //post imprime por pantalla el recorrido de un vertice a otro si este recorrido existe y es factible.
     void mostrar_recorrido_factible(int origen, int destino);
 
@@ -42,6 +39,8 @@ public:
 
     //post: muestra por pantalla el camino mínimo entre el origen y el destino, detallando su recorrido y peso
     void mostrar_camino_minimo(int origen, int destino) override;
+
+    int calcular_peso_minimo(int origen, int destino) override;
 
     ~Dijkstra() override;
 };

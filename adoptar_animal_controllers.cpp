@@ -30,6 +30,7 @@ const int ALTO_DEL_MAPA = 8;
 const int CANTIDAD_DE_CARACTERES_A_IGNORAR = 100;
 const int COORDENADA_MINIMA_PERMITIDA = 1;
 const int COORDENADA_MAXIMA_PERMITIDA = 8;
+const int VERTICE_INICIAL_AUTO = 1;
 
 const int PRIMERA_Y_ULTIMA_COLUMNA = 2;
 const int PESO_A_VERTICE_NEGRO = 40;
@@ -39,6 +40,11 @@ const int PESO_A_VERTICE_MARRON_CLARO = 2;
 const int DOS_POSICIONES = 2;
 const int PRIMERA_POSICION_EN_DIAGONAL_AL_PRIMER_VERTICE = 10;
 const int TRES_POSICIONES = 3;
+const int SEGUNDO_VERTICE = 2;
+const int DESFAZAJE_ITERADOR = 1;
+
+const int VOLVER_AL_MENU = 1;
+const int REINTENTAR = 0;
 
 void inicializar_aristas_vertices_esquinas(Grafo &grafo_mapa){
     grafo_mapa.agregar_camino(ID_PRIMER_VERTICE, ID_VERTICE_DERECHO_PRIMER_VERTICE, PESO_A_VERTICE_NEGRO);
@@ -177,7 +183,7 @@ bool coincide_con_posicion_random(int i, int posiciones_random[]){
 
 void inicializar_posiciones_random(int posiciones_random[]){
     for(int i = 0; i < MAXIMO_POSICIONES_RANDOM_NECESITADAS; ++i){
-        posiciones_random[i] = UNA_POSICION + (rand() % CANTIDAD_DE_VERTICES_NECESITADOS);
+        posiciones_random[i] = SEGUNDO_VERTICE + (rand() % CANTIDAD_DE_VERTICES_NECESITADOS);
     }
 }
 
@@ -230,10 +236,10 @@ void realizar_impresion(Grafo &grafo_mapa, int &iterador_vertices, int coordenad
 void imprimir_grafo(Grafo &grafo_mapa){
     int iterador_vertices = 0;
 
-    cout << "  0 1 2 3 4 5 6 7";
+    cout << "  1 2 3 4 5 6 7 8";
     for(int j = 0; j < ALTO_DEL_MAPA; ++j){
         cout << endl;
-        cout << j << " ";
+        cout << j + DESFAZAJE_ITERADOR << " ";
         for(int i = 0; i < ANCHO_DEL_MAPA; ++i){
             realizar_impresion(grafo_mapa, iterador_vertices, i, j);
         }
@@ -277,13 +283,56 @@ void pedir_coordenadas(int &coordenada_usuario_x, int &coordenada_usuario_y){
     revisar_respuesta(coordenada_usuario_y);
 }
 
-Animal* revisar_coordenadas(Grafo grafo_mapa, int coordenada_x, int coordenada_y){
-    int vertice_buscado = (ANCHO_DEL_MAPA * ALTO_DEL_MAPA) - (ALTO_DEL_MAPA * coordenada_y) + coordenada_x;
-    int combustible_necesitado = grafo_mapa.obtener_camino_minimo(1, vertice_buscado)
+Animal* revisar_coordenadas(Grafo &grafo_mapa, int coordenada_x, int coordenada_y){
+    if(coordenada_x == VERTICE_INICIAL_AUTO && coordenada_y == VERTICE_INICIAL_AUTO) return nullptr;
 
+    int vertice_buscado = ((ANCHO_DEL_MAPA * coordenada_y) - ALTO_DEL_MAPA ) + coordenada_x;
+    return grafo_mapa.devolver_animal_vertice(vertice_buscado);
+}
 
-    Animal* animal_buscado = grafo_mapa.devolver_animal_vertice(vertice_buscado);
+int revisar_combustible(int coordenada_x, int coordenada_y, int combustible_auto, Grafo &grafo_mapa){
+    int vertice_buscado = ((ANCHO_DEL_MAPA * coordenada_y) - ALTO_DEL_MAPA ) + coordenada_x;
 
+    if(coordenada_x == VERTICE_INICIAL_AUTO && coordenada_y == VERTICE_INICIAL_AUTO){
+        cout << "No se puede viajar a esa coordenada." << endl;
+        return ERROR;
+    }
+
+    int combustible_necesitado = grafo_mapa.obtener_peso_minimo(VERTICE_INICIAL_AUTO, vertice_buscado);
+    if(combustible_necesitado > combustible_auto) {
+        cout << "No se puede viajar a esa coordenada porque no hay suficiente combustible." << endl;
+        return ERROR;
+    }
+
+    return combustible_necesitado;
+}
+
+bool respuesta_valida_menu_error(int respuesta){
+    return (respuesta == VOLVER_AL_MENU || respuesta == REINTENTAR);
+}
+
+void chequear_respuesta_menu_error(int &respuesta){
+    while(!respuesta_valida_menu_error(respuesta)){
+        cout << "Respuesta invalida, vuelva a intentar con valores validos (0 volver a intentar, 1 volver al menu principal): ";
+        cin.clear();
+        cin.ignore(CANTIDAD_DE_CARACTERES_A_IGNORAR, '\n');
+        cin >> respuesta;
+        cout << endl;
+    }
+}
+
+void desplegar_menu_error(ArbolB <Animal*> &registro_de_animales, int &combustible_auto){
+    int respuesta;
+    cout << "Vemos que, por una razon u otra, no pudiste llegar a donde deseabas. ¿Queres volver a intentarlo (0) o preferis volver al menu principal (1)? ";
+    cin >> respuesta;
+    chequear_respuesta_menu_error(respuesta);
+    if(respuesta == VOLVER_AL_MENU) return;
+
+    rescatar_animal(registro_de_animales, combustible_auto);
+}
+
+bool hubo_un_error(int resultado_inspeccion, Animal* animal_a_rescatar){
+    return (resultado_inspeccion == ERROR || animal_a_rescatar == nullptr);
 }
 
 void rescatar_animal(ArbolB<Animal*> &registro_de_animales, int &combustible_auto) {
@@ -296,5 +345,9 @@ void rescatar_animal(ArbolB<Animal*> &registro_de_animales, int &combustible_aut
     presentar();
     imprimir_grafo(grafo_mapa);
     pedir_coordenadas(coordenada_usuario_x, coordenada_usuario_y);
+    int resultado_inspeccion = revisar_combustible(coordenada_usuario_x, coordenada_usuario_y, combustible_auto, grafo_mapa);
     Animal* animal_a_rescatar = revisar_coordenadas(grafo_mapa, coordenada_usuario_x, coordenada_usuario_y);
+
+    if(hubo_un_error(resultado_inspeccion, animal_a_rescatar)) desplegar_menu_error(registro_de_animales, combustible_auto);
+    //else realizar_rescate();
 }
