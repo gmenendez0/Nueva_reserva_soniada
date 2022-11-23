@@ -70,6 +70,9 @@ public:
     //Post: Devuelve el color de un vertice
     char devolver_color_vertice(int id);
 
+    //Post: Devuelve el animal de un vertice
+    Animal* devolver_animal_vertice(int id);
+
     ~Grafo();
 };
 

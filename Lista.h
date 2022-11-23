@@ -36,6 +36,8 @@ public:
     //post: agrega un nuevo elemento a la lista
     void agregar(int id_vertice_nuevo, Animal* animal, char color);
 
+    Animal* obtener_animal(int posicion);
+
     ~Lista();
 };
 
@@ -121,6 +123,20 @@ char Lista<Tipo>::obtener_color(int posicion) {
         i++;
     }
     return auxiliar->get_color();
+}
+
+template<typename Tipo>
+Animal* Lista<Tipo>::obtener_animal(int posicion) {
+    int i = 0;
+    Nodo_grafo<Tipo>* auxiliar = primero;
+
+    if(posicion > cantidad_de_elementos) return nullptr;
+
+    while(i != posicion){
+        auxiliar = auxiliar->obtener_siguiente();
+        i++;
+    }
+    return auxiliar->get_animal();
 }
 
 #endif //GRAFOS_LISTA_H

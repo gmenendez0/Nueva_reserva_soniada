@@ -86,7 +86,7 @@ void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_ani
 
         case RESCATAR_ANIMAL:
             registro_de_animales.pasar_tiempo(combustible_auto);
-            adoptar_animal(registro_de_animales);
+            rescatar_animal(registro_de_animales, combustible_auto);
             //rescatar_animal(registro_de_animales);
             break;
 

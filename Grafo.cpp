@@ -144,3 +144,9 @@ char Grafo::devolver_color_vertice(int id){
 
     return vertices->obtener_color(posicion);
 }
+
+Animal* Grafo::devolver_animal_vertice(int id){
+    int posicion = vertices->obtener_posicion(id);
+
+    return vertices->obtener_animal(posicion);
+}

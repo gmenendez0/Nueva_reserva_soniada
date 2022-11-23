@@ -29,6 +29,8 @@ public:
     //post devuelve el color del vertice del nodo
     char get_color();
 
+    Animal* get_animal();
+
     ~Nodo_grafo();
 };
 
@@ -61,6 +63,11 @@ Nodo_grafo<Tipo>::~Nodo_grafo() {
 template<typename Tipo>
 char Nodo_grafo <Tipo>::get_color(){
     return elemento->get_color();
+}
+
+template<typename Tipo>
+Animal* Nodo_grafo <Tipo>::get_animal(){
+    return elemento->get_animal();
 }
 
 
