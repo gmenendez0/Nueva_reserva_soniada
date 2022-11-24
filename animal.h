@@ -70,12 +70,16 @@ class Animal{
         //Post Devuelve el espacio minimo requerido para que el animal pueda vivir
         int get_espacio_minimo_requerido();
 
+        //post Devuelve true si el animal fue eliminado, caso contrario false
         bool esta_eliminado();
 
+        //post Setea el atributo eliminado en true
         void eliminar();
 
+        //post Devuelve true si el animal se escapo, caso contrario false
         bool se_escapo();
 
+        //POST setea el nombre del animal
         void set_nombre(string nombre);
 };
 

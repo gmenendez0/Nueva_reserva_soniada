@@ -6,7 +6,7 @@
 using namespace std;
 const string SALIR = "CONFIRMAR_SALIDA";
 
-//pre: Debe recibir un nombre y la lista de animales
+//pre:
 //post: Exige al usuario que ingrese un nombre de un animal existente
 void comprobar_animal_buscado(string &nombre, ArbolB<Animal*> &registro_de_animales, Animal* &animal_buscado){
     while(animal_buscado == nullptr && nombre != SALIR){
@@ -16,6 +16,7 @@ void comprobar_animal_buscado(string &nombre, ArbolB<Animal*> &registro_de_anima
         animal_buscado = registro_de_animales.buscar_animal(nombre);
     }
 }
+
 
 Animal* ingresar_nombre(ArbolB<Animal*> &registro_de_animales){
     string nombre;

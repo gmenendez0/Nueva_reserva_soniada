@@ -190,7 +190,8 @@ class ArbolB{
         //Post Crea un arbol vacio.
         ArbolB();
 
-        //Pre Tiene que recibir un elemento inicializado para insertarse en el arbol usando su nombre como clave
+        //Pre Tiene que recibir un elemento inicializado para insertarse en el arbol usando su nombre como clave. No puede haber ya un animal con el mismo nombre en el arbol, salvo que
+        // este este o eliminado o haya escapado.
         //Post Devolvera 0 en caso de operacion completada exitosamente y 1 en caso de animal repetido
         int insertar(Tipo_de_animal animal);
 
@@ -274,13 +275,10 @@ resultado_insercion){
     } else {
         if(animal_es_mas_grande(animal->get_nombre(), nodo_a_insertar)){
             split_hoja(nodo_a_insertar, nodo_a_insertar->get_primer_dato(), nodo_a_insertar->get_segundo_dato(), animal, animal_a_insertar_proviene_de_split, resultado_insercion);
-            //Quiere decir que el animal que trato de ingresar es más grande que las dos claves que están en el nodo. SPLIT
         } else if(animal_es_intermedio(animal->get_nombre(), nodo_a_insertar)) {
             split_hoja(nodo_a_insertar, nodo_a_insertar->get_primer_dato(), animal, nodo_a_insertar->get_segundo_dato(), animal_a_insertar_proviene_de_split, resultado_insercion);
-            //quiere decir que el animal que quiero ingresar es más grande que la primera clave, pero más chico que la segunda SPLIT
         } else {
             split_hoja(nodo_a_insertar, animal, nodo_a_insertar->get_primer_dato(), nodo_a_insertar->get_segundo_dato(), animal_a_insertar_proviene_de_split, resultado_insercion);
-            //Quiere decir que el animal es más chico que las otras dos claves. SPLIT
         }
     }
 }
@@ -298,12 +296,10 @@ resultado_insercion){
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::realizar_insercion(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal){
     if(nodo_a_insertar->get_primera_clave() > animal->get_nombre()){
-        //mover el dato que está en la primera posicion del vector a la segunda e insertar el animal nuevo en la primera posicion del vector.
         nodo_a_insertar->set_segundo_dato(nodo_a_insertar->get_primer_dato());
         nodo_a_insertar->set_primer_dato(animal);
         nodo_a_insertar->aumentar_tope_datos();
     } else {
-        //insertar el dato en la segunda posicion del vector
         nodo_a_insertar->set_segundo_dato(animal);
         nodo_a_insertar->aumentar_tope_datos();
     }
@@ -312,9 +308,7 @@ void ArbolB <Tipo_de_animal>::realizar_insercion(Nodo <Tipo_de_animal>* nodo_a_i
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::evaluar_insercion_proveniente_de_split(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split, int*
 resultado_insercion){
-    //? SI ENTRA POR ACA ES PORQUE LA INSERCION PROVIENE DE SPLIT
     if(nodo_a_insertar->get_tope_datos() == UN_DATO){
-        //? EL NODO TIENE UN SOLO DATO
         realizar_insercion(nodo_a_insertar, animal);
     } else {
         realizar_insercion_proveniente_de_split_dos_datos(nodo_a_insertar, animal, animal_a_insertar_proviene_de_split, resultado_insercion);
@@ -324,16 +318,12 @@ resultado_insercion){
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::realizar_insercion_proveniente_de_split_dos_datos(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
 int* resultado_insercion){
-    //? EL NODO TIENE DOS DATOS
     if(animal_es_mas_grande(animal->get_nombre(), nodo_a_insertar)){
         split_nodo_con_hijos(nodo_a_insertar, nodo_a_insertar->get_primer_dato(), nodo_a_insertar->get_segundo_dato(), animal, animal_a_insertar_proviene_de_split, resultado_insercion);
-        //Quiere decir que el animal que trato de ingresar es más grande que las dos claves que están en el nodo. SPLIT
     } else if(animal_es_intermedio(animal->get_nombre(), nodo_a_insertar)) {
         split_nodo_con_hijos(nodo_a_insertar, nodo_a_insertar->get_primer_dato(), animal, nodo_a_insertar->get_segundo_dato(), animal_a_insertar_proviene_de_split, resultado_insercion);
-        //quiere decir que el animal que quiero ingresar es más grande que la primera clave, pero más chico que la segunda SPLIT
     } else {
         split_nodo_con_hijos(nodo_a_insertar, animal, nodo_a_insertar->get_primer_dato(), nodo_a_insertar->get_segundo_dato(), animal_a_insertar_proviene_de_split, resultado_insercion);
-        //Quiere decir que el animal es más chico que las otras dos claves. SPLIT
     }
 }
 
@@ -343,33 +333,26 @@ void ArbolB <Tipo_de_animal>::evaluar_insercion_no_proveniente_de_split_un_dato(
     //? EL NODO TIENE UN SOLO DATO
     if(nodo_a_insertar->get_primera_clave() > animal->get_nombre()){
         insertar_en_arbol(animal, nodo_a_insertar->get_primer_hijo(), animal_a_insertar_proviene_de_split, resultado_insercion);
-        //se avanza al PRIMER hijo del nodo.
     } else {
         insertar_en_arbol(animal, nodo_a_insertar->get_segundo_hijo(), animal_a_insertar_proviene_de_split, resultado_insercion);
-        //se avanza al SEGUNDO hijo del nodo.
     }
 }
 
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::evaluar_insercion_no_proveniente_de_split_dos_datos(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
  int* resultado_insercion){
-    //? EL NODO TIENE DOS DATOS
     if(animal_es_mas_grande(animal->get_nombre(), nodo_a_insertar)){
         insertar_en_arbol(animal, nodo_a_insertar->get_tercer_hijo(), animal_a_insertar_proviene_de_split, resultado_insercion);
-        //Quiere decir que el animal que trato de ingresar es más grande que las dos claves que están en el nodo. Se avanza al tercer hijo del nodo.
     } else if(animal_es_intermedio(animal->get_nombre(), nodo_a_insertar)) {
         insertar_en_arbol(animal, nodo_a_insertar->get_segundo_hijo(), animal_a_insertar_proviene_de_split, resultado_insercion);
-        //Quiere decir que el animal que quiero ingresar es más grande que la primera clave, pero más chico que la segunda. Se avanza al segundo hijo del nodo
     } else {
         insertar_en_arbol(animal, nodo_a_insertar->get_primer_hijo(), animal_a_insertar_proviene_de_split, resultado_insercion);
-        //Quiere decir que el animal es más chico que las otras dos claves. Se avanza al primer hijo del nodo
     }
 }
 
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::evaluar_insercion_no_proveniente_de_split(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
 int* resultado_insercion){
-    //? SI ENTRA POR ACA ES PORQUE LA INSERCION NO PROVIENE DE SPLIT
     if(nodo_a_insertar->get_tope_datos() == UN_DATO){
         evaluar_insercion_no_proveniente_de_split_un_dato(nodo_a_insertar, animal, animal_a_insertar_proviene_de_split, resultado_insercion);
     } else{
@@ -392,7 +375,6 @@ dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion)
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::realizar_split_nodo_hoja_raiz(Nodo<Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
 dato_mayor){
-    //? SI ENTRA POR ACA ES PORQUE EL NODO A SPLITEAR ES EL NODO RAIZ
     Nodo<Tipo_de_animal>* nodo_superior = new Nodo<Tipo_de_animal>(dato_intermedio);
 
     Nodo<Tipo_de_animal>* nodo_menor = new Nodo<Tipo_de_animal>(dato_menor, nullptr, nodo_superior);
@@ -407,7 +389,6 @@ dato_mayor){
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::realizar_split_nodo_hoja_un_dato(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
 dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion){
-    //? SI ENTRA POR ACA ES PORQUE EL NODO A SPLITEAR ES HOJA Y PORQUE EL PADRE DEL NODO A SPLITEAR NO ESTA LLENO
     Nodo<Tipo_de_animal>* nodo_menor = new Nodo<Tipo_de_animal>(dato_menor, nullptr, nodo_a_splitear->get_nodo_padre());
     Nodo<Tipo_de_animal>* nodo_mayor = new Nodo<Tipo_de_animal>(dato_mayor, nullptr, nodo_a_splitear->get_nodo_padre());
 
@@ -421,7 +402,6 @@ dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion)
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::realizar_split_nodo_hoja_dos_datos(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal dato_mayor,
   bool &animal_a_insertar_proviene_de_split, int* resultado_insercion){
-    //? SI ENTRA POR ACA ES PORQUE EL NODO A SPLITEAR ES HOJA Y PORQUE EL PADRE DEL NODO A SPLITEAR ESTA LLENO. HAY QUE PREPARAR TODO PARA EL SPLIT DEL PADRE.
     Nodo<Tipo_de_animal>* nuevo_nodo_menor = new Nodo<Tipo_de_animal>(dato_menor);
     Nodo<Tipo_de_animal>* nuevo_nodo_mayor = new Nodo<Tipo_de_animal>(dato_mayor);
 
@@ -459,7 +439,6 @@ void ArbolB <Tipo_de_animal>::setear_parentescos_nodo_spliteado(Nodo <Tipo_de_an
 
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::split_nodo_raiz_con_hijos(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal dato_mayor){
-    //? SI ENTRA POR ACA ES PORQUE EL NODO A SPLITEAR ES UN NODO RAIZ CON HIJOS
     Nodo<Tipo_de_animal>* nodo_superior = new Nodo<Tipo_de_animal>(dato_intermedio);
     Nodo<Tipo_de_animal>* nodo_menor = new Nodo<Tipo_de_animal>(dato_menor, nullptr, nodo_superior);
     Nodo<Tipo_de_animal>* nodo_mayor = new Nodo<Tipo_de_animal>(dato_mayor, nullptr, nodo_superior);
@@ -476,7 +455,6 @@ void ArbolB <Tipo_de_animal>::split_nodo_raiz_con_hijos(Nodo <Tipo_de_animal>* n
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::split_nodo_con_hijos_no_raiz(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
 dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion){
-    //? SI ENTRA POR ACA ES PORQUE EL NODO A SPLITEAR TIENE DOS DATOS Y EL NODO PADRE TIENE UNO SOLO.
     Nodo<Tipo_de_animal>* nodo_menor = new Nodo<Tipo_de_animal>(dato_menor, nullptr, nodo_a_splitear->get_nodo_padre());
     Nodo<Tipo_de_animal>* nodo_mayor = new Nodo<Tipo_de_animal>(dato_mayor, nullptr, nodo_a_splitear->get_nodo_padre());
 
@@ -536,8 +514,6 @@ bool ArbolB <Tipo_de_animal>::animal_es_intermedio(string nombre_animal, Nodo <T
     return (nodo_a_insertar->get_primera_clave() < nombre_animal && nodo_a_insertar->get_segunda_clave() > nombre_animal);
 }
 
-//!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 template<typename Tipo_de_animal>
 Tipo_de_animal ArbolB <Tipo_de_animal>::buscar_animal(string nombre){
     return revisar_arbol(nombre, raiz);
@@ -548,7 +524,6 @@ Tipo_de_animal ArbolB <Tipo_de_animal>::revisar_arbol(string nombre, Nodo <Tipo_
     if(nodo_a_revisar == nullptr) return nullptr;
 
     Tipo_de_animal animal_buscado = nodo_a_revisar->buscar_animal_con_mismo_nombre(nombre);
-    //! RECORDAR QUE ESTA FUNCION TIENE UN ERROR: DA EL ANIMAL COMO ENCONTRADO A PESAR DE TENER EL ATRIBUTO "ELIMINADO"
 
     if(animal_buscado != nullptr){
         return analizar_animal_encontrado(animal_buscado);
@@ -570,8 +545,6 @@ Tipo_de_animal ArbolB <Tipo_de_animal>::analizar_animal_encontrado(Tipo_de_anima
     return animal_encontrado;
 }
 
-//! ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 template<typename Tipo_de_animal>
 int ArbolB <Tipo_de_animal>::eliminar_animal(string nombre){
     Tipo_de_animal animal_a_eliminar = revisar_arbol(nombre, raiz);
@@ -580,8 +553,6 @@ int ArbolB <Tipo_de_animal>::eliminar_animal(string nombre){
     animal_a_eliminar->eliminar();
     return COMPLETADA;
 }
-
-//! ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::presentar_todos(){
@@ -604,14 +575,10 @@ void ArbolB <Tipo_de_animal>::presentar_datos_nodo(Nodo <Tipo_de_animal>* nodo_a
     }
 }
 
-//! ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 template<typename Tipo_de_animal>
 bool ArbolB <Tipo_de_animal>::esta_vacio(){
     return (raiz == nullptr);
 }
-
-//! ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::pasar_tiempo(int &combustible_auto){
@@ -650,8 +617,6 @@ void ArbolB <Tipo_de_animal>::desarmar_reserva(int* animales_escapados){
     exit(EXITO);
 }
 
-//! ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::presentar_cuidables(){
     presentar_cuidables(raiz);
@@ -677,8 +642,6 @@ template<typename Tipo_de_animal>
 bool ArbolB <Tipo_de_animal>::animal_esta_presente(Tipo_de_animal animal){
     return (!animal->esta_eliminado() && !animal->se_escapo());
 }
-
-//! ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::guardar_datos_en_archivo(){
@@ -728,8 +691,6 @@ string ArbolB <Tipo_de_animal>::recibir_datos_animal(Tipo_de_animal animal){
 
     return datos_animal;
 }
-
-//! --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::eliminar_todos(){

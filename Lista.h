@@ -36,6 +36,7 @@ public:
     //post: agrega un nuevo elemento a la lista
     void agregar(int id_vertice_nuevo, Animal* animal, char color);
 
+    //Post Devuelve el animal del nodo en la posicion recibida o nullptr si no encuentra ese nodo
     Animal* obtener_animal(int posicion);
 
     ~Lista();
@@ -101,7 +102,7 @@ int Lista<Tipo>::obtener_id(int posicion) {
     int i = 0;
     Nodo_grafo<Tipo>* auxiliar = primero;
 
-    if(posicion > cantidad_de_elementos) return ID_NO_ENCONTRADO;
+    if(posicion > cantidad_de_elementos) return ID_NO_ENCONTRADO;       //! CODIGO REPETIDO 1 FUNCION TEMPLATE SE PUEDE HACE
 
     while(i != posicion - 1){
         auxiliar = auxiliar->obtener_siguiente();
@@ -116,7 +117,7 @@ char Lista<Tipo>::obtener_color(int posicion) {
     int i = 0;
     Nodo_grafo<Tipo>* auxiliar = primero;
 
-    if(posicion > cantidad_de_elementos) return ID_NO_ENCONTRADO;
+    if(posicion > cantidad_de_elementos) return ID_NO_ENCONTRADO;       //! CODIGO REPETIDO 1 FUNCION TEMPLATE SE PUEDE HACER
 
     while(i != posicion){
         auxiliar = auxiliar->obtener_siguiente();
@@ -130,7 +131,7 @@ Animal* Lista<Tipo>::obtener_animal(int posicion) {
     int i = 0;
     Nodo_grafo<Tipo>* auxiliar = primero;
 
-    if(posicion > cantidad_de_elementos) return nullptr;
+    if(posicion > cantidad_de_elementos) return nullptr;            //! CODIGO REPETIDO 1 FUNCION TEMPLATE SE PUEDE HACE
 
     while(i != posicion){
         auxiliar = auxiliar->obtener_siguiente();

@@ -40,6 +40,7 @@ public:
     //post: muestra por pantalla el camino mínimo entre el origen y el destino, detallando su recorrido y peso
     void mostrar_camino_minimo(int origen, int destino) override;
 
+    //Post calcula y devuelve el peso minimo de viajar del vertice origen al destino
     int calcular_peso_minimo(int origen, int destino) override;
 
     ~Dijkstra() override;

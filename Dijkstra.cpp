@@ -18,8 +18,7 @@ int Dijkstra::calcular_peso_minimo(int origen, int destino){
     int vertices_recorridos = UN_VERTICE;
 
     while(!destino_arribado){
-        //mostrar_iteracion(vertices_recorridos - UN_VERTICE);
-        minimo_vertice = vertice_minima_distancia();                       //? SE PUEDE MODULARIZAR MÁS
+        minimo_vertice = vertice_minima_distancia();
         destino_arribado = minimo_vertice == destino;
 
         if(!destino_arribado){

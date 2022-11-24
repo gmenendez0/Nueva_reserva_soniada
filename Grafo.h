@@ -33,20 +33,13 @@ private:
     //post libera la memoria de la matriz de adyacencia
     void liberar_matriz_adyacencia();
 
-    //post: imprime por pantalla los vertices del grafo
-    void mostrar_vertices();
-
-    //post: imprime por pantalla la matriz de adyacencia
-    void mostrar_matriz_adyacencia();
-
-    void realizar_impresion_matriz_adyacencia(int i, int j);
-
+    //Post Devuelve true en caso de que una de las dos posiciones no haya sido encontrada
     bool posicion_no_encontrada(int posicion_origen, int posicion_destino);
 public:
 
     Grafo();
 
-    //pre: No hay vertices repetidos en nombre
+    //pre: No hay vertices repetidos en id
     //post: agrega un nuevo vertice al grafo
     void agregar_vertice(int id_vertice_nuevo, Animal* animal, char color);
 
@@ -58,12 +51,6 @@ public:
     //post: Ajusta la matriz de adyacencia con el peso ingresado
     void agregar_camino(int id_origen, int id_destino, int peso);
 
-    //post: imprime por pantalla el grafo
-    void mostrar_grafo();
-
-    //post: selecciona el algortimo de Floyd para calcular el camino mínimo
-    //void usar_floyd();
-
     //post: selecciona el algortimo de Dijkstra para calcular el camino mínimo
     void usar_dijkstra();
 
@@ -73,6 +60,7 @@ public:
     //Post: Devuelve el animal de un vertice
     Animal* devolver_animal_vertice(int id);
 
+    //Post Devuelve el peso minimo de ir del origen al destino
     int obtener_peso_minimo(int origen, int destino);
 
     ~Grafo();

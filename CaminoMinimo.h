@@ -21,6 +21,7 @@ public:
     //post: muestra por pantalla el camino mínimo entre el origen y el destino, detallando su recorrido y peso
     virtual void mostrar_camino_minimo(int origen, int destino) = 0;
 
+    //post: Devuelve el peso del camino mínimo entre el origen y el destino
     virtual int calcular_peso_minimo(int origen, int destino) = 0;
 
     virtual ~camino_minimo() = default;

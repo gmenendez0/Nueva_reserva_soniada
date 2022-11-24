@@ -2,7 +2,7 @@
 #include "buscar_animal.h"
 #include "cuidar_animales_controllers.h"
 #include "cargar_combustible_controllers.h"
-#include "adoptar_animal_controllers.h"
+#include "rescatar_animal_controllers.h"
 
 using std::cout;
 using std::cin;

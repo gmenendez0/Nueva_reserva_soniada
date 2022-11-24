@@ -29,6 +29,7 @@ public:
     //post devuelve el color del vertice del nodo
     char get_color();
 
+    //Post devuelve el animal que este en su vertice
     Animal* get_animal();
 
     ~Nodo_grafo();

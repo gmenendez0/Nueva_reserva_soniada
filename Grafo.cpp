@@ -13,12 +13,6 @@ void Grafo::agregar_vertice(int id_vertice_nuevo, Animal* animal, char color) {
     vertices->agregar(id_vertice_nuevo, animal, color);
 }
 
-void Grafo::mostrar_grafo() {
-    std::cout << "La matriz de adyacencia muestra el peso de viajar de un vertice adyacente a otro, o infinito si no son adyacentes" << std::endl;
-    mostrar_vertices();
-    mostrar_matriz_adyacencia();
-}
-
 bool Grafo::posicion_no_encontrada(int posicion_origen, int posicion_destino){
     return (!(posicion_destino == POSICION_NO_ENCONTRADA || posicion_origen == POSICION_NO_ENCONTRADA));
 }
@@ -91,39 +85,6 @@ Grafo::~Grafo() {
     delete algortimo_camino_minimo;
 }
 
-void Grafo::mostrar_vertices() {
-    cout << "Lista de vértices: [";
-    for(int i = 0; i < vertices->obtener_cantidad_de_elementos(); i++){
-        cout << vertices->obtener_id(i + 1);
-        if(i + 1 != vertices->obtener_cantidad_de_elementos()) cout << ", ";
-    }
-    cout << "]" << endl;
-}
-
-//!no es necesario imprimir
-void Grafo::realizar_impresion_matriz_adyacencia(int i, int j) {
-    if(j == vertices->obtener_cantidad_de_elementos() * 2 - 1){
-        cout << endl;
-    } else if(j % 2 == 0){
-        if(matriz_de_adyacencia[i][j/2] == INFINITO){
-            cout << "∞";
-        } else {
-            cout << matriz_de_adyacencia[i][j/2];
-        }
-    } else{
-        cout << "|";
-    }
-}
-
-void Grafo::mostrar_matriz_adyacencia() {
-    cout << "Matriz de adyacencia:" << endl;
-    for(int i = 0; i < vertices->obtener_cantidad_de_elementos(); i++){
-        for(int j = 0; j < vertices->obtener_cantidad_de_elementos() * 2; j++) {
-            realizar_impresion_matriz_adyacencia(i, j);
-        }
-    }
-    cout << endl;
-}
 
 void Grafo::mostrar_camino_minimo(int origen, int destino) {
     algortimo_camino_minimo->mostrar_camino_minimo(origen, destino);
