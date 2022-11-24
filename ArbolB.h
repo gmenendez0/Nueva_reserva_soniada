@@ -429,6 +429,7 @@ void ArbolB <Tipo_de_animal>::realizar_split_nodo_hoja_dos_datos(Nodo <Tipo_de_a
 
     animal_a_insertar_proviene_de_split = true;
     insertar_en_arbol(dato_intermedio, nodo_a_splitear->get_nodo_padre(), animal_a_insertar_proviene_de_split, resultado_insercion);
+    delete nodo_a_splitear;
 }
 
 template<typename Tipo_de_animal>
@@ -738,7 +739,6 @@ void ArbolB <Tipo_de_animal>::eliminar_todos(){
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::eliminar_todos(Nodo <Tipo_de_animal>* nodo_actual){
     if(nodo_actual == nullptr) return;
-
     borrar_datos(nodo_actual);
 
     eliminar_todos(nodo_actual->get_primer_hijo());
