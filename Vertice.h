@@ -25,8 +25,6 @@ public:
 
     //post: devuelve el color del vertice
     char get_color();
-
-    ~Vertice();
 };
 
 

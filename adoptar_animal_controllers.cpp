@@ -239,13 +239,12 @@ void llenar_grafo(Grafo &grafo_mapa, Animal* animales_a_rescatar[]){
     inicializar_aristas(grafo_mapa);
 }
 
-void realizar_impresion(Grafo &grafo_mapa, int &iterador_vertices, int coordenada_x, int coordenada_y){
+void realizar_impresion(Grafo &grafo_mapa, int &iterador_vertices){
     iterador_vertices++;
     if(grafo_mapa.devolver_animal_vertice(iterador_vertices) == nullptr){
         cout << grafo_mapa.devolver_color_vertice(iterador_vertices) << " ";
     } else {
         cout << "A" << " ";
-        //Imprimiria una A indicando un animal y después guardar la J como coordenada Y y la I como coordenada X.
     }
 }
 
@@ -257,7 +256,7 @@ void imprimir_grafo(Grafo &grafo_mapa){
         cout << endl;
         cout << j + DESFAZAJE_ITERADOR << " ";
         for(int i = 0; i < ANCHO_DEL_MAPA; ++i){
-            realizar_impresion(grafo_mapa, iterador_vertices, i, j);
+            realizar_impresion(grafo_mapa, iterador_vertices);
         }
     }
 
@@ -379,16 +378,28 @@ void repedir_nombre(Animal* animal_a_rescatar){
     animal_a_rescatar->set_nombre(nombre);
 }
 
-void realizar_rescate(int combustible_necesitado, Animal* animal_a_rescatar, ArbolB<Animal*> &registro_de_animales, int &combustible_auto){
+string realizar_rescate(int combustible_necesitado, Animal* animal_a_rescatar, ArbolB<Animal*> &registro_de_animales, int &combustible_auto){
     pedir_nombre(animal_a_rescatar);
     int resultado_insercion = registro_de_animales.insertar(animal_a_rescatar);
     while(resultado_insercion == ANIMAL_REPETIDO) {
         repedir_nombre(animal_a_rescatar);
         resultado_insercion = registro_de_animales.insertar(animal_a_rescatar);
     }
-    cout << endl << "Animal rescatado con exito!" << endl << endl;
     combustible_auto -= combustible_necesitado;
-    cout << combustible_auto;
+    cout << endl << "Animal rescatado con exito! Su auto ahora tiene " << combustible_auto << "de combustible" << endl << endl;
+    return animal_a_rescatar->get_nombre();
+}
+
+void liberar_animales_creados(Animal* animales_a_rescatar[]){
+    for(int i = 0; i < MAXIMO_ANIMALES_A_RESCATAR; ++i){
+        delete animales_a_rescatar[i];
+    }
+}
+
+void liberar_animales_no_rescatados(Animal* animales_a_rescatar[], string nombre_animal_rescatado){
+    for(int i = 0; i < MAXIMO_ANIMALES_A_RESCATAR; ++i){
+        if(animales_a_rescatar[i]->get_nombre() != nombre_animal_rescatado) delete animales_a_rescatar[i];
+    }
 }
 
 void rescatar_animal(ArbolB<Animal*> &registro_de_animales, int &combustible_auto) {
@@ -405,8 +416,13 @@ void rescatar_animal(ArbolB<Animal*> &registro_de_animales, int &combustible_aut
     int resultado_inspeccion = revisar_combustible(coordenada_usuario_x, coordenada_usuario_y, combustible_auto, grafo_mapa);
     Animal* animal_a_rescatar = revisar_coordenadas(grafo_mapa, coordenada_usuario_x, coordenada_usuario_y);
 
-    if(hubo_un_error(resultado_inspeccion, animal_a_rescatar)) desplegar_menu_error(registro_de_animales, combustible_auto);
-    else realizar_rescate(resultado_inspeccion, animal_a_rescatar, registro_de_animales, combustible_auto);
+    if(hubo_un_error(resultado_inspeccion, animal_a_rescatar)) {
+        liberar_animales_creados(animales_a_rescatar);
+        desplegar_menu_error(registro_de_animales, combustible_auto);
+    } else {
+        string nombre_animal_rescatado = realizar_rescate(resultado_inspeccion, animal_a_rescatar, registro_de_animales, combustible_auto);
+        liberar_animales_no_rescatados(animales_a_rescatar, nombre_animal_rescatado);
+    }
 }
 
 

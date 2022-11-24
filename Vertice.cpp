@@ -18,6 +18,3 @@ char Vertice::get_color(){
     return color;
 }
 
-Vertice::~Vertice() {
-
-}
