@@ -75,6 +75,8 @@ class Animal{
         void eliminar();
 
         bool se_escapo();
+
+        void set_nombre(string nombre);
 };
 
 #endif

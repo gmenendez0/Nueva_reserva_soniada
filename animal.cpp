@@ -156,3 +156,7 @@ string Animal::get_mensaje_escape(){
 
     return "No";
 }
+
+void Animal::set_nombre(string nombre){
+    this->nombre = nombre;
+}

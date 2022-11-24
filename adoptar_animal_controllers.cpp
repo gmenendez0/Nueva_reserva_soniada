@@ -1,6 +1,11 @@
 #include "adoptar_animal_controllers.h"
 #include "Grafo.h"
 #include "ArbolB.h"
+#include "gato.h"
+#include "caballo.h"
+#include "erizo.h"
+#include "perro.h"
+#include "roedor.h"
 
 const int CANTIDAD_DE_VERTICES_NECESITADOS = 64;
 const int MAXIMO_POSICIONES_RANDOM_NECESITADAS = 5;
@@ -43,8 +48,18 @@ const int TRES_POSICIONES = 3;
 const int SEGUNDO_VERTICE = 2;
 const int DESFAZAJE_ITERADOR = 1;
 
+const int UN_ANIO = 1;
+const int DOS_ANIOS = 2;
+const int TRES_ANIOS = 3;
+const int CUATRO_ANIOS = 4;
+const int CINCO_ANIOS = 5;
+
 const int VOLVER_AL_MENU = 1;
 const int REINTENTAR = 0;
+const int MAXIMO_ANIMALES_A_RESCATAR = 4;
+const char COLOR_NEGRO = 'N';
+const char COLOR_MARRON_OSCURO = 'M';
+const char COLOR_MARRON_CLARO = 'C';
 
 void inicializar_aristas_vertices_esquinas(Grafo &grafo_mapa){
     grafo_mapa.agregar_camino(ID_PRIMER_VERTICE, ID_VERTICE_DERECHO_PRIMER_VERTICE, PESO_A_VERTICE_NEGRO);
@@ -63,11 +78,11 @@ void inicializar_aristas_vertices_esquinas(Grafo &grafo_mapa){
 int determinar_peso(Grafo &grafo_mapa, int id_vertice){
     int peso;
 
-    if(grafo_mapa.devolver_color_vertice(id_vertice) ==  'N'){
+    if(grafo_mapa.devolver_color_vertice(id_vertice) ==  COLOR_NEGRO){
         peso = PESO_A_VERTICE_NEGRO;
-    } else if(grafo_mapa.devolver_color_vertice(id_vertice) ==  'M'){
+    } else if(grafo_mapa.devolver_color_vertice(id_vertice) ==  COLOR_MARRON_OSCURO){
         peso = PESO_A_VERTICE_MARRON_OSCURO;
-    } else if(grafo_mapa.devolver_color_vertice(id_vertice) ==  'C'){
+    } else if(grafo_mapa.devolver_color_vertice(id_vertice) ==  COLOR_MARRON_CLARO){
         peso = PESO_A_VERTICE_MARRON_CLARO;
     } else {
         peso = PESO_A_VERTICE_GRIS;
@@ -187,39 +202,40 @@ void inicializar_posiciones_random(int posiciones_random[]){
     }
 }
 
-void inicializar_vertices(std::ifstream &archivo_vertices, Grafo &grafo_mapa){
+void inicializar_vertices(std::ifstream &archivo_vertices, Grafo &grafo_mapa, Animal* animales_a_rescatar[]){
     int posiciones_random[MAXIMO_POSICIONES_RANDOM_NECESITADAS];
     inicializar_posiciones_random(posiciones_random);
 
     string id_vertice;
     string color;
+    int iterador_animal = 0;
 
     while(getline(archivo_vertices, id_vertice, ',')){
         getline(archivo_vertices, color, '\n');
 
         if(coincide_con_posicion_random(stoi(id_vertice), posiciones_random)){
-            //grafo_mapa.agregar_vertice(stoi(id_vertice), animal, color[0]);
-            grafo_mapa.agregar_vertice(stoi(id_vertice), nullptr, color[PRIMERA_POSICION]); //! DESPUES ESTO SE DEBE ELIMINAR
+            grafo_mapa.agregar_vertice(stoi(id_vertice), animales_a_rescatar[iterador_animal], color[PRIMERA_POSICION]);
+            iterador_animal++;
         } else {
             grafo_mapa.agregar_vertice(stoi(id_vertice), nullptr, color[PRIMERA_POSICION]);
         }
     }
 }
 
-void abrir_archivo_vertices(Grafo &grafo_mapa){
+void abrir_archivo_vertices(Grafo &grafo_mapa, Animal* animales_a_rescatar[]){
     std::ifstream archivo_vertices(ARCHIVO_VERTICES);
     if(!archivo_vertices.is_open()){
         cout<<"Error al abrir el archivo de vertices. Compruebe que exista y que no este corrompido y vuelva a intentar."<<endl;
         exit(ERROR);
     }
 
-    inicializar_vertices(archivo_vertices, grafo_mapa);
+    inicializar_vertices(archivo_vertices, grafo_mapa, animales_a_rescatar);
     archivo_vertices.close();
 }
 
 //Pre: El grafo debe tener forma CUADRADA.
-void llenar_grafo(Grafo &grafo_mapa){
-    abrir_archivo_vertices(grafo_mapa);
+void llenar_grafo(Grafo &grafo_mapa, Animal* animales_a_rescatar[]){
+    abrir_archivo_vertices(grafo_mapa, animales_a_rescatar);
     inicializar_aristas(grafo_mapa);
 }
 
@@ -228,7 +244,7 @@ void realizar_impresion(Grafo &grafo_mapa, int &iterador_vertices, int coordenad
     if(grafo_mapa.devolver_animal_vertice(iterador_vertices) == nullptr){
         cout << grafo_mapa.devolver_color_vertice(iterador_vertices) << " ";
     } else {
-        cout << " encontre un animal";
+        cout << "A" << " ";
         //Imprimiria una A indicando un animal y después guardar la J como coordenada Y y la I como coordenada X.
     }
 }
@@ -284,10 +300,17 @@ void pedir_coordenadas(int &coordenada_usuario_x, int &coordenada_usuario_y){
 }
 
 Animal* revisar_coordenadas(Grafo &grafo_mapa, int coordenada_x, int coordenada_y){
-    if(coordenada_x == VERTICE_INICIAL_AUTO && coordenada_y == VERTICE_INICIAL_AUTO) return nullptr;
+    if(coordenada_x == VERTICE_INICIAL_AUTO && coordenada_y == VERTICE_INICIAL_AUTO) {
+        cout << "No se puede viajar a esa coordenada." << endl;
+        return nullptr;
+    }
 
     int vertice_buscado = ((ANCHO_DEL_MAPA * coordenada_y) - ALTO_DEL_MAPA ) + coordenada_x;
-    return grafo_mapa.devolver_animal_vertice(vertice_buscado);
+    Animal* animal_buscado = grafo_mapa.devolver_animal_vertice(vertice_buscado);
+
+    if(animal_buscado == nullptr) cout << "No encontramos ningun animal en el area seleccionada." << endl;
+
+    return animal_buscado;
 }
 
 int revisar_combustible(int coordenada_x, int coordenada_y, int combustible_auto, Grafo &grafo_mapa){
@@ -335,11 +358,45 @@ bool hubo_un_error(int resultado_inspeccion, Animal* animal_a_rescatar){
     return (resultado_inspeccion == ERROR || animal_a_rescatar == nullptr);
 }
 
+void generar_animales_random(Animal* animales_a_rescatar[]){
+    animales_a_rescatar[PRIMERA_POSICION] = new Gato("nombre_predefinido", UN_ANIO, "pequeño", 'G', "travieso");
+    animales_a_rescatar[SEGUNDA_POSICION] = new Perro("nombre_predefinido", DOS_ANIOS, "diminuto", 'P', "sociable");
+    animales_a_rescatar[TERCERA_POSICION] = new Erizo("nombre_predefinido", TRES_ANIOS, "mediano", 'E', "dormilon");
+    animales_a_rescatar[CUARTA_POSICION] = new Caballo("nombre_predefinido", CUATRO_ANIOS, "grande", 'C', "travieso");
+}
+
+void pedir_nombre(Animal* animal_a_rescatar){
+    string nombre;
+    cout << "Felicitaciones! Parece que encontraste un animal en peligro. ¿Cual es su nombre? ";
+    getline(cin >> ws, nombre);
+    animal_a_rescatar->set_nombre(nombre);
+}
+
+void repedir_nombre(Animal* animal_a_rescatar){
+    string nombre;
+    cout << endl << "Ya existe un animal con ese nombre en el registro. Por favor, ingresa otro nombre: ";
+    getline(cin >> ws, nombre);
+    animal_a_rescatar->set_nombre(nombre);
+}
+
+void realizar_rescate(int combustible_necesitado, Animal* animal_a_rescatar, ArbolB<Animal*> &registro_de_animales, int &combustible_auto){
+    pedir_nombre(animal_a_rescatar);
+    int resultado_insercion = registro_de_animales.insertar(animal_a_rescatar);
+    while(resultado_insercion == ANIMAL_REPETIDO) {
+        repedir_nombre(animal_a_rescatar);
+        resultado_insercion = registro_de_animales.insertar(animal_a_rescatar);
+    }
+    cout << endl << "Animal rescatado con exito!" << endl << endl;
+    combustible_auto -= combustible_necesitado;
+    cout << combustible_auto;
+}
+
 void rescatar_animal(ArbolB<Animal*> &registro_de_animales, int &combustible_auto) {
     int coordenada_usuario_x, coordenada_usuario_y;
-    //generar_animales_random();
+    Animal* animales_a_rescatar[MAXIMO_ANIMALES_A_RESCATAR];
+    generar_animales_random(animales_a_rescatar);
     Grafo grafo_mapa;
-    llenar_grafo(grafo_mapa);
+    llenar_grafo(grafo_mapa, animales_a_rescatar);
     grafo_mapa.usar_dijkstra();
 
     presentar();
@@ -349,5 +406,7 @@ void rescatar_animal(ArbolB<Animal*> &registro_de_animales, int &combustible_aut
     Animal* animal_a_rescatar = revisar_coordenadas(grafo_mapa, coordenada_usuario_x, coordenada_usuario_y);
 
     if(hubo_un_error(resultado_inspeccion, animal_a_rescatar)) desplegar_menu_error(registro_de_animales, combustible_auto);
-    //else realizar_rescate();
+    else realizar_rescate(resultado_inspeccion, animal_a_rescatar, registro_de_animales, combustible_auto);
 }
+
+
