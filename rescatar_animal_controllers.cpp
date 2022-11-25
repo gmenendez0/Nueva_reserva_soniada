@@ -452,7 +452,7 @@ string realizar_rescate(int combustible_necesitado, Animal* animal_a_rescatar, A
         repedir_nombre(animal_a_rescatar);
         resultado_insercion = registro_de_animales.insertar(animal_a_rescatar);
     }
-    combustible_auto -= combustible_necesitado;
+    combustible_auto = combustible_auto - combustible_necesitado;
     cout << endl << "Animal rescatado con exito! Su auto ahora tiene " << combustible_auto << "de combustible" << endl << endl;
     return animal_a_rescatar->get_nombre();
 }
