@@ -30,7 +30,7 @@ public:
     //post: devuelve el id que se encuentra en la posicion recibida o ID_NO_ENCONTRADO si no lo encuentra
     int obtener_id(int posicion);
 
-    //post: devuelve el color que se encuentra en la posicion recibida o ID_NO_ENCONTRADO si no lo encuentra
+    //post: devuelve el color del vertice del nodo que se encuentra en la posicion recibida o ID_NO_ENCONTRADO si no lo encuentra
     char obtener_color(int posicion);
 
     //post: agrega un nuevo elemento a la lista
@@ -102,7 +102,7 @@ int Lista<Tipo>::obtener_id(int posicion) {
     int i = 0;
     Nodo_grafo<Tipo>* auxiliar = primero;
 
-    if(posicion > cantidad_de_elementos) return ID_NO_ENCONTRADO;       //! CODIGO REPETIDO 1 FUNCION TEMPLATE SE PUEDE HACE
+    if(posicion > cantidad_de_elementos) return ID_NO_ENCONTRADO;
 
     while(i != posicion - UNA_POSICION){
         auxiliar = auxiliar->obtener_siguiente();
