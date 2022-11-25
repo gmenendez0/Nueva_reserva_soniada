@@ -268,7 +268,9 @@ void llenar_grafo(Grafo &grafo_mapa, Animal* animales_a_rescatar[]){
 //Post Realiza la impresion adecuada del contenido del vertice
 void realizar_impresion(Grafo &grafo_mapa, int &iterador_vertices){
     iterador_vertices++;
-    if(grafo_mapa.devolver_animal_vertice(iterador_vertices) == nullptr){
+    if(iterador_vertices == VERTICE_INICIAL_AUTO){
+        cout << "R" << " ";
+    } else if(grafo_mapa.devolver_animal_vertice(iterador_vertices) == nullptr){
         cout << grafo_mapa.devolver_color_vertice(iterador_vertices) << " ";
     } else {
         cout << "A" << " ";
@@ -298,7 +300,14 @@ void presentar(){
     cout << "Bienvenido al sistema de rescate de animales. Se ha detectado posible movimiento animal en las posiciones que han sido marcadas con una A en el mapa." << endl;
     cout << "Para averiguar mas caracteristicas sobre el posible animal y poder rescatarlo, dirigete hacia el. Recorda que para dirigirte a un animal, tenes que contar con combustible "
             "suficiente." << endl;
-    cout << "Quedate tranquilo que nosotros nos ocuparemos de encontrar la via optima para gastar el menor combustible posible. Buena suerte!" << endl;
+    cout << "Quedate tranquilo que nosotros nos ocuparemos de encontrar la via optima para gastar el menor combustible posible. Buena suerte!" << endl << endl;
+    cout << "Las señalizaciones significan lo siguiente:" << endl;
+    cout << "R: Posicion de la camioneta Reserva." << endl;
+    cout << "A: Animal en la zona." << endl;
+    cout << "C: Tierra, con un costo de llegada de 2 de combustible." << endl;
+    cout << "N: Acantilado, con un costo de llegada de 40 de combustible." << endl;
+    cout << "M: Montaña, con un costo de llegada de 5 de combustible." << endl;
+    cout << "G: Camino, con un costo de llegada de 1 de combustible." << endl;
     cout << endl;
 }
 
@@ -355,6 +364,7 @@ Animal* revisar_coordenadas(Grafo &grafo_mapa, int coordenada_x, int coordenada_
 //Post Devuelve -1 en caso de combustible insuficiente. Si el combustible es suficiente, devuelve la cantidad de combustible que se gastara.
 int revisar_combustible(int coordenada_x, int coordenada_y, int combustible_auto, Grafo &grafo_mapa){
     int vertice_buscado = ((ANCHO_DEL_MAPA * coordenada_y) - ALTO_DEL_MAPA ) + coordenada_x;
+    grafo_mapa.obtener_camino_minimo(VERTICE_INICIAL_AUTO, vertice_buscado);
 
     if(coordenada_x == VERTICE_INICIAL_AUTO && coordenada_y == VERTICE_INICIAL_AUTO){
         cout << "No se puede viajar a esa coordenada." << endl;

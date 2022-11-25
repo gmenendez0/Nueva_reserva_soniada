@@ -15,6 +15,7 @@ const int LIMITE_ANIMALES_ESCAPADOS = 3;
 const int EXITO = 0;
 const int ERROR = -1;
 const std::string NOMBRE_CSV = "animales.csv";
+const int ESPACIO_INSUFICIENTE = 2;
 
 template<typename Tipo_de_animal>
 class ArbolB{
@@ -185,13 +186,19 @@ class ArbolB{
         //Post elimina todos los datos de un nodo, liberando la memoria alocada
         void borrar_datos(Nodo <Tipo_de_animal>* nodo_actual);
 
+        //Post Muestra a todos los animales adoptables con el espacio recibido y devuelve la cantidad de animales adoptables
+        int mostrar_animales_adoptables(int espacio_disponible, int* cantidad_animales_adoptables, Nodo <Tipo_de_animal>* nodo_actual);
+
+        //Post Recorre todos los datos de un nodo y en caso de encontrar un animal adoptable segun el espacio disponible, lo imprime.
+        void presentar_animales_adoptables(int espacio_disponible, int* cantidad_animales_adoptables, Nodo <Tipo_de_animal>* nodo_actual);
+
     public:
         //Pre -
         //Post Crea un arbol vacio.
         ArbolB();
 
         //Pre Tiene que recibir un elemento inicializado para insertarse en el arbol usando su nombre como clave. No puede haber ya un animal con el mismo nombre en el arbol, salvo que
-        // este este o eliminado o haya escapado.
+        // este o eliminado o haya escapado.
         //Post Devolvera 0 en caso de operacion completada exitosamente y 1 en caso de animal repetido
         int insertar(Tipo_de_animal animal);
 
@@ -200,8 +207,8 @@ class ArbolB{
         Tipo_de_animal buscar_animal(string nombre);
 
         //Pre -
-        //Post Devolvera 0 en caso de eliminacion exitosa, 1 en caso contrario que no se haya encontrado el animal a eliminar
-        int eliminar_animal(string nombre);
+        //Post Devolvera 0 en caso de eliminacion exitosa, 1 en caso contrario que no se haya encontrado el animal a eliminar, 2 en caso de falta de espacio
+        int adoptar_animal(string nombre, int espacio_disponible);
 
         //Pre -
         //Post Presentara todos los animales dentro del arbol
@@ -224,6 +231,9 @@ class ArbolB{
 
         //Post elimina todos los nodos y datos del arbol, liberando la memoria alocada
         void eliminar_todos();
+
+        //Post Muestra a todos los animales adoptables con el espacio recibido y devuelve la cantidad de animales adoptables
+        int mostrar_animales_adoptables(int espacio_disponible);
 };
 
 template<typename Tipo_de_animal>
@@ -330,7 +340,6 @@ int* resultado_insercion){
 template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::evaluar_insercion_no_proveniente_de_split_un_dato(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
  int* resultado_insercion){
-    //? EL NODO TIENE UN SOLO DATO
     if(nodo_a_insertar->get_primera_clave() > animal->get_nombre()){
         insertar_en_arbol(animal, nodo_a_insertar->get_primer_hijo(), animal_a_insertar_proviene_de_split, resultado_insercion);
     } else {
@@ -546,9 +555,11 @@ Tipo_de_animal ArbolB <Tipo_de_animal>::analizar_animal_encontrado(Tipo_de_anima
 }
 
 template<typename Tipo_de_animal>
-int ArbolB <Tipo_de_animal>::eliminar_animal(string nombre){
+int ArbolB <Tipo_de_animal>::adoptar_animal(string nombre, int espacio_disponible){
     Tipo_de_animal animal_a_eliminar = revisar_arbol(nombre, raiz);
     if(animal_a_eliminar == nullptr) return ANIMAL_NO_ENCONTRADO;
+
+    if(animal_a_eliminar->get_espacio_minimo_requerido() > espacio_disponible) return ESPACIO_INSUFICIENTE;
 
     animal_a_eliminar->eliminar();
     return COMPLETADA;
@@ -714,6 +725,39 @@ void ArbolB <Tipo_de_animal>::borrar_datos(Nodo <Tipo_de_animal>* nodo_actual){
     for(int i = 0; i < nodo_actual->get_tope_datos(); ++i){
         delete nodo_actual->get_dato_buscado(i);
     }
+}
+
+template<typename Tipo_de_animal>
+int ArbolB <Tipo_de_animal>::mostrar_animales_adoptables(int espacio_disponible){
+   int* cantidad_de_animales_adoptables = new int;
+    (*cantidad_de_animales_adoptables) = 0;
+
+    std::cout << "A continuacion, todos los animales adoptables segun el espacio ingresado:" << std::endl;
+    int sumatoria_de_animales_adoptables = mostrar_animales_adoptables(espacio_disponible, cantidad_de_animales_adoptables, raiz);
+
+    delete cantidad_de_animales_adoptables;
+    return sumatoria_de_animales_adoptables;
+}
+
+template<typename Tipo_de_animal>
+void ArbolB <Tipo_de_animal>::presentar_animales_adoptables(int espacio_disponible, int* cantidad_animales_adoptables, Nodo <Tipo_de_animal>* nodo_actual){
+    for(int i = 0; i < nodo_actual->get_tope_datos(); ++i){
+        if(nodo_actual->get_dato_buscado(i)->get_espacio_minimo_requerido() <= espacio_disponible) {
+            nodo_actual->get_dato_buscado(i)->presentar_animal();
+            (*cantidad_animales_adoptables)++;
+        }
+    }
+}
+
+template<typename Tipo_de_animal>
+int ArbolB <Tipo_de_animal>::mostrar_animales_adoptables(int espacio_disponible, int* cantidad_animales_adoptables, Nodo <Tipo_de_animal>* nodo_actual){
+    if(nodo_actual != nullptr) presentar_animales_adoptables(espacio_disponible, cantidad_animales_adoptables, nodo_actual);
+
+    if(nodo_actual->get_primer_hijo() != nullptr) mostrar_animales_adoptables(espacio_disponible, cantidad_animales_adoptables, nodo_actual->get_primer_hijo());
+    if(nodo_actual->get_segundo_hijo() != nullptr) mostrar_animales_adoptables(espacio_disponible, cantidad_animales_adoptables, nodo_actual->get_segundo_hijo());
+    if(nodo_actual->get_tercer_hijo() != nullptr) mostrar_animales_adoptables(espacio_disponible, cantidad_animales_adoptables, nodo_actual->get_tercer_hijo());
+
+    return (*cantidad_animales_adoptables);
 }
 
 

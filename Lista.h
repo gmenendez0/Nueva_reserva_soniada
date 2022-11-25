@@ -104,7 +104,7 @@ int Lista<Tipo>::obtener_id(int posicion) {
 
     if(posicion > cantidad_de_elementos) return ID_NO_ENCONTRADO;       //! CODIGO REPETIDO 1 FUNCION TEMPLATE SE PUEDE HACE
 
-    while(i != posicion - 1){
+    while(i != posicion - UNA_POSICION){
         auxiliar = auxiliar->obtener_siguiente();
         i++;
     }
@@ -117,7 +117,7 @@ char Lista<Tipo>::obtener_color(int posicion) {
     int i = 0;
     Nodo_grafo<Tipo>* auxiliar = primero;
 
-    if(posicion > cantidad_de_elementos) return ID_NO_ENCONTRADO;       //! CODIGO REPETIDO 1 FUNCION TEMPLATE SE PUEDE HACER
+    if(posicion > cantidad_de_elementos) return ID_NO_ENCONTRADO;
 
     while(i != posicion){
         auxiliar = auxiliar->obtener_siguiente();
@@ -131,7 +131,7 @@ Animal* Lista<Tipo>::obtener_animal(int posicion) {
     int i = 0;
     Nodo_grafo<Tipo>* auxiliar = primero;
 
-    if(posicion > cantidad_de_elementos) return nullptr;            //! CODIGO REPETIDO 1 FUNCION TEMPLATE SE PUEDE HACE
+    if(posicion > cantidad_de_elementos) return nullptr;
 
     while(i != posicion){
         auxiliar = auxiliar->obtener_siguiente();

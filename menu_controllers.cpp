@@ -3,6 +3,7 @@
 #include "cuidar_animales_controllers.h"
 #include "cargar_combustible_controllers.h"
 #include "rescatar_animal_controllers.h"
+#include "adoptar_animal_controllers.h"
 
 using std::cout;
 using std::cin;
@@ -102,7 +103,7 @@ void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_ani
 
         case ADOPTAR_ANIMAL:
             registro_de_animales.pasar_tiempo(combustible_auto);
-            //adoptar_animal(registro_de_animales);
+            adoptar_animal(registro_de_animales);
             break;
 
         case CARGAR_COMBUSTIBLE:
