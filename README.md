@@ -1,4 +1,4 @@
-# Nueva_reserva_soniada
+# Nueva reserva soñada
 
 Para compilar aplicar el siguiente comando en la linea de comando de linux:
         g++ *.cpp -Wall -Werror -Wconversion -o reserva_soniada
