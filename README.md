@@ -1,8 +1,8 @@
 # Nueva reserva soñada
 
-Para compilar aplicar el siguiente comando en la linea de comando de linux:
-        g++ *.cpp -Wall -Werror -Wconversion -o reserva_soniada
-Para correr el ejecutable, aplicar el siguiente comando en la linea de comando de linux:
+Para compilar aplicar el siguiente comando en la linea de comando de linux:  
+        g++ *.cpp -Wall -Werror -Wconversion -o reserva_soniada  
+Para correr el ejecutable, aplicar el siguiente comando en la linea de comando de linux:  
         ./reserva_soniada
 
                                             FUNCIONALIDADES
