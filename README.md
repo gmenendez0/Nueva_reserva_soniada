@@ -5,7 +5,7 @@ Para compilar aplicar el siguiente comando en la linea de comando de linux:
 Para correr el ejecutable, aplicar el siguiente comando en la linea de comando de linux:
         ./reserva_soniada
 
-                                                  FUNCIONALIDADES
+                                            FUNCIONALIDADES
 
 A la mayoría de la gente le gustan los animales y hay muchas personas dispuestas a cuidarlos y darles un
 hogar. Después de mucho ahorrar, se logró abrir una reserva para todos los animales que lo necesiten.
@@ -31,4 +31,4 @@ Se le deberá pedira al usuario que elija entre alguno de los animales o si dese
 
 5)Podra elegirse la cantidad de combustible a cargar al auto.
 
-6)Al terminar de usar el programa se deberá actualizara el archivo con los cambios correspondientes.
+6)Al terminar de usar el programa se deberá el archivo con los cambios correspondientes.
