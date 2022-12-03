@@ -25,10 +25,6 @@ class Animal{
         void escapar();
 
     private:
-        //Pre: -
-        //Post: Devuelve la especie del animal en forma completa.
-        string get_especie_completa();
-
         //Pre: Debe recibir el tamaño del animal
         //Post: Setea el espacio minimo requerido para que el animal pueda vivir
         void set_espacio_minimo_requerido(string tamanio);
@@ -81,6 +77,10 @@ class Animal{
 
         //POST setea el nombre del animal
         void set_nombre(string nombre);
+
+        //Pre: -
+        //Post: Devuelve la especie del animal en forma completa.
+        string get_especie_completa();
 };
 
 #endif

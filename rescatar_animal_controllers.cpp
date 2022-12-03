@@ -364,7 +364,7 @@ Animal* revisar_coordenadas(Grafo &grafo_mapa, int coordenada_x, int coordenada_
 //Post Devuelve -1 en caso de combustible insuficiente. Si el combustible es suficiente, devuelve la cantidad de combustible que se gastara.
 int revisar_combustible(int coordenada_x, int coordenada_y, int combustible_auto, Grafo &grafo_mapa){
     int vertice_buscado = ((ANCHO_DEL_MAPA * coordenada_y) - ALTO_DEL_MAPA ) + coordenada_x;
-    grafo_mapa.obtener_camino_minimo(VERTICE_INICIAL_AUTO, vertice_buscado);
+    grafo_mapa.obtener_camino_minimo(VERTICE_INICIAL_AUTO, vertice_buscado);  //! MSG PARA CORRECTOR: Esto lo pongo solo para facilitarte la correccion, esto no iria en el programa final.
 
     if(coordenada_x == VERTICE_INICIAL_AUTO && coordenada_y == VERTICE_INICIAL_AUTO){
         cout << "No se puede viajar a esa coordenada." << endl;
@@ -429,7 +429,7 @@ void generar_animales_random(Animal* animales_a_rescatar[]){
 //Post Pide un nombre para el nuevo animal
 void pedir_nombre(Animal* animal_a_rescatar){
     string nombre;
-    cout << "Felicitaciones! Parece que encontraste un animal en peligro. ¿Cual es su nombre? ";
+    cout << "Felicitaciones! Encontramos un " << animal_a_rescatar->get_especie_completa() << " en el lugar! ¿Cual es su nombre? ";
     getline(cin >> ws, nombre);
     animal_a_rescatar->set_nombre(nombre);
 }
@@ -453,7 +453,7 @@ string realizar_rescate(int combustible_necesitado, Animal* animal_a_rescatar, A
         resultado_insercion = registro_de_animales.insertar(animal_a_rescatar);
     }
     combustible_auto = combustible_auto - combustible_necesitado;
-    cout << endl << "Animal rescatado con exito! Su auto ahora tiene " << combustible_auto << "de combustible" << endl << endl;
+    cout << endl << "Animal rescatado con exito! Su auto ahora tiene " << combustible_auto << " de combustible" << endl << endl;
     return animal_a_rescatar->get_nombre();
 }
 

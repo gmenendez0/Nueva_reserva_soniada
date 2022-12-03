@@ -116,11 +116,6 @@ class ArbolB{
         &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
         //Pre
-        //Post Evalua el camino a tomar en caso de que haya un animal con el mismo nombre en el arbol. Si este animal está eliminado, lo reemplaza por el ingresante, caso contrario,
-        // devuelve error en la insercion.
-        void evaluar_repeticion_nombre(Tipo_de_animal animal_coincidente, Tipo_de_animal animal, int* resultado_insercion);
-
-        //Pre
         //Post Devuelve nullptr en caso de que no se haya encontrado un animal con el nombre buscado, caso contrario devuelve el puntero al animal buscado.
         Tipo_de_animal revisar_arbol(string nombre, Nodo <Tipo_de_animal>* nodo_a_revisar);
 
@@ -257,7 +252,7 @@ int* ArbolB<Tipo_de_animal>::insertar_en_arbol(Tipo_de_animal animal, Nodo<Tipo_
      if(nodo_a_insertar == nullptr){
         raiz = new Nodo <Tipo_de_animal>(animal);
     } else if(nodo_a_insertar->buscar_animal_con_mismo_nombre(animal->get_nombre()) != nullptr){
-         evaluar_repeticion_nombre(nodo_a_insertar->buscar_animal_con_mismo_nombre(animal->get_nombre()), animal, resultado_insercion);
+         (*resultado_insercion) = ANIMAL_REPETIDO;
     } else if(nodo_a_insertar->es_hoja()){
         evaluar_posibilidades_nodo_hoja(animal, nodo_a_insertar, animal_a_insertar_proviene_de_split, resultado_insercion);
     } else{
@@ -265,16 +260,6 @@ int* ArbolB<Tipo_de_animal>::insertar_en_arbol(Tipo_de_animal animal, Nodo<Tipo_
     }
 
     return resultado_insercion;
-}
-
-template<typename Tipo_de_animal>
-void ArbolB <Tipo_de_animal>::evaluar_repeticion_nombre(Tipo_de_animal animal_coincidente, Tipo_de_animal animal, int* resultado_insercion){
-    if(animal_coincidente->esta_eliminado()){
-        delete animal_coincidente;
-        animal_coincidente = animal;        //? AVERIGUAR COMO HACER QUE ESTO ANDE CORRECTAMENTE
-    } else {
-        (*resultado_insercion) = ANIMAL_REPETIDO;
-    }
 }
 
 template<typename Tipo_de_animal>
