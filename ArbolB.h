@@ -70,17 +70,17 @@ class ArbolB{
 
         //Pre  El animal a insertar debe venir de un previo split y el nodo a insertar debe tener dos datos.
         //Post Realiza la insercion de un dato en un nodo cuando el animal a insertar proviene de un split y el nodo a insertar tiene dos datos
-        void realizar_insercion_proveniente_de_split_dos_datos(Nodo<Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split, int*
+        void realizar_insercion_proveniente_de_split_nodo_lleno(Nodo<Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split, int*
         resultado_insercion);
 
         //Pre El nodo recibido para insertar debe tener solo un dato
         //Post Evalua las posibilidades de insercion en un nodo con un solo dato cuando la insercion no proviene de un split
-        void evaluar_insercion_no_proveniente_de_split_un_dato(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
-        int* resultado_insercion);
+        void evaluar_insercion_no_proveniente_de_split_nodo_no_lleno(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
+                                                                     int* resultado_insercion);
 
         //Pre El nodo recibido para insertar debe tener dos datos
         //Post Evalua las posibilidades de insercion en un nodo con un dos datos cuando la insercion no proviene de un split
-        void evaluar_insercion_no_proveniente_de_split_dos_datos(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
+        void evaluar_insercion_no_proveniente_de_split_nodo_lleno(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
         int* resultado_insercion);
 
         //Pre El nodo a splitear debe ser raiz y hoja.
@@ -90,12 +90,12 @@ class ArbolB{
 
         //Pre El nodo a splitear debe ser hoja y tener un dato.
         //Post Realiza el split de un nodo hoja de un dato
-        void realizar_split_nodo_hoja_un_dato(Nodo<Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
+        void realizar_split_nodo_hoja_no_lleno(Nodo<Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
         dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
         //Pre El nodo a splitear debe tener dos datos y ser hoja
         //Post Realiza el split de un nodo hoja de dos datos.
-        void realizar_split_nodo_hoja_dos_datos(Nodo<Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
+        void realizar_split_nodo_hoja_lleno(Nodo<Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
         dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion);
 
         //Pre El nodo padre del nodo a splitear debe tener un dato.
@@ -306,13 +306,13 @@ resultado_insercion){
     if(nodo_a_insertar->get_tope_datos() == UN_DATO){
         realizar_insercion(nodo_a_insertar, animal);
     } else {
-        realizar_insercion_proveniente_de_split_dos_datos(nodo_a_insertar, animal, animal_a_insertar_proviene_de_split, resultado_insercion);
+        realizar_insercion_proveniente_de_split_nodo_lleno(nodo_a_insertar, animal, animal_a_insertar_proviene_de_split,
+                                                           resultado_insercion);
     }
 }
 
 template<typename Tipo_de_animal>
-void ArbolB <Tipo_de_animal>::realizar_insercion_proveniente_de_split_dos_datos(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
-int* resultado_insercion){
+void ArbolB <Tipo_de_animal>::realizar_insercion_proveniente_de_split_nodo_lleno(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion){
     if(animal_es_mas_grande(animal->get_nombre(), nodo_a_insertar)){
         split_nodo_con_hijos(nodo_a_insertar, nodo_a_insertar->get_primer_dato(), nodo_a_insertar->get_segundo_dato(), animal, animal_a_insertar_proviene_de_split, resultado_insercion);
     } else if(animal_es_intermedio(animal->get_nombre(), nodo_a_insertar)) {
@@ -323,8 +323,7 @@ int* resultado_insercion){
 }
 
 template<typename Tipo_de_animal>
-void ArbolB <Tipo_de_animal>::evaluar_insercion_no_proveniente_de_split_un_dato(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
- int* resultado_insercion){
+void ArbolB <Tipo_de_animal>::evaluar_insercion_no_proveniente_de_split_nodo_no_lleno(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion){
     if(nodo_a_insertar->get_primera_clave() > animal->get_nombre()){
         insertar_en_arbol(animal, nodo_a_insertar->get_primer_hijo(), animal_a_insertar_proviene_de_split, resultado_insercion);
     } else {
@@ -333,7 +332,7 @@ void ArbolB <Tipo_de_animal>::evaluar_insercion_no_proveniente_de_split_un_dato(
 }
 
 template<typename Tipo_de_animal>
-void ArbolB <Tipo_de_animal>::evaluar_insercion_no_proveniente_de_split_dos_datos(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
+void ArbolB <Tipo_de_animal>::evaluar_insercion_no_proveniente_de_split_nodo_lleno(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
  int* resultado_insercion){
     if(animal_es_mas_grande(animal->get_nombre(), nodo_a_insertar)){
         insertar_en_arbol(animal, nodo_a_insertar->get_tercer_hijo(), animal_a_insertar_proviene_de_split, resultado_insercion);
@@ -348,9 +347,11 @@ template<typename Tipo_de_animal>
 void ArbolB <Tipo_de_animal>::evaluar_insercion_no_proveniente_de_split(Nodo <Tipo_de_animal>* nodo_a_insertar, Tipo_de_animal animal, bool &animal_a_insertar_proviene_de_split,
 int* resultado_insercion){
     if(nodo_a_insertar->get_tope_datos() == UN_DATO){
-        evaluar_insercion_no_proveniente_de_split_un_dato(nodo_a_insertar, animal, animal_a_insertar_proviene_de_split, resultado_insercion);
+        evaluar_insercion_no_proveniente_de_split_nodo_no_lleno(nodo_a_insertar, animal,
+                                                                animal_a_insertar_proviene_de_split,
+                                                                resultado_insercion);
     } else{
-        evaluar_insercion_no_proveniente_de_split_dos_datos(nodo_a_insertar, animal, animal_a_insertar_proviene_de_split, resultado_insercion);
+        evaluar_insercion_no_proveniente_de_split_nodo_lleno(nodo_a_insertar, animal, animal_a_insertar_proviene_de_split, resultado_insercion);
     }
 }
 
@@ -360,9 +361,9 @@ dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion)
     if(nodo_a_splitear->es_raiz()){
         realizar_split_nodo_hoja_raiz(nodo_a_splitear, dato_menor, dato_intermedio, dato_mayor);
     } else if(nodo_a_splitear->get_nodo_padre()->get_tope_datos() == UN_DATO){
-        realizar_split_nodo_hoja_un_dato(nodo_a_splitear, dato_menor, dato_intermedio, dato_mayor, animal_a_insertar_proviene_de_split, resultado_insercion);
+        realizar_split_nodo_hoja_no_lleno(nodo_a_splitear, dato_menor, dato_intermedio, dato_mayor, animal_a_insertar_proviene_de_split, resultado_insercion);
     } else{
-        realizar_split_nodo_hoja_dos_datos(nodo_a_splitear, dato_menor, dato_intermedio, dato_mayor, animal_a_insertar_proviene_de_split, resultado_insercion);
+        realizar_split_nodo_hoja_lleno(nodo_a_splitear, dato_menor, dato_intermedio, dato_mayor, animal_a_insertar_proviene_de_split, resultado_insercion);
     }
 }
 
@@ -381,7 +382,7 @@ dato_mayor){
 }
 
 template<typename Tipo_de_animal>
-void ArbolB <Tipo_de_animal>::realizar_split_nodo_hoja_un_dato(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
+void ArbolB <Tipo_de_animal>::realizar_split_nodo_hoja_no_lleno(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal
 dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion){
     Nodo<Tipo_de_animal>* nodo_menor = new Nodo<Tipo_de_animal>(dato_menor, nullptr, nodo_a_splitear->get_nodo_padre());
     Nodo<Tipo_de_animal>* nodo_mayor = new Nodo<Tipo_de_animal>(dato_mayor, nullptr, nodo_a_splitear->get_nodo_padre());
@@ -394,7 +395,7 @@ dato_mayor, bool &animal_a_insertar_proviene_de_split, int* resultado_insercion)
 }
 
 template<typename Tipo_de_animal>
-void ArbolB <Tipo_de_animal>::realizar_split_nodo_hoja_dos_datos(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal dato_mayor,
+void ArbolB <Tipo_de_animal>::realizar_split_nodo_hoja_lleno(Nodo <Tipo_de_animal>* nodo_a_splitear, Tipo_de_animal dato_menor, Tipo_de_animal dato_intermedio, Tipo_de_animal dato_mayor,
   bool &animal_a_insertar_proviene_de_split, int* resultado_insercion){
     Nodo<Tipo_de_animal>* nuevo_nodo_menor = new Nodo<Tipo_de_animal>(dato_menor);
     Nodo<Tipo_de_animal>* nuevo_nodo_mayor = new Nodo<Tipo_de_animal>(dato_mayor);
