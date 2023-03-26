@@ -27,5 +27,4 @@ public:
     virtual ~camino_minimo() = default;
 };
 
-
 #endif //GRAFOS_CAMINOMINIMO_H
