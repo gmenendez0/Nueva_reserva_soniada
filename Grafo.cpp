@@ -26,7 +26,6 @@ void Grafo::agregar_camino(int id_origen, int id_destino, int peso) {
     if(posicion_destino == POSICION_NO_ENCONTRADA) cout << "El vertice " << id_destino << " no existe en el grafo" << endl;
 
     if(posicion_no_encontrada(posicion_origen, posicion_destino)) matriz_de_adyacencia[posicion_origen][posicion_destino] = peso;
-
 }
 
 void Grafo::obtener_camino_minimo(int id_origen, int id_destino) {
@@ -68,7 +67,7 @@ void Grafo::inicializar_nuevo_vertice(int** nueva_adyacente) {
         nueva_adyacente[vertices->obtener_cantidad_de_elementos()][i] = INFINITO;
         nueva_adyacente[i][vertices->obtener_cantidad_de_elementos()] = INFINITO;
     }
-    nueva_adyacente[vertices->obtener_cantidad_de_elementos()][vertices -> obtener_cantidad_de_elementos()] = 0;
+    nueva_adyacente[vertices->obtener_cantidad_de_elementos()][vertices->obtener_cantidad_de_elementos()] = 0;
 }
 
 void Grafo::liberar_matriz_adyacencia() {
