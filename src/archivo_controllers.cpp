@@ -65,7 +65,7 @@ void inicializar_registro(std::ifstream &archivo_animales, ArbolB<Animal*> &regi
 int abrir_archivo(ArbolB<Animal*> &registro_de_animales){
     std::ifstream archivo_animales(NOMBRE_CSV);
     if(!archivo_animales.is_open()){
-        cout<<"Error al abrir el archivo. Compruebe que exista y que no este corrompido y vuelva a intentar."<<endl;
+        cout<<"Error al abrir el archivo de animales. Compruebe que exista y que no este corrompido y vuelva a intentar."<<endl;
         return ERROR;
     }
 

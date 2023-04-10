@@ -14,7 +14,7 @@ const int MAXIMO_NAFTA_CAMIONETA = 100;
 const int LIMITE_ANIMALES_ESCAPADOS = 3;
 const int EXITO = 0;
 const int ERROR = -1;
-const std::string NOMBRE_CSV = "animales.csv";
+const std::string NOMBRE_CSV = "../resources/animales.csv";
 const int ESPACIO_INSUFICIENTE = 2;
 
 template<typename Tipo_de_animal>
