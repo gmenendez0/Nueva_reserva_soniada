@@ -1,28 +1,24 @@
-#include "ArbolB.h"
-#include "archivo_controllers.h"
 #include "animal.h"
 #include "User_menu.h"
+#include "Reserva_animal.h"
 
-const int UNA_ACCION = 1;
 const int GUARDAR_Y_SALIR = 7;
-const int COMBUSTIBLE_LLENO = 100;
 
 int main(){
     srand((unsigned)time(nullptr));
-    ArbolB<Animal*> registro_de_animales;
-    int combustible_auto = COMBUSTIBLE_LLENO;
-
-    int resultado_lectura = abrir_archivo(registro_de_animales);
-    if (resultado_lectura) return ERROR;
 
     User_menu user_menu;
+    Reserva_animal reserva;
+
     int opcion_elegida = user_menu.mostrar_menu();
-    user_menu.activar_opcion_elegida(opcion_elegida, registro_de_animales, combustible_auto);
+    reserva.activar_opcion_elegida(opcion_elegida);
 
     while(opcion_elegida != GUARDAR_Y_SALIR){
         opcion_elegida = user_menu.mostrar_menu();
-        user_menu.activar_opcion_elegida(opcion_elegida, registro_de_animales, combustible_auto);
+        reserva.activar_opcion_elegida(opcion_elegida);
     }
+
+    user_menu.imprimir_mensaje_despedida();
 
     return 0;
 }

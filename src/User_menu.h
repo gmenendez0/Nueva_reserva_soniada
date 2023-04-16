@@ -9,11 +9,6 @@
 
 class User_menu {
 private:
-    Rescatar_animal rescatar_animales_controllers;
-    Buscar_animal buscar_animal_controllers;
-    Cuidar_animales cuidar_animales_controllers;
-    Adoptar_animal adoptar_animal_controllers;
-    Cargar_combustible cargar_combustible_controllers;
     int cantidad_acciones_ejecutadas;
 
 public:
@@ -23,15 +18,11 @@ public:
     //Post Imprime por consola el menu de acciones para el usuario
     int mostrar_menu();
 
-    //Pre Debe recibir una opcion elegida y el arbol de los animales
-    //Post Activa las debidas funciones para ejecutar al accion del usuario
-    void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_animales, int &combustible_auto);
-
-private:
     //Pre
     //Post Imprime el mensaje de despedida al usuario
     void imprimir_mensaje_despedida();
 
+private:
     //Pre Debe recibir la cantidad de acciones ejecutadas por el usuario
     //Post Imprime por consola el menu de acciones para el usuario
     int imprimir_menu();
@@ -43,7 +34,6 @@ private:
     //Pre Debe recibir una respuesta
     //Post Devuelve true en caso de que la respuesta sea válida (valores 1 - 7 inclusive), false caso contrario
     bool respuesta_es_valida(int respuesta);
-
 };
 
 
