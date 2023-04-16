@@ -1,4 +1,4 @@
-#include "archivo_controllers.h"
+#include "CSV_Handler.h"
 #include <iostream>
 #include "animal.h"
 #include "gato.h"
@@ -16,15 +16,13 @@ using std::cout;
 using std::string;
 using std::endl;
 
-//Pre: Debe recibir todas las caracteristicas de un animal y la lista de animales
-//Post: Da de alta un animal en el arbol con los datos recibidos.
 template <typename Tipo_de_animal>
-void crear_animal(string nombre, int edad, string tamanio, char especie, string personalidad, ArbolB<Animal*> &registro_de_animales){
+void CSV_Handler::crear_animal(string nombre, int edad, string tamanio, char especie, string personalidad, ArbolB<Animal*> &registro_de_animales){
     Animal* nuevo_animal = new Tipo_de_animal(nombre, edad, tamanio, especie, personalidad);
     registro_de_animales.insertar(nuevo_animal);
 }
 
-void revisar_especie(string nombre, int edad, string tamanio, char especie, string personalidad, ArbolB<Animal*> &registro_de_animales){
+void CSV_Handler::revisar_especie(string nombre, int edad, string tamanio, char especie, string personalidad, ArbolB<Animal*> &registro_de_animales){
 
     if(especie == 'G'){
         crear_animal<Gato>(nombre, edad, tamanio, especie, personalidad, registro_de_animales);
@@ -43,9 +41,7 @@ void revisar_especie(string nombre, int edad, string tamanio, char especie, stri
     }
 }
 
-//Pre: Debe recibir un archivo csv con los datos de los animales y una arbol vacio de animales
-//Post: Devuelve el arbol inicializado con los datos leidos del archivo
-void inicializar_registro(std::ifstream &archivo_animales, ArbolB<Animal*> &registro_de_animales){
+void CSV_Handler::inicializar_registro(std::ifstream &archivo_animales, ArbolB<Animal*> &registro_de_animales){
     string especie;
     string edad;
     string nombre;
@@ -62,7 +58,7 @@ void inicializar_registro(std::ifstream &archivo_animales, ArbolB<Animal*> &regi
     }
 }
 
-int abrir_archivo(ArbolB<Animal*> &registro_de_animales){
+int CSV_Handler::abrir_archivo(ArbolB<Animal*> &registro_de_animales){
     std::ifstream archivo_animales(NOMBRE_CSV);
     if(!archivo_animales.is_open()){
         cout<<"Error al abrir el archivo de animales. Compruebe que exista y que no este corrompido y vuelva a intentar."<<endl;
@@ -74,6 +70,3 @@ int abrir_archivo(ArbolB<Animal*> &registro_de_animales){
 
     return EXITO;
 }
-
-
-

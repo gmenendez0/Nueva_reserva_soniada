@@ -1,5 +1,4 @@
 #include "Reserva_animal.h"
-#include "archivo_controllers.h"
 
 const int LISTAR_ANIMALES = 1;
 const int RESCATAR_ANIMAL = 2;
@@ -12,7 +11,7 @@ const int COMBUSTIBLE_LLENO = 100;
 
 Reserva_animal::Reserva_animal() {
     combustible_auto = COMBUSTIBLE_LLENO;
-    int resultado_lectura = abrir_archivo(registro_de_animales);
+    int resultado_lectura = csv_animales_controllers.abrir_archivo(registro_de_animales);
     if (resultado_lectura == ERROR) exit(ERROR);
 }
 

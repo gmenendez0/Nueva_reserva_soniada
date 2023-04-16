@@ -6,6 +6,7 @@
 #include "Cuidar_animales.h"
 #include "Adoptar_animal.h"
 #include "Cargar_combustible.h"
+#include "CSV_Handler.h"
 
 class Reserva_animal {
 
@@ -15,6 +16,8 @@ private:
     Cuidar_animales cuidar_animales_controllers;
     Adoptar_animal adoptar_animal_controllers;
     Cargar_combustible cargar_combustible_controllers;
+    CSV_Handler csv_animales_controllers;
+
     ArbolB<Animal*> registro_de_animales;
     int combustible_auto;
 
