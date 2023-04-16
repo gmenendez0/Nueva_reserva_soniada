@@ -1,6 +1,6 @@
-#include "animal.h"
-#include "User_menu.h"
-#include "Reserva_animal.h"
+#include "Animal/Animal.h"
+#include "User_interface/User_menu.h"
+#include "Reserva/Reserva_animal.h"
 
 const int GUARDAR_Y_SALIR = 7;
 
