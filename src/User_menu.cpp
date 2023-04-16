@@ -1,9 +1,5 @@
+#include "User_menu.h"
 #include "menu_controllers.h"
-#include "buscar_animal.h"
-#include "cuidar_animales_controllers.h"
-#include "cargar_combustible_controllers.h"
-#include "rescatar_animal_controllers.h"
-#include "adoptar_animal_controllers.h"
 
 using std::cout;
 using std::cin;
@@ -19,15 +15,15 @@ const int CARGAR_COMBUSTIBLE = 6;
 const int GUARDAR_Y_SALIR = 7;
 const int UNA_ACCION = 1;
 
-//Pre Debe recibir una respuesta
-//Post Devuelve true en caso de que la respuesta sea válida (valores 1 - 7 inclusive), false caso contrario
-bool respuesta_es_valida(int respuesta){
+User_menu::User_menu() {
+    cantidad_acciones_ejecutadas = 0;
+}
+
+bool User_menu::respuesta_es_valida(int respuesta){
     return (respuesta >= LISTAR_ANIMALES && respuesta <= GUARDAR_Y_SALIR);
 }
 
-//Pre Debe recibir una respuesta
-//Post Chequea si la respuesta es válida, en caso de no serla vuelve a pedir una respuesta al usuario
-void chequear_entrada(int &respuesta){
+void User_menu::chequear_entrada(int &respuesta){
     while(!respuesta_es_valida(respuesta)){
         cout << "Usted a ingresado un valor invalido. Porfavor, vuelva a intentar:  ";
         cin.clear();
@@ -37,12 +33,10 @@ void chequear_entrada(int &respuesta){
     }
 }
 
-//Pre Debe recibir la cantidad de acciones ejecutadas por el usuario
-//Post Imprime por consola el menu de acciones para el usuario
-int imprimir_menu(int cantidad_acciones){
+int User_menu::imprimir_menu(){
     int respuesta;
 
-    if(cantidad_acciones == UNA_ACCION){
+    if(cantidad_acciones_ejecutadas == 0){
         cout << "Bienvenido al sistema de rescate de animales." << endl << "¿Qué desea realizar?" << endl << endl;
     } else {
         cout << "¿Algo más?" << endl << endl;
@@ -64,20 +58,18 @@ int imprimir_menu(int cantidad_acciones){
     return respuesta;
 }
 
-int mostrar_menu(int &cantidad_acciones){
-    int respuesta = imprimir_menu(cantidad_acciones);
-    cantidad_acciones++;
+int User_menu::mostrar_menu(){
+    int respuesta = imprimir_menu();
+    cantidad_acciones_ejecutadas++;
 
     return respuesta;
 }
 
-//Pre
-//Post Imprime el mensaje de despedida al usuario
-void imprimir_mensaje_despedida(){
+void User_menu::imprimir_mensaje_despedida(){
     cout << "Guardando y saliendo..." << endl;
 }
 
-void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_animales, int &combustible_auto){
+void User_menu::activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_animales, int &combustible_auto){
     switch(opcion_elegida){
         case LISTAR_ANIMALES:
             registro_de_animales.pasar_tiempo(combustible_auto);
@@ -86,31 +78,32 @@ void activar_opcion_elegida(int opcion_elegida, ArbolB<Animal*> &registro_de_ani
 
         case RESCATAR_ANIMAL:
             registro_de_animales.pasar_tiempo(combustible_auto);
-            rescatar_animal(registro_de_animales, combustible_auto);
+            rescatar_animales_controllers.rescatar_animal(registro_de_animales, combustible_auto);
             break;
 
         case BUSCAR_ANIMAL:
             registro_de_animales.pasar_tiempo(combustible_auto);
-            proceso_de_busqueda(registro_de_animales);
+            buscar_animal_controllers.proceso_de_busqueda(registro_de_animales);
             break;
 
         case CUIDAR_ANIMALES:
             registro_de_animales.pasar_tiempo(combustible_auto);
-            cuidar_animales(registro_de_animales);
+            cuidar_animales_controllers.cuidar_animales(registro_de_animales);
             break;
 
         case ADOPTAR_ANIMAL:
             registro_de_animales.pasar_tiempo(combustible_auto);
-            adoptar_animal(registro_de_animales);
+            adoptar_animal_controllers.adoptar_animal(registro_de_animales);
             break;
 
         case CARGAR_COMBUSTIBLE:
-            cargar_combustible(combustible_auto);
+            cargar_combustible_controllers.cargar_combustible(combustible_auto);
             break;
 
         case GUARDAR_Y_SALIR:
             registro_de_animales.pasar_tiempo(combustible_auto);
             registro_de_animales.guardar_datos_en_archivo();
+            registro_de_animales.eliminar_todos();
             imprimir_mensaje_despedida();
             break;
     }

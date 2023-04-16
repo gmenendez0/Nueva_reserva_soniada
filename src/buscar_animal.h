@@ -1,8 +1,6 @@
 #ifndef __BUSCAR_ANIMAL_H__
 #define __BUSCAR_ANIMAL_H__
 
-//#include "lista.h"
-//#include "animal.h"
 #include "animal.h"
 #include "ArbolB.h"
 

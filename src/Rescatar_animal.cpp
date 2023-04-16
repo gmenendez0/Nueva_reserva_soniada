@@ -1,4 +1,4 @@
-#include "rescatar_animal_controllers.h"
+#include "Rescatar_animal.h"
 #include "Grafo.h"
 #include "ArbolB.h"
 #include "gato.h"
@@ -58,9 +58,7 @@ const char COLOR_NEGRO = 'N';
 const char COLOR_MARRON_OSCURO = 'M';
 const char COLOR_MARRON_CLARO = 'C';
 
-//Pre
-//Post Inicializa las aristas de las 4 esquinas
-void inicializar_aristas_vertices_esquinas(Grafo &grafo_mapa){
+void Rescatar_animal::inicializar_aristas_vertices_esquinas(Grafo &grafo_mapa){
     grafo_mapa.agregar_camino(ID_PRIMER_VERTICE, ID_VERTICE_DERECHO_PRIMER_VERTICE, PESO_A_VERTICE_NEGRO);
     grafo_mapa.agregar_camino(ID_PRIMER_VERTICE, ID_VERTICE_INFERIOR_PRIMER_VERTICE, PESO_A_VERTICE_GRIS);
 
@@ -74,9 +72,7 @@ void inicializar_aristas_vertices_esquinas(Grafo &grafo_mapa){
     grafo_mapa.agregar_camino(ID_ULTIMO_VERTICE, ID_VERTICE_IZQUIERDO_ULTIMO_VERTICE, PESO_A_VERTICE_GRIS);
 }
 
-//Pre
-//Post Devuelve el peso de la arista que conectaria al vertice del id recibido.
-int determinar_peso(Grafo &grafo_mapa, int id_vertice){
+int Rescatar_animal::determinar_peso(Grafo &grafo_mapa, int id_vertice){
     int peso;
 
     if(grafo_mapa.devolver_color_vertice(id_vertice) ==  COLOR_NEGRO){
@@ -92,9 +88,7 @@ int determinar_peso(Grafo &grafo_mapa, int id_vertice){
     return peso;
 }
 
-//Pre
-//Post Inicializa las aristas de la fila de la cima
-void inicializar_aristas_vertices_superiores(Grafo &grafo_mapa){
+void Rescatar_animal::inicializar_aristas_vertices_superiores(Grafo &grafo_mapa){
     int peso_camino_derecho;
     int peso_camino_izquierdo;
     int peso_camino_inferior;
@@ -110,9 +104,7 @@ void inicializar_aristas_vertices_superiores(Grafo &grafo_mapa){
     }
 }
 
-//Pre
-//Post Inicializa las aristas de la fila del fondo
-void inicializar_aristas_vertices_inferiores(Grafo &grafo_mapa){
+void Rescatar_animal::inicializar_aristas_vertices_inferiores(Grafo &grafo_mapa){
     int peso_camino_derecho;
     int peso_camino_izquierdo;
     int peso_camino_superior;
@@ -128,9 +120,7 @@ void inicializar_aristas_vertices_inferiores(Grafo &grafo_mapa){
     }
 }
 
-//Pre
-//Post Inicializa las aristas de la columna derecha del to.do
-void inicializar_aristas_vertices_derechos(Grafo &grafo_mapa){
+void Rescatar_animal::inicializar_aristas_vertices_derechos(Grafo &grafo_mapa){
     int peso_camino_superior;
     int peso_camino_inferior;
     int peso_camino_izquierdo;
@@ -146,9 +136,7 @@ void inicializar_aristas_vertices_derechos(Grafo &grafo_mapa){
     }
 }
 
-//Pre
-//Post Inicializa las aristas de la columna izquierda del to.do
-void inicializar_aristas_vertices_izquierdos(Grafo &grafo_mapa){
+void Rescatar_animal::inicializar_aristas_vertices_izquierdos(Grafo &grafo_mapa){
     int peso_camino_superior;
     int peso_camino_inferior;
     int peso_camino_derecho;
@@ -164,9 +152,7 @@ void inicializar_aristas_vertices_izquierdos(Grafo &grafo_mapa){
     }
 }
 
-//Pre
-//Post Inicializa las aristas de los vertices centrales
-void inicializar_aristas_vertices_centrales(Grafo &grafo_mapa){
+void Rescatar_animal::inicializar_aristas_vertices_centrales(Grafo &grafo_mapa){
     int peso_camino_superior;
     int peso_camino_inferior;
     int peso_camino_derecho;
@@ -191,9 +177,7 @@ void inicializar_aristas_vertices_centrales(Grafo &grafo_mapa){
     }
 }
 
-//Pre
-//Post Inicializa todas las aristas
-void inicializar_aristas(Grafo &grafo_mapa){
+void Rescatar_animal::inicializar_aristas(Grafo &grafo_mapa){
     inicializar_aristas_vertices_esquinas(grafo_mapa);
     inicializar_aristas_vertices_superiores(grafo_mapa);
     inicializar_aristas_vertices_inferiores(grafo_mapa);
@@ -202,9 +186,7 @@ void inicializar_aristas(Grafo &grafo_mapa){
     inicializar_aristas_vertices_centrales(grafo_mapa);
 }
 
-//Pre
-//Post Devuelve true en caso de que el id de vertice coincida con una de las posiciones random
-bool coincide_con_posicion_random(int id_vertice, int posiciones_random[]){
+bool Rescatar_animal::coincide_con_posicion_random(int id_vertice, int posiciones_random[]){
     bool coincide = false;
 
     for(int j = 0; j < MAXIMO_ANIMALES_A_RESCATAR; ++j){
@@ -214,17 +196,13 @@ bool coincide_con_posicion_random(int id_vertice, int posiciones_random[]){
     return coincide;
 }
 
-//Pre
-//Post Inicializa el vector de coordenadas random
-void inicializar_posiciones_random(int posiciones_random[]){
+void Rescatar_animal::inicializar_posiciones_random(int posiciones_random[]){
     for(int i = 0; i < MAXIMO_POSICIONES_RANDOM_NECESITADAS; ++i){
         posiciones_random[i] = SEGUNDO_VERTICE + (rand() % CANTIDAD_DE_VERTICES_NECESITADOS);
     }
 }
 
-//Pre
-//Post Inicializa todos los vertices del grafo.
-void inicializar_vertices(std::ifstream &archivo_vertices, Grafo &grafo_mapa, Animal* animales_a_rescatar[]){
+void Rescatar_animal::inicializar_vertices(std::ifstream &archivo_vertices, Grafo &grafo_mapa, Animal* animales_a_rescatar[]){
     int posiciones_random[MAXIMO_POSICIONES_RANDOM_NECESITADAS];
     inicializar_posiciones_random(posiciones_random);
 
@@ -244,9 +222,7 @@ void inicializar_vertices(std::ifstream &archivo_vertices, Grafo &grafo_mapa, An
     }
 }
 
-//Pre
-//Post Abre el archivo de vertices y si no se puede, exitea el programa de manera controlada
-void abrir_archivo_vertices(Grafo &grafo_mapa, Animal* animales_a_rescatar[]){
+void Rescatar_animal::abrir_archivo_vertices(Grafo &grafo_mapa, Animal* animales_a_rescatar[]){
     std::ifstream archivo_vertices(ARCHIVO_VERTICES);
     if(!archivo_vertices.is_open()){
         cout<<"Error al abrir el archivo de vertices. Compruebe que exista y que no este corrompido y vuelva a intentar."<<endl;
@@ -257,16 +233,12 @@ void abrir_archivo_vertices(Grafo &grafo_mapa, Animal* animales_a_rescatar[]){
     archivo_vertices.close();
 }
 
-//Pre: El grafo debe tener forma CUADRADA.
-//Post: Llena el grafo con todos sus vertices y aristas.
-void llenar_grafo(Grafo &grafo_mapa, Animal* animales_a_rescatar[]){
+void Rescatar_animal::llenar_grafo(Grafo &grafo_mapa, Animal* animales_a_rescatar[]){
     abrir_archivo_vertices(grafo_mapa, animales_a_rescatar);
     inicializar_aristas(grafo_mapa);
 }
 
-//Pre
-//Post Realiza la impresion adecuada del contenido del vertice
-void realizar_impresion(Grafo &grafo_mapa, int &iterador_vertices){
+void Rescatar_animal::realizar_impresion(Grafo &grafo_mapa, int &iterador_vertices){
     iterador_vertices++;
     if(iterador_vertices == VERTICE_INICIAL_AUTO){
         cout << "R" << " ";
@@ -277,9 +249,7 @@ void realizar_impresion(Grafo &grafo_mapa, int &iterador_vertices){
     }
 }
 
-//Pre
-//Post Imprime el grafo por pantalla
-void imprimir_grafo(Grafo &grafo_mapa){
+void Rescatar_animal::imprimir_grafo(Grafo &grafo_mapa){
     int iterador_vertices = 0;
 
     cout << "  1 2 3 4 5 6 7 8";
@@ -294,9 +264,7 @@ void imprimir_grafo(Grafo &grafo_mapa){
     cout << endl << endl;
 }
 
-//Pre
-//Post Presenta al usuario el funcionamiento del rescate de animales.
-void presentar(){
+void Rescatar_animal::presentar(){
     cout << "Bienvenido al sistema de rescate de animales. Se ha detectado posible movimiento animal en las posiciones que han sido marcadas con una A en el mapa." << endl;
     cout << "Para averiguar mas caracteristicas sobre el posible animal y poder rescatarlo, dirigete hacia el. Recorda que para dirigirte a un animal, tenes que contar con combustible "
             "suficiente." << endl;
@@ -311,15 +279,11 @@ void presentar(){
     cout << endl;
 }
 
-//Pre
-//Post Devuelve true si el usuario ingreso una opcion invalida (fuera del rango 1-8), false en caso contrario.
-bool respuesta_fuera_de_rango(int respuesta){
+bool Rescatar_animal::respuesta_fuera_de_rango(int respuesta){
     return (respuesta < COORDENADA_MINIMA_PERMITIDA || respuesta > COORDENADA_MAXIMA_PERMITIDA);
 }
 
-//Pre
-//Post Chequea la validez de las coordenadas ingresadas, en caso de no serlas las repide
-void revisar_respuesta(int &respuesta){
+void Rescatar_animal::revisar_respuesta(int &respuesta){
     while(respuesta_fuera_de_rango(respuesta)){
         cout << "Coordenada invalida. Porfavor vuelva a intentar con valores validos (1-8): ";
         cin.clear();
@@ -329,9 +293,7 @@ void revisar_respuesta(int &respuesta){
     }
 }
 
-//Pre
-//Post Pide al usuario que ingrese un par de coordendas
-void pedir_coordenadas(int &coordenada_usuario_x, int &coordenada_usuario_y){
+void Rescatar_animal::pedir_coordenadas(int &coordenada_usuario_x, int &coordenada_usuario_y){
     cout << "Ingrese la coordenada X a donde desea desplazarse: ";
     cin >> coordenada_usuario_x;
     revisar_respuesta(coordenada_usuario_x);
@@ -344,9 +306,7 @@ void pedir_coordenadas(int &coordenada_usuario_x, int &coordenada_usuario_y){
     revisar_respuesta(coordenada_usuario_y);
 }
 
-//Pre
-//Post Devuelve nullptr en caso de que no haya ningun animal en la coordenada seleccionada, caso contrario devuelve un puntero al animal
-Animal* revisar_coordenadas(Grafo &grafo_mapa, int coordenada_x, int coordenada_y){
+Animal* Rescatar_animal::revisar_coordenadas(Grafo &grafo_mapa, int coordenada_x, int coordenada_y){
     if(coordenada_x == VERTICE_INICIAL_AUTO && coordenada_y == VERTICE_INICIAL_AUTO) {
         cout << "No se puede viajar a esa coordenada." << endl;
         return nullptr;
@@ -360,11 +320,9 @@ Animal* revisar_coordenadas(Grafo &grafo_mapa, int coordenada_x, int coordenada_
     return animal_buscado;
 }
 
-//Pre
-//Post Devuelve -1 en caso de combustible insuficiente. Si el combustible es suficiente, devuelve la cantidad de combustible que se gastara.
-int revisar_combustible(int coordenada_x, int coordenada_y, int combustible_auto, Grafo &grafo_mapa){
+int Rescatar_animal::revisar_combustible(int coordenada_x, int coordenada_y, int combustible_auto, Grafo &grafo_mapa){
     int vertice_buscado = ((ANCHO_DEL_MAPA * coordenada_y) - ALTO_DEL_MAPA ) + coordenada_x;
-    grafo_mapa.obtener_camino_minimo(VERTICE_INICIAL_AUTO, vertice_buscado);  //! MSG PARA CORRECTOR: Esto lo pongo solo para facilitarte la correccion, esto no iria en el programa final.
+    //grafo_mapa.obtener_camino_minimo(VERTICE_INICIAL_AUTO, vertice_buscado);  //! For debug only.
 
     if(coordenada_x == VERTICE_INICIAL_AUTO && coordenada_y == VERTICE_INICIAL_AUTO){
         cout << "No se puede viajar a esa coordenada." << endl;
@@ -380,15 +338,11 @@ int revisar_combustible(int coordenada_x, int coordenada_y, int combustible_auto
     return combustible_necesitado;
 }
 
-//Pre
-//Post Devuelve true en caso de respuesta válida (0 O 1), false caso contrario
-bool respuesta_valida_menu_error(int respuesta){
+bool Rescatar_animal::respuesta_valida_menu_error(int respuesta){
     return (respuesta == VOLVER_AL_MENU || respuesta == REINTENTAR);
 }
 
-//Pre
-//Post Chequea la respuesta del usuario del menu de error. En caso de ser invalida la vuelve a pedir
-void chequear_respuesta_menu_error(int &respuesta){
+void Rescatar_animal::chequear_respuesta_menu_error(int &respuesta){
     while(!respuesta_valida_menu_error(respuesta)){
         cout << "Respuesta invalida, vuelva a intentar con valores validos (0 volver a intentar, 1 volver al menu principal): ";
         cin.clear();
@@ -398,9 +352,7 @@ void chequear_respuesta_menu_error(int &respuesta){
     }
 }
 
-//Pre
-//Post Despliega el menu de opciones de error para el usuario y redirige al lugar correspondiente
-void desplegar_menu_error(ArbolB <Animal*> &registro_de_animales, int &combustible_auto){
+void Rescatar_animal::desplegar_menu_error(ArbolB <Animal*> &registro_de_animales, int &combustible_auto){
     int respuesta;
     cout << "Vemos que, por una razon u otra, no pudiste llegar a donde deseabas. ¿Queres volver a intentarlo (0) o preferis volver al menu principal (1)? ";
     cin >> respuesta;
@@ -410,42 +362,32 @@ void desplegar_menu_error(ArbolB <Animal*> &registro_de_animales, int &combustib
     rescatar_animal(registro_de_animales, combustible_auto);
 }
 
-//Pre
-//Post Devuelve true en caso de que haya habido un error a la hora de moverse a donde el usuario quiso
-bool hubo_un_error(int resultado_inspeccion, Animal* animal_a_rescatar){
+bool Rescatar_animal::hubo_un_error(int resultado_inspeccion, Animal* animal_a_rescatar){
     return (resultado_inspeccion == ERROR || animal_a_rescatar == nullptr);
 }
 
-//Pre
-//Post Genera animales para ser rescatados
-void generar_animales_random(Animal* animales_a_rescatar[]){
+void Rescatar_animal::generar_animales_random(Animal* animales_a_rescatar[]){
     animales_a_rescatar[PRIMERA_POSICION] = new Gato("nombre_predefinido", UN_ANIO, "pequeño", 'G', "travieso");
     animales_a_rescatar[SEGUNDA_POSICION] = new Perro("nombre_predefinido", DOS_ANIOS, "diminuto", 'P', "sociable");
     animales_a_rescatar[TERCERA_POSICION] = new Erizo("nombre_predefinido", TRES_ANIOS, "mediano", 'E', "dormilon");
     animales_a_rescatar[CUARTA_POSICION] = new Caballo("nombre_predefinido", CUATRO_ANIOS, "grande", 'C', "travieso");
 }
 
-//Pre
-//Post Pide un nombre para el nuevo animal
-void pedir_nombre(Animal* animal_a_rescatar){
+void Rescatar_animal::pedir_nombre(Animal* animal_a_rescatar){
     string nombre;
     cout << "Felicitaciones! Encontramos un " << animal_a_rescatar->get_especie_completa() << " en el lugar! ¿Cual es su nombre? ";
     getline(cin >> ws, nombre);
     animal_a_rescatar->set_nombre(nombre);
 }
 
-//Pre
-//Post Vuelve a pedir un nombre apropiado en caso de que el nombre ingresado no sea valido.
-void repedir_nombre(Animal* animal_a_rescatar){
+void Rescatar_animal::repedir_nombre(Animal* animal_a_rescatar){
     string nombre;
     cout << endl << "Ya existe un animal con ese nombre en el registro. Por favor, ingresa otro nombre: ";
     getline(cin >> ws, nombre);
     animal_a_rescatar->set_nombre(nombre);
 }
 
-//Pre
-//Post Realiza el rescate del animal, insertandolo en el arbol con un nombre adecuado
-string realizar_rescate(int combustible_necesitado, Animal* animal_a_rescatar, ArbolB<Animal*> &registro_de_animales, int &combustible_auto){
+string Rescatar_animal::realizar_rescate(int combustible_necesitado, Animal* animal_a_rescatar, ArbolB<Animal*> &registro_de_animales, int &combustible_auto){
     pedir_nombre(animal_a_rescatar);
     int resultado_insercion = registro_de_animales.insertar(animal_a_rescatar);
     while(resultado_insercion == ANIMAL_REPETIDO) {
@@ -457,22 +399,21 @@ string realizar_rescate(int combustible_necesitado, Animal* animal_a_rescatar, A
     return animal_a_rescatar->get_nombre();
 }
 
-//Pre
-//Post Libera la memoria de todos los animales creados para ser rescatados
-void liberar_animales_creados(Animal* animales_a_rescatar[]){
+
+void Rescatar_animal::liberar_animales_creados(Animal* animales_a_rescatar[]){
     for(int i = 0; i < MAXIMO_ANIMALES_A_RESCATAR; ++i){
         delete animales_a_rescatar[i];
     }
 }
 
-//Post Libera la memoria de los animales no rescatados
-void liberar_animales_no_rescatados(Animal* animales_a_rescatar[], string nombre_animal_rescatado){
+
+void Rescatar_animal::liberar_animales_no_rescatados(Animal* animales_a_rescatar[], string nombre_animal_rescatado){
     for(int i = 0; i < MAXIMO_ANIMALES_A_RESCATAR; ++i){
         if(animales_a_rescatar[i]->get_nombre() != nombre_animal_rescatado) delete animales_a_rescatar[i];
     }
 }
 
-void rescatar_animal(ArbolB<Animal*> &registro_de_animales, int &combustible_auto) {
+void Rescatar_animal::rescatar_animal(ArbolB<Animal*> &registro_de_animales, int &combustible_auto) {
     int coordenada_usuario_x, coordenada_usuario_y;
     Animal* animales_a_rescatar[MAXIMO_ANIMALES_A_RESCATAR];
     generar_animales_random(animales_a_rescatar);
@@ -494,5 +435,3 @@ void rescatar_animal(ArbolB<Animal*> &registro_de_animales, int &combustible_aut
         liberar_animales_no_rescatados(animales_a_rescatar, nombre_animal_rescatado);
     }
 }
-
-
