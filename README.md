@@ -1,11 +1,19 @@
 # Nueva reserva soñada
 
+## Instrucciones de usuario
 Para compilar aplicar el siguiente comando en la linea de comando de linux:  
         **g++ *.cpp -Wall -Werror -Wconversion -o reserva_soniada***  
+
 Para correr el ejecutable, aplicar el siguiente comando en la linea de comando de linux:  
         ***./reserva_soniada***
 
-                                            FUNCIONALIDADES
+## Diagramas de clases
+
+<img src="">
+<img src="">
+<img src="">
+
+## Funcionalidades
 
 A la mayoría de la gente le gustan los animales y hay muchas personas dispuestas a cuidarlos y darles un
 hogar. Después de mucho ahorrar, se logró abrir una reserva para todos los animales que lo necesiten.
@@ -14,8 +22,8 @@ Pero al tener tantos es difícil llevar un registro de todo...
 1)Se listaran todos los animales con su nombre, edad, tamaño, especie en forma completa,
 personalidad, hambre e higiene.
 
-2)Ahora la reserva consiguió un auto y puede ir a buscar los animales que necesitan ser rescatados. El
-auto comenzará con 100 de combustible y se le cargará 5 por cada acción del menú principal que sea
+2)La reserva consiguió un auto y puede ir a buscar los animales que necesitan ser rescatados. El
+auto comenzará con 100 de combustible y se le cargara 5 por cada acción del menú principal que sea
 seleccionada.
 
 3)Se solicitara el nombre del animal al usuario y validara que el mismo este entre los animales de la
@@ -31,4 +39,4 @@ Se le deberá pedira al usuario que elija entre alguno de los animales o si dese
 
 5)Podra elegirse la cantidad de combustible a cargar al auto.
 
-6)Al terminar de usar el programa se deberá el archivo con los cambios correspondientes.
+6)Al terminar de usar el programa, se guardaran los cambios hechos.

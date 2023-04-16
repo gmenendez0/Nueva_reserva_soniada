@@ -16,6 +16,7 @@ class Animal{
         int espacio_minimo_requerido;
         bool eliminado;
         bool escapo;
+        string tipo_de_comida;
 
     protected:
         //Pre: Debe recibir el nombre, la edad, el tamanio, la especie y la personalidad del animal.

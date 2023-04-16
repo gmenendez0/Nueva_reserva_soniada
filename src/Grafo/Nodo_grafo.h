@@ -53,7 +53,7 @@ int Nodo_grafo<Tipo>::get_id() {
 
 template<typename Tipo>
 void Nodo_grafo<Tipo>::asignar_siguiente(Nodo_grafo<Tipo>* siguiente) {
-    this -> siguiente = siguiente;
+    this->siguiente = siguiente;
 }
 
 template<typename Tipo>

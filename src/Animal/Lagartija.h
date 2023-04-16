@@ -4,9 +4,6 @@
 #include "Animal/Animal.h"
 
 class Lagartija: public Animal{
-    private:
-        std::string tipo_de_comida;
-
     public:
         //Pre: Debe recibir el nombre, la edad, el tamanio, la especie y la personalidad del animal para poder enviarlos al constructor de la clase padre.
         //Post: Llama al constructor de la clase padre y luego crea un perro seteando sus atributos.
