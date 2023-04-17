@@ -12,6 +12,7 @@ Para correr el ejecutable, aplicar el siguiente comando en la linea de comando d
 <img src="https://github.com/gmenendez0/Nueva_reserva_soniada/blob/main/doc/Diagrama_de_clases_Reserva.png" alt="Diagrama de clases de Reserva">
 <img src="https://github.com/gmenendez0/Nueva_reserva_soniada/blob/main/doc/Diagrama_de_clases_Grafo.png" alt="Diagrama de clases de Grafo">
 <img src="https://github.com/gmenendez0/Nueva_reserva_soniada/blob/main/doc/Diagrama_de_clases_Animal.png" alt="Diagrama de clases de Animal">
+<img src="https://github.com/gmenendez0/Nueva_reserva_soniada/blob/main/doc/Diagrama_de_clases_UserUI.png" alt="Diagrama de clases de UserUI">
 
 ## Funcionalidades
 
