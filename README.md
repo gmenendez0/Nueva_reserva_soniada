@@ -6,14 +6,8 @@ Para compilar aplicar el siguiente comando en la linea de comando de linux:
 
 Para correr el ejecutable, aplicar el siguiente comando en la linea de comando de linux:  
         ***./reserva_soniada***
-
-## Diagramas de clases
-
-<img src="https://github.com/gmenendez0/Nueva_reserva_soniada/blob/main/doc/Diagrama_de_clases_Reserva.png" alt="Diagrama de clases de Reserva">
-<img src="https://github.com/gmenendez0/Nueva_reserva_soniada/blob/main/doc/Diagrama_de_clases_Grafo.png" alt="Diagrama de clases de Grafo">
-<img src="https://github.com/gmenendez0/Nueva_reserva_soniada/blob/main/doc/Diagrama_de_clases_Animal.png" alt="Diagrama de clases de Animal">
-<img src="https://github.com/gmenendez0/Nueva_reserva_soniada/blob/main/doc/Diagrama_de_clases_UserUI.png" alt="Diagrama de clases de UserUI">
-
+        
+        
 ## Funcionalidades
 
 A la mayoría de la gente le gustan los animales y hay muchas personas dispuestas a cuidarlos y darles un
@@ -41,3 +35,10 @@ Se le deberá pedira al usuario que elija entre alguno de los animales o si dese
 5)Podra elegirse la cantidad de combustible a cargar al auto.
 
 6)Al terminar de usar el programa, se guardaran los cambios hechos.
+
+## Diagramas de clases
+
+<img src="https://github.com/gmenendez0/Nueva_reserva_soniada/blob/main/doc/Diagrama_de_clases_Reserva.png" alt="Diagrama de clases de Reserva">
+<img src="https://github.com/gmenendez0/Nueva_reserva_soniada/blob/main/doc/Diagrama_de_clases_Grafo.png" alt="Diagrama de clases de Grafo">
+<img src="https://github.com/gmenendez0/Nueva_reserva_soniada/blob/main/doc/Diagrama_de_clases_Animal.png" alt="Diagrama de clases de Animal">
+<img src="https://github.com/gmenendez0/Nueva_reserva_soniada/blob/main/doc/Diagrama_de_clases_UserUI.png" alt="Diagrama de clases de UserUI">
